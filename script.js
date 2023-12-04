@@ -19,9 +19,9 @@ noBtn.addEventListener("mouseover", () => {
 
 const noBtnRect = noBtn.getBoundingClientRect(); 
 
-const maxX window.innerWidth noBtnRect.width;
+const maxX = window.innerWidth - noBtnRect.width;
 
-const maxY window.innerHeight noBtnRect.height;
+const maxY = window.innerHeight - noBtnRect.height;
 
 const randomX = Math.floor(Math.random() * maxX);
 
