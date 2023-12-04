@@ -10,7 +10,7 @@ const noBtn = document.querySelector(".no-btn");
 
 yesBtn.addEventListener("click", () => {
 
-  quest lon.innerHTML = "Aaaaa, I like you too";
+  question.innerHTML = "Aaaaa, I like you too";
 
   gif.src = "https://raw.githubusercontent.com/DzarelDeveloper/Img/main/gif.webp"; 
 });
