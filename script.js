@@ -17,7 +17,7 @@ yesBtn.addEventListener("click", () => {
 
 noBtn.addEventListener("mouseover", () => {
 
-const noBtnRect noBtn.getBoundingClientRect(); 
+const noBtnRect = noBtn.getBoundingClientRect(); 
 
 const maxX window.innerWidth noBtnRect.width;
 
