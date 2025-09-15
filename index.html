@@ -1,1219 +1,277 @@
+<!--<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Message for you</title> 
+  <link rel="stylesheet" href="style.css"> 
+ </head> 
+ <body> 
+  <div class="wrapper"> 
+   <h2 class="question">You like me?</h2> 
+   <img class="gif" alt="gif" src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/gifyou.webp"> 
+   <div class="btn-group"> <button class="yes-btn">Yes</button> <button class="no-btn">No</button> 
+   </div> 
+  </div> 
+  <script src="script.js"></script> 
+ </body>
+</html>-->
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentCar Pro - Penyewaan Kendaraan Terpercaya</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        .hero-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 70vh;
-        }
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .stats-section {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Portofolio</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="style.css">
+
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
-        <div class="container">
-            <a class="navbar-brand text-primary" href="#">
-                <i class="bi bi-car-front-fill me-2"></i>RentCar Pro
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#page-top">Dedi suardana</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showHome()">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showBooking()">Pemesanan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showGallery()">Galeri</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showMaps()">Maps</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary ms-2" href="#">Kontak</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <!-- Home Section -->
-    <div id="homeSection" style="padding-top: 76px;">
-        <!-- Hero Section -->
-        <section class="hero-bg text-white d-flex align-items-center">
-            <div class="container text-center">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <h1 class="display-4 fw-bold mb-4">Selamat Datang di RentCar Pro</h1>
-                        <p class="lead mb-4">
-                            Solusi terpercaya untuk kebutuhan penyewaan kendaraan Anda. Dengan armada lengkap dan pelayanan terbaik, 
-                            kami siap mengantarkan perjalanan Anda ke tujuan dengan nyaman dan aman.
-                        </p>
-                        <button class="btn btn-light btn-lg text-primary fw-semibold" onclick="showBooking()">
-                            <i class="bi bi-calendar-check me-2"></i>Pesan Sekarang
-                        </button>
-                    </div>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">PORTOFOLIO</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Portofolio dan dokumentasi</h2>
+                    <!--<a class="btn btn-primary" href="#about">Get Started</a>-->
                 </div>
             </div>
-        </section>
-
-        <!-- Company Introduction -->
-        <section class="py-5 bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto text-center mb-5">
-                        <h2 class="display-5 fw-bold text-dark mb-4">Tentang RentCar Pro</h2>
-                        <p class="lead text-muted">
-                            Berdiri sejak 2015, RentCar Pro telah melayani ribuan pelanggan dengan komitmen memberikan 
-                            layanan penyewaan kendaraan terbaik di Indonesia.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm card-hover">
-                            <div class="card-body text-center p-4">
-                                <div class="display-4 text-primary mb-3">
-                                    <i class="bi bi-car-front"></i>
-                                </div>
-                                <h5 class="card-title fw-bold mb-3">Armada Lengkap</h5>
-                                <p class="card-text text-muted">
-                                    Berbagai jenis kendaraan mulai dari city car, SUV, hingga bus pariwisata 
-                                    tersedia untuk memenuhi kebutuhan perjalanan Anda.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm card-hover">
-                            <div class="card-body text-center p-4">
-                                <div class="display-4 text-warning mb-3">
-                                    <i class="bi bi-star-fill"></i>
-                                </div>
-                                <h5 class="card-title fw-bold mb-3">Pelayanan Terbaik</h5>
-                                <p class="card-text text-muted">
-                                    Tim customer service yang ramah dan profesional siap membantu Anda 24/7 
-                                    untuk memberikan pengalaman terbaik.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-sm card-hover">
-                            <div class="card-body text-center p-4">
-                                <div class="display-4 text-success mb-3">
-                                    <i class="bi bi-currency-dollar"></i>
-                                </div>
-                                <h5 class="card-title fw-bold mb-3">Harga Terjangkau</h5>
-                                <p class="card-text text-muted">
-                                    Tarif kompetitif dengan berbagai paket menarik. Dapatkan diskon khusus 
-                                    untuk penyewaan jangka panjang.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Statistics -->
-        <section class="py-5 stats-section text-white">
-            <div class="container">
-                <div class="row text-center g-4">
-                    <div class="col-md-3 col-6">
-                        <div class="h2 fw-bold mb-2">500+</div>
-                        <div class="text-light">Kendaraan Tersedia</div>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <div class="h2 fw-bold mb-2">10,000+</div>
-                        <div class="text-light">Pelanggan Puas</div>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <div class="h2 fw-bold mb-2">50+</div>
-                        <div class="text-light">Kota Terjangkau</div>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <div class="h2 fw-bold mb-2">8</div>
-                        <div class="text-light">Tahun Pengalaman</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Gallery Section -->
-    <div id="gallerySection" class="d-none" style="padding-top: 76px;">
-        <section class="py-5 bg-light">
-            <div class="container">
-                <div class="text-center mb-5">
-                    <h2 class="display-5 fw-bold text-dark mb-4">Galeri Kendaraan</h2>
-                    <p class="lead text-muted">
-                        Lihat koleksi lengkap armada kendaraan kami yang siap melayani perjalanan Anda
+        </div>
+    </header>
+    <!-- About-->
+    <section class="about-section text-center" id="about">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="text-white mb-4">I PUTU DEDI SUARDANA</h2>
+                    <p class="text-white-50">
+                        Saya biasa dipanggil dedi suardana, lahir pada bulan januari 2001 di banjar dinas puring desa
+                        sangketan, dari keluarga kecil yang bekerja sebagai petani,
+                        Saya pernah bekerja sebagai it support di sebuah rumahsakit swasta di daerah badung bali, dimana
+                        mengemban tugas untu melakukan instalasi jaringn, telepon dan cctv.
+                        Serta menangani komplain dari klien pada bagian hardware dan jaringan
                     </p>
                 </div>
-
-                <!-- Filter Buttons -->
-                <div class="text-center mb-4">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-outline-primary active" onclick="filterGallery('all')">Semua</button>
-                        <button type="button" class="btn btn-outline-primary" onclick="filterGallery('city-car')">City Car</button>
-                        <button type="button" class="btn btn-outline-primary" onclick="filterGallery('sedan')">Sedan</button>
-                        <button type="button" class="btn btn-outline-primary" onclick="filterGallery('suv')">SUV</button>
-                        <button type="button" class="btn btn-outline-primary" onclick="filterGallery('mpv')">MPV</button>
-                        <button type="button" class="btn btn-outline-primary" onclick="filterGallery('luxury')">Luxury</button>
+            </div>
+            <img class="img-fluid" src="assets/img/pagi.jpg" alt="..." />
+        </div>
+    </section>
+    <!-- Projects-->
+    <section class="projects-section bg-light" id="projects">
+        <div class="container px-4 px-lg-5">
+            <!-- Featured Project Row-->
+            <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/web.png"
+                        alt="..." /></div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="featured-text text-center text-lg-left">
+                        <h4>Sistem Informasi koperasi</h4>
+                        <p class="text-black-50 mb-0">Sistem informasi koperasi simpan pinjam berbasis website yang
+                            dibangun menggunakan framework codeigniter,
+                            dalam sistem ini terdapat beberapa fitur seperti pengelolaan tabungan, deposito, penjaman
+                            dan pendataan anggota</p>
                     </div>
                 </div>
-
-                <!-- Add Vehicle Button -->
-                <div class="text-center mb-4">
-                    <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#addVehicleModal">
-                        <i class="bi bi-plus-circle me-2"></i>Tambah Kendaraan Baru
-                    </button>
-                </div>
-
-                <!-- Gallery Grid -->
-                <div class="row g-4" id="galleryGrid">
-                    <!-- City Cars -->
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="city-car" data-id="1">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-primary d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-car-front text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(1)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Toyota Agya</h5>
-                                <p class="card-text text-muted">City car yang ekonomis dan efisien untuk perjalanan dalam kota</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-primary">City Car</span>
-                                    <small class="text-muted">Rp 250.000/hari</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="city-car" data-id="2">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-success d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-car-front text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(2)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Honda Brio</h5>
-                                <p class="card-text text-muted">Mobil kompak dengan desain modern dan fitur lengkap</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-primary">City Car</span>
-                                    <small class="text-muted">Rp 275.000/hari</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sedans -->
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="sedan" data-id="3">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-warning d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-car-front text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(3)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Toyota Vios</h5>
-                                <p class="card-text text-muted">Sedan elegan dengan kenyamanan dan performa terbaik</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-warning">Sedan</span>
-                                    <small class="text-muted">Rp 400.000/hari</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="sedan" data-id="4">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-info d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-car-front text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(4)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Honda Civic</h5>
-                                <p class="card-text text-muted">Sedan sporty dengan teknologi canggih dan desain mewah</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-warning">Sedan</span>
-                                    <small class="text-muted">Rp 500.000/hari</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SUVs -->
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="suv" data-id="5">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-danger d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-truck text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(5)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Toyota Fortuner</h5>
-                                <p class="card-text text-muted">SUV tangguh untuk perjalanan jarak jauh dan medan berat</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-danger">SUV</span>
-                                    <small class="text-muted">Rp 800.000/hari</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- MPVs -->
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="mpv" data-id="6">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-bus-front text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(6)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Toyota Avanza</h5>
-                                <p class="card-text text-muted">MPV keluarga yang nyaman untuk 7 penumpang</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-secondary">MPV</span>
-                                    <small class="text-muted">Rp 450.000/hari</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Luxury -->
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="luxury" data-id="7">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-dark d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-car-front text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(7)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Toyota Alphard</h5>
-                                <p class="card-text text-muted">Kendaraan mewah dengan fasilitas premium dan kenyamanan maksimal</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-dark">Luxury</span>
-                                    <small class="text-muted">Rp 1.500.000/hari</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 gallery-item" data-category="luxury" data-id="8">
-                        <div class="card h-100 shadow-sm card-hover">
-                            <div class="position-relative">
-                                <div class="card-img-top bg-purple d-flex align-items-center justify-content-center" style="height: 200px; background-color: #6f42c1;">
-                                    <i class="bi bi-car-front text-white" style="font-size: 4rem;"></i>
-                                </div>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(8)" title="Hapus Kendaraan">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Mercedes Benz</h5>
-                                <p class="card-text text-muted">Sedan mewah Eropa dengan teknologi terdepan</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-dark">Luxury</span>
-                                    <small class="text-muted">Rp 2.000.000/hari</small>
-                                </div>
+            </div>
+            <!-- Project One Row-->
+            <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+                <div class="col-lg-6"><img class="img-fluid" src="assets/img/server-7014602_1280.jpg" alt="..." /></div>
+                <div class="col-lg-6">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-left">
+                                <h4 class="text-white">Instalasi internet</h4>
+                                <p class="mb-0 text-white-50">Pemasangan jaringan internet, diantaranya pemasangan kabel
+                                    data menuju komputer clien dari server,
+                                    pemasangan aksespoin agar internet dapat digunakan bersama</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-
-    <!-- Maps Section -->
-    <div id="mapsSection" class="d-none" style="padding-top: 76px;">
-        <section class="py-5 bg-light">
-            <div class="container">
-                <div class="text-center mb-5">
-                    <h2 class="display-5 fw-bold text-dark mb-4">Lokasi & Tujuan</h2>
-                    <p class="lead text-muted">
-                        Temukan lokasi kantor kami dan destinasi populer yang bisa Anda kunjungi
-                    </p>
-                </div>
-
-                <div class="row g-4">
-                    <!-- Map Container -->
-                    <div class="col-lg-8">
-                        <div class="card shadow-lg border-0">
-                            <div class="card-header bg-primary text-white">
-                                <h5 class="card-title mb-0">
-                                    <i class="bi bi-geo-alt me-2"></i>Peta Lokasi
-                                </h5>
-                            </div>
-                            <div class="card-body p-0">
-                                <div id="mapContainer" class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
-                                    <div class="text-center">
-                                        <i class="bi bi-map display-1 text-primary mb-3"></i>
-                                        <h5>Peta Interaktif</h5>
-                                        <p class="text-muted">Klik pada lokasi di samping untuk melihat peta</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Location List -->
-                    <div class="col-lg-4">
-                        <div class="card shadow-lg border-0">
-                            <div class="card-header bg-success text-white">
-                                <h5 class="card-title mb-0">
-                                    <i class="bi bi-building me-2"></i>Kantor Kami
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="list-group list-group-flush">
-                                    <button class="list-group-item list-group-item-action" onclick="showLocation('jakarta')">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">Jakarta Pusat</h6>
-                                            <small class="text-primary">Kantor Utama</small>
-                                        </div>
-                                        <p class="mb-1 text-muted small">Jl. Sudirman No. 123, Jakarta Pusat</p>
-                                        <small>Telp: (021) 1234-5678</small>
-                                    </button>
-                                    
-                                    <button class="list-group-item list-group-item-action" onclick="showLocation('bandung')">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">Bandung</h6>
-                                            <small class="text-success">Cabang</small>
-                                        </div>
-                                        <p class="mb-1 text-muted small">Jl. Asia Afrika No. 45, Bandung</p>
-                                        <small>Telp: (022) 8765-4321</small>
-                                    </button>
-                                    
-                                    <button class="list-group-item list-group-item-action" onclick="showLocation('surabaya')">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">Surabaya</h6>
-                                            <small class="text-success">Cabang</small>
-                                        </div>
-                                        <p class="mb-1 text-muted small">Jl. Pemuda No. 67, Surabaya</p>
-                                        <small>Telp: (031) 9876-5432</small>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card shadow-lg border-0 mt-4">
-                            <div class="card-header bg-warning text-dark">
-                                <h5 class="card-title mb-0">
-                                    <i class="bi bi-compass me-2"></i>Destinasi Populer
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="list-group list-group-flush">
-                                    <button class="list-group-item list-group-item-action" onclick="showDestination('bogor')">
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi bi-tree me-3 text-success"></i>
-                                            <div>
-                                                <h6 class="mb-1">Puncak Bogor</h6>
-                                                <small class="text-muted">Wisata Alam & Villa</small>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    
-                                    <button class="list-group-item list-group-item-action" onclick="showDestination('bali')">
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi bi-water me-3 text-primary"></i>
-                                            <div>
-                                                <h6 class="mb-1">Bali</h6>
-                                                <small class="text-muted">Pantai & Budaya</small>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    
-                                    <button class="list-group-item list-group-item-action" onclick="showDestination('yogya')">
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi bi-building-fill me-3 text-warning"></i>
-                                            <div>
-                                                <h6 class="mb-1">Yogyakarta</h6>
-                                                <small class="text-muted">Sejarah & Kuliner</small>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    
-                                    <button class="list-group-item list-group-item-action" onclick="showDestination('malang')">
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi bi-mountain me-3 text-info"></i>
-                                            <div>
-                                                <h6 class="mb-1">Malang</h6>
-                                                <small class="text-muted">Pegunungan & Wisata</small>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
+            <!-- Project Two Row-->
+            <div class="row gx-0 justify-content-center">
+                <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-02.jpg" alt="..." /></div>
+                <div class="col-lg-6 order-lg-first">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-right">
+                                <h4 class="text-white">Cctv</h4>
+                                <p class="mb-0 text-white-50">Melakukan pemasangan cctv digital atau cctv analog, baik
+                                    pemasangan baru ataupun perbaikan cctv</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+    <!-- Gallery -->
+   <!-- <div class="row">
+        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
+                class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
 
-    <!-- Booking Section -->
-    <div id="bookingSection" class="d-none" style="padding-top: 76px;">
-        <section class="py-5 bg-light min-vh-100">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="text-center mb-5">
-                            <h2 class="display-5 fw-bold text-dark mb-4">Pemesanan Kendaraan</h2>
-                            <p class="lead text-muted">
-                                Isi form di bawah ini untuk melakukan pemesanan kendaraan
-                            </p>
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain1.webp"
+                class="w-100 shadow-1-strong rounded mb-4" alt="Wintry Mountain Landscape" />
+        </div>
+
+        <div class="col-lg-4 mb-4 mb-lg-0">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain2.webp"
+                class="w-100 shadow-1-strong rounded mb-4" alt="Mountains in the Clouds" />
+
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
+                class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
+        </div>
+
+        <div class="col-lg-4 mb-4 mb-lg-0">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(18).webp"
+                class="w-100 shadow-1-strong rounded mb-4" alt="Waves at Sea" />
+
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain3.webp"
+                class="w-100 shadow-1-strong rounded mb-4" alt="Yosemite National Park" />
+        </div>
+    </div>-->
+    <!-- Gallery -->
+    <!-- Signup-->
+    <!-- <section class="signup-section" id="signup">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-10 col-lg-8 mx-auto text-center">
+                    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+                    <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
+                    <!-- * * * * * * * * * * * * * * *-->
+    <!-- * * SB Forms Contact Form * *-->
+    <!-- * * * * * * * * * * * * * * *-->
+    <!-- This form is pre-integrated with SB Forms.-->
+    <!-- To make this form functional, sign up at-->
+    <!-- https://startbootstrap.com/solution/contact-forms-->
+    <!-- to get an API token!-->
+    <!-- <form class="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">-->
+    <!-- Email address input-->
+    <!--     <div class="row input-group-newsletter">
+                            <div class="col"><input class="form-control" id="emailAddress" type="email"
+                                    placeholder="Enter email address..." aria-label="Enter email address..."
+                                    data-sb-validations="required,email" /></div>
+                            <div class="col-auto"><button class="btn btn-primary disabled" id="submitButton"
+                                    type="submit">Notify Me!</button></div>
                         </div>
-
-                        <div class="card shadow-lg border-0">
-                            <div class="card-body p-4">
-                                <form id="bookingForm">
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label for="nama" class="form-label fw-semibold">
-                                                <i class="bi bi-person me-1"></i>Nama Lengkap *
-                                            </label>
-                                            <input type="text" class="form-control" id="nama" name="nama" required
-                                                placeholder="Masukkan nama lengkap Anda">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="asal" class="form-label fw-semibold">
-                                                <i class="bi bi-geo-alt me-1"></i>Asal Daerah *
-                                            </label>
-                                            <input type="text" class="form-control" id="asal" name="asal" required
-                                                placeholder="Contoh: Jakarta, Bandung, Surabaya">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="tanggalMulai" class="form-label fw-semibold">
-                                                <i class="bi bi-calendar-event me-1"></i>Tanggal Mulai Peminjaman *
-                                            </label>
-                                            <input type="date" class="form-control" id="tanggalMulai" name="tanggalMulai" required>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="tanggalSelesai" class="form-label fw-semibold">
-                                                <i class="bi bi-calendar-check me-1"></i>Tanggal Selesai Peminjaman *
-                                            </label>
-                                            <input type="date" class="form-control" id="tanggalSelesai" name="tanggalSelesai" required>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label for="jenisKendaraan" class="form-label fw-semibold">
-                                                <i class="bi bi-car-front me-1"></i>Jenis Kendaraan *
-                                            </label>
-                                            <select class="form-select" id="jenisKendaraan" name="jenisKendaraan" required>
-                                                <option value="">Pilih jenis kendaraan</option>
-                                                <option value="city-car">City Car (Agya, Ayla, Brio)</option>
-                                                <option value="sedan">Sedan (Vios, Altis, Camry)</option>
-                                                <option value="suv">SUV (Avanza, Innova, Fortuner)</option>
-                                                <option value="mpv">MPV (Ertiga, Mobilio, BR-V)</option>
-                                                <option value="luxury">Luxury (Alphard, Vellfire)</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label for="catatan" class="form-label fw-semibold">
-                                                <i class="bi bi-chat-text me-1"></i>Catatan Tambahan
-                                            </label>
-                                            <textarea class="form-control" id="catatan" name="catatan" rows="4"
-                                                placeholder="Tambahkan catatan khusus untuk pemesanan Anda (opsional)"></textarea>
-                                        </div>
-
-                                        <div class="col-12 text-center">
-                                            <button type="submit" class="btn btn-success btn-lg px-5">
-                                                <i class="bi bi-whatsapp me-2"></i>Pesan via WhatsApp
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:required">An email is
+                            required.</div>
+                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:email">Email is not valid.
+                        </div>-->
+    <!-- Submit success message-->
+    <!---->
+    <!-- This is what your users will see when the form-->
+    <!-- has successfully submitted-->
+    <!--   <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3 mt-2 text-white">
+                                <div class="fw-bolder">Form submission successful!</div>
+                                To activate this form, sign up at
+                                <br />
+                                <a
+                                    href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                             </div>
-                        </div>
-
-                        <!-- WhatsApp Info -->
-                        <div class="mt-5">
-                            <div class="card shadow-lg border-0 bg-success text-white">
-                                <div class="card-body text-center p-4">
-                                    <div class="display-4 mb-3">
-                                        <i class="bi bi-whatsapp"></i>
-                                    </div>
-                                    <h5 class="card-title fw-bold mb-3">Hubungi Kami via WhatsApp</h5>
-                                    <p class="card-text mb-3">
-                                        Setelah mengisi form di atas, Anda akan diarahkan ke WhatsApp kami untuk konfirmasi pemesanan secara langsung.
-                                    </p>
-                                    <div class="row text-center">
-                                        <div class="col-md-4">
-                                            <i class="bi bi-clock-fill mb-2 d-block"></i>
-                                            <small>Respon Cepat<br>< 5 Menit</small>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <i class="bi bi-shield-check-fill mb-2 d-block"></i>
-                                            <small>Terpercaya<br>& Aman</small>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <i class="bi bi-headset mb-2 d-block"></i>
-                                            <small>Customer Service<br>24/7</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Add Vehicle Modal -->
-    <div class="modal fade" id="addVehicleModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-plus-circle me-2"></i>Tambah Kendaraan Baru
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addVehicleForm">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="vehicleName" class="form-label fw-semibold">
-                                    <i class="bi bi-car-front me-1"></i>Nama Kendaraan *
-                                </label>
-                                <input type="text" class="form-control" id="vehicleName" required
-                                    placeholder="Contoh: Toyota Avanza">
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="vehicleCategory" class="form-label fw-semibold">
-                                    <i class="bi bi-tags me-1"></i>Kategori *
-                                </label>
-                                <select class="form-select" id="vehicleCategory" required>
-                                    <option value="">Pilih kategori</option>
-                                    <option value="city-car">City Car</option>
-                                    <option value="sedan">Sedan</option>
-                                    <option value="suv">SUV</option>
-                                    <option value="mpv">MPV</option>
-                                    <option value="luxury">Luxury</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="vehiclePrice" class="form-label fw-semibold">
-                                    <i class="bi bi-currency-dollar me-1"></i>Harga per Hari *
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp</span>
-                                    <input type="number" class="form-control" id="vehiclePrice" required
-                                        placeholder="250000" min="0">
-                                    <span class="input-group-text">/hari</span>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="vehicleColor" class="form-label fw-semibold">
-                                    <i class="bi bi-palette me-1"></i>Warna Kartu
-                                </label>
-                                <select class="form-select" id="vehicleColor">
-                                    <option value="primary">Biru (Primary)</option>
-                                    <option value="success">Hijau (Success)</option>
-                                    <option value="warning">Kuning (Warning)</option>
-                                    <option value="danger">Merah (Danger)</option>
-                                    <option value="info">Biru Muda (Info)</option>
-                                    <option value="secondary">Abu-abu (Secondary)</option>
-                                    <option value="dark">Hitam (Dark)</option>
-                                    <option value="purple" style="background-color: #6f42c1; color: white;">Ungu (Purple)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="vehicleIcon" class="form-label fw-semibold">
-                                    <i class="bi bi-emoji-smile me-1"></i>Ikon Kendaraan
-                                </label>
-                                <select class="form-select" id="vehicleIcon">
-                                    <option value="car-front">Mobil Standar</option>
-                                    <option value="truck">Truk/SUV</option>
-                                    <option value="bus-front">Bus/MPV</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="vehicleImage" class="form-label fw-semibold">
-                                    <i class="bi bi-image me-1"></i>Upload Foto (Opsional)
-                                </label>
-                                <input type="file" class="form-control" id="vehicleImage" accept="image/*">
-                                <small class="text-muted">Format: JPG, PNG, GIF (Max 2MB)</small>
-                            </div>
-                            
-                            <div class="col-12">
-                                <label for="vehicleDescription" class="form-label fw-semibold">
-                                    <i class="bi bi-chat-text me-1"></i>Deskripsi *
-                                </label>
-                                <textarea class="form-control" id="vehicleDescription" rows="3" required
-                                    placeholder="Deskripsi singkat tentang kendaraan ini..."></textarea>
-                            </div>
+                        </div>-->
+    <!-- Submit error message-->
+    <!---->
+    <!-- This is what your users will see when there is-->
+    <!-- an error submitting the form-->
+    <!-- <div class="d-none" id="submitErrorMessage">
+                            <div class="text-center text-danger mb-3 mt-2">Error sending message!</div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x-lg me-2"></i>Batal
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="addVehicle()">
-                        <i class="bi bi-plus-circle me-2"></i>Tambah Kendaraan
-                    </button>
-                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-exclamation-triangle me-2"></i>Konfirmasi Hapus
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <div class="display-1 text-danger mb-3">
-                        <i class="bi bi-trash"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Hapus Kendaraan?</h5>
-                    <p class="text-muted mb-4">
-                        Apakah Anda yakin ingin menghapus kendaraan ini? Tindakan ini tidak dapat dibatalkan.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x-lg me-2"></i>Batal
-                    </button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
-                        <i class="bi bi-trash me-2"></i>Ya, Hapus
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center p-5">
-                    <div class="display-1 text-success mb-4">
-                        <i class="bi bi-check-circle-fill"></i>
-                    </div>
-                    <h4 class="fw-bold mb-3" id="successTitle">Berhasil!</h4>
-                    <p class="text-muted mb-4" id="successMessage">
-                        Operasi berhasil dilakukan.
-                    </p>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                        <i class="bi bi-x-lg me-2"></i>Tutup
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Navigation functions
-        function showHome() {
-            hideAllSections();
-            document.getElementById('homeSection').classList.remove('d-none');
-        }
-
-        function showBooking() {
-            hideAllSections();
-            document.getElementById('bookingSection').classList.remove('d-none');
-        }
-
-        function showGallery() {
-            hideAllSections();
-            document.getElementById('gallerySection').classList.remove('d-none');
-        }
-
-        function showMaps() {
-            hideAllSections();
-            document.getElementById('mapsSection').classList.remove('d-none');
-        }
-
-        function hideAllSections() {
-            document.getElementById('homeSection').classList.add('d-none');
-            document.getElementById('bookingSection').classList.add('d-none');
-            document.getElementById('gallerySection').classList.add('d-none');
-            document.getElementById('mapsSection').classList.add('d-none');
-        }
-
-        // Gallery filter function
-        function filterGallery(category) {
-            const items = document.querySelectorAll('.gallery-item');
-            const buttons = document.querySelectorAll('.btn-group .btn');
-            
-            // Update active button
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Filter items
-            items.forEach(item => {
-                if (category === 'all' || item.dataset.category === category) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        // Maps functions
-        function showLocation(location) {
-            const mapContainer = document.getElementById('mapContainer');
-            const locations = {
-                jakarta: {
-                    name: 'Jakarta Pusat',
-                    address: 'Jl. Sudirman No. 123, Jakarta Pusat',
-                    phone: '(021) 1234-5678',
-                    color: 'primary'
-                },
-                bandung: {
-                    name: 'Bandung',
-                    address: 'Jl. Asia Afrika No. 45, Bandung',
-                    phone: '(022) 8765-4321',
-                    color: 'success'
-                },
-                surabaya: {
-                    name: 'Surabaya',
-                    address: 'Jl. Pemuda No. 67, Surabaya',
-                    phone: '(031) 9876-5432',
-                    color: 'info'
-                }
-            };
-            
-            const loc = locations[location];
-            mapContainer.innerHTML = `
-                <div class="text-center p-4">
-                    <div class="display-1 text-${loc.color} mb-3">
-                        <i class="bi bi-geo-alt-fill"></i>
-                    </div>
-                    <h4 class="fw-bold mb-3">${loc.name}</h4>
-                    <p class="text-muted mb-2">
-                        <i class="bi bi-house me-2"></i>${loc.address}
-                    </p>
-                    <p class="text-muted mb-3">
-                        <i class="bi bi-telephone me-2"></i>${loc.phone}
-                    </p>
-                    <div class="badge bg-${loc.color} fs-6">Kantor ${loc.name}</div>
-                </div>
-            `;
-        }
-
-        function showDestination(destination) {
-            const mapContainer = document.getElementById('mapContainer');
-            const destinations = {
-                bogor: {
-                    name: 'Puncak Bogor',
-                    description: 'Destinasi wisata alam dengan udara sejuk dan pemandangan indah',
-                    distance: '60 km dari Jakarta',
-                    icon: 'tree',
-                    color: 'success'
-                },
-                bali: {
-                    name: 'Bali',
-                    description: 'Pulau dewata dengan pantai eksotis dan budaya yang kaya',
-                    distance: '1.150 km dari Jakarta',
-                    icon: 'water',
-                    color: 'primary'
-                },
-                yogya: {
-                    name: 'Yogyakarta',
-                    description: 'Kota budaya dengan sejarah dan kuliner yang menawan',
-                    distance: '560 km dari Jakarta',
-                    icon: 'building-fill',
-                    color: 'warning'
-                },
-                malang: {
-                    name: 'Malang',
-                    description: 'Kota apel dengan wisata pegunungan yang mempesona',
-                    distance: '680 km dari Jakarta',
-                    icon: 'mountain',
-                    color: 'info'
-                }
-            };
-            
-            const dest = destinations[destination];
-            mapContainer.innerHTML = `
-                <div class="text-center p-4">
-                    <div class="display-1 text-${dest.color} mb-3">
-                        <i class="bi bi-${dest.icon}"></i>
-                    </div>
-                    <h4 class="fw-bold mb-3">${dest.name}</h4>
-                    <p class="text-muted mb-2">${dest.description}</p>
-                    <p class="text-muted mb-3">
-                        <i class="bi bi-signpost me-2"></i>${dest.distance}
-                    </p>
-                    <div class="badge bg-${dest.color} fs-6">Destinasi Populer</div>
-                </div>
-            `;
-        }
-
-        // Vehicle data storage (simulating database)
-        let vehicleData = [];
-        let vehicleCounter = 9; // Starting from 9 since we have 8 existing vehicles
-        let deleteVehicleId = null;
-
-        // Booking data storage (simulating database)
-        let bookingData = [];
-        let bookingCounter = 1;
-
-        // Form submission
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const booking = {
-                nama: formData.get('nama'),
-                asal: formData.get('asal'),
-                tanggalMulai: formData.get('tanggalMulai'),
-                tanggalSelesai: formData.get('tanggalSelesai'),
-                jenisKendaraan: formData.get('jenisKendaraan'),
-                catatan: formData.get('catatan')
-            };
-
-            // Validate dates
-            const startDate = new Date(booking.tanggalMulai);
-            const endDate = new Date(booking.tanggalSelesai);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            if (startDate < today) {
-                alert('Tanggal mulai tidak boleh kurang dari hari ini!');
-                return;
-            }
-
-            if (endDate <= startDate) {
-                alert('Tanggal selesai harus setelah tanggal mulai!');
-                return;
-            }
-
-            // Create WhatsApp message
-            const message = createWhatsAppMessage(booking);
-            
-            // Send to WhatsApp
-            sendToWhatsApp(message);
-        });
-
-        // WhatsApp functions
-        function createWhatsAppMessage(booking) {
-            const tanggalMulaiFormatted = formatDate(booking.tanggalMulai);
-            const tanggalSelesaiFormatted = formatDate(booking.tanggalSelesai);
-            const jenisKendaraanFormatted = getKendaraanName(booking.jenisKendaraan);
-            
-            let message = `🚗 *PEMESANAN KENDARAAN - RENTCAR PRO*\n\n`;
-            message += `👤 *Nama Lengkap:* ${booking.nama}\n`;
-            message += `📍 *Asal Daerah:* ${booking.asal}\n`;
-            message += `📅 *Tanggal Mulai:* ${tanggalMulaiFormatted}\n`;
-            message += `📅 *Tanggal Selesai:* ${tanggalSelesaiFormatted}\n`;
-            message += `🚙 *Jenis Kendaraan:* ${jenisKendaraanFormatted}\n`;
-            
-            if (booking.catatan && booking.catatan.trim() !== '') {
-                message += `📝 *Catatan:* ${booking.catatan}\n`;
-            }
-            
-            message += `\n✅ Mohon konfirmasi ketersediaan kendaraan dan total biaya sewa.\n`;
-            message += `🙏 Terima kasih!`;
-            
-            return message;
-        }
-
-        function sendToWhatsApp(message) {
-            // Nomor WhatsApp RentCar Pro (ganti dengan nomor yang sesuai)
-            const phoneNumber = '6285238932196'; // Format: 62 + nomor tanpa 0 di depan
-            
-            // Encode message untuk URL
-            const encodedMessage = encodeURIComponent(message);
-            
-            // Buat URL WhatsApp
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            
-            // Buka WhatsApp di tab baru
-            window.open(whatsappURL, '_blank');
-            
-            // Reset form setelah mengirim
-            document.getElementById('bookingForm').reset();
-            
-            // Show success modal
-            const modal = new bootstrap.Modal(document.getElementById('successModal'));
-            modal.show();
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            });
-        }
-
-        function getKendaraanName(value) {
-            const kendaraanMap = {
-                'city-car': 'City Car',
-                'sedan': 'Sedan',
-                'suv': 'SUV',
-                'mpv': 'MPV',
-                'luxury': 'Luxury'
-            };
-            return kendaraanMap[value] || value;
-        }
-
-        // Set minimum date to today
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('tanggalMulai').setAttribute('min', today);
-            document.getElementById('tanggalSelesai').setAttribute('min', today);
-        });
-
-        // Update end date minimum when start date changes
-        document.getElementById('tanggalMulai').addEventListener('change', function() {
-            const startDate = this.value;
-            document.getElementById('tanggalSelesai').setAttribute('min', startDate);
-        });
-
-        // Vehicle management functions
-        function addVehicle() {
-            const name = document.getElementById('vehicleName').value;
-            const category = document.getElementById('vehicleCategory').value;
-            const price = document.getElementById('vehiclePrice').value;
-            const color = document.getElementById('vehicleColor').value;
-            const icon = document.getElementById('vehicleIcon').value;
-            const description = document.getElementById('vehicleDescription').value;
-            const imageFile = document.getElementById('vehicleImage').files[0];
-
-            // Validation
-            if (!name || !category || !price || !description) {
-                alert('Mohon lengkapi semua field yang wajib diisi!');
-                return;
-            }
-
-            // Create new vehicle object
-            const newVehicle = {
-                id: vehicleCounter++,
-                name: name,
-                category: category,
-                price: parseInt(price),
-                color: color,
-                icon: icon,
-                description: description,
-                image: null
-            };
-
-            // Handle image upload
-            if (imageFile) {
-                if (imageFile.size > 2 * 1024 * 1024) { // 2MB limit
-                    alert('Ukuran file terlalu besar! Maksimal 2MB.');
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    newVehicle.image = e.target.result;
-                    createVehicleCard(newVehicle);
-                };
-                reader.readAsDataURL(imageFile);
-            } else {
-                createVehicleCard(newVehicle);
-            }
-
-            // Save to storage
-            vehicleData.push(newVehicle);
-
-            // Reset form and close modal
-            document.getElementById('addVehicleForm').reset();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addVehicleModal'));
-            modal.hide();
-
-            // Show success message
-            showSuccessMessage('Kendaraan Berhasil Ditambahkan!', 'Kendaraan baru telah ditambahkan ke galeri.');
-        }
-
-        function createVehicleCard(vehicle) {
-            const galleryGrid = document.getElementById('galleryGrid');
-            
-            // Get category badge info
-            const categoryInfo = getCategoryInfo(vehicle.category);
-            
-            // Create card HTML
-            const cardHTML = `
-                <div class="col-lg-4 col-md-6 gallery-item" data-category="${vehicle.category}" data-id="${vehicle.id}">
-                    <div class="card h-100 shadow-sm card-hover">
-                        <div class="position-relative">
-                            ${vehicle.image ? 
-                                `<img src="${vehicle.image}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="${vehicle.name}">` :
-                                `<div class="card-img-top bg-${vehicle.color} d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-${vehicle.icon} text-white" style="font-size: 4rem;"></i>
-                                </div>`
-                            }
-                            <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" onclick="deleteVehicle(${vehicle.id})" title="Hapus Kendaraan">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">${vehicle.name}</h5>
-                            <p class="card-text text-muted">${vehicle.description}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge bg-${categoryInfo.color}">${categoryInfo.name}</span>
-                                <small class="text-muted">Rp ${formatPrice(vehicle.price)}/hari</small>
-                            </div>
+    </section>-->
+    <!-- Contact-->
+    <section class="contact-section bg-black" id="contact">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Alamat</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50">Desa Sangketan Kecamatan Penebel Kabupaten Tabanan</div>
                         </div>
                     </div>
                 </div>
-            `;
-
-            // Add to gallery
-            galleryGrid.insertAdjacentHTML('beforeend', cardHTML);
-        }
-
-        function deleteVehicle(id) {
-            deleteVehicleId = id;
-            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
-            modal.show();
-        }
-
-        // Confirm delete handler
-        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-            if (deleteVehicleId) {
-                // Remove from DOM
-                const vehicleElement = document.querySelector(`[data-id="${deleteVehicleId}"]`);
-                if (vehicleElement) {
-                    vehicleElement.remove();
-                }
-
-                // Remove from storage
-                vehicleData = vehicleData.filter(vehicle => vehicle.id !== deleteVehicleId);
-
-                // Close modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
-                modal.hide();
-
-                // Show success message
-                showSuccessMessage('Kendaraan Berhasil Dihapus!', 'Kendaraan telah dihapus dari galeri.');
-
-                deleteVehicleId = null;
-            }
-        });
-
-        function getCategoryInfo(category) {
-            const categoryMap = {
-                'city-car': { name: 'City Car', color: 'primary' },
-                'sedan': { name: 'Sedan', color: 'warning' },
-                'suv': { name: 'SUV', color: 'danger' },
-                'mpv': { name: 'MPV', color: 'secondary' },
-                'luxury': { name: 'Luxury', color: 'dark' }
-            };
-            return categoryMap[category] || { name: category, color: 'primary' };
-        }
-
-        function formatPrice(price) {
-            return new Intl.NumberFormat('id-ID').format(price);
-        }
-
-        function showSuccessMessage(title, message) {
-            document.getElementById('successTitle').textContent = title;
-            document.getElementById('successMessage').textContent = message;
-            const modal = new bootstrap.Modal(document.getElementById('successModal'));
-            modal.show();
-        }
-
-        // Save gallery data to localStorage
-        function saveGalleryData() {
-            localStorage.setItem('rentcarGallery', JSON.stringify(vehicleData));
-            localStorage.setItem('rentcarVehicleCounter', vehicleCounter.toString());
-        }
-
-        // Load gallery data from localStorage
-        function loadGalleryData() {
-            const savedData = localStorage.getItem('rentcarGallery');
-            const savedCounter = localStorage.getItem('rentcarVehicleCounter');
-            
-            if (savedData) {
-                vehicleData = JSON.parse(savedData);
-                vehicleData.forEach(vehicle => createVehicleCard(vehicle));
-            }
-            
-            if (savedCounter) {
-                vehicleCounter = parseInt(savedCounter);
-            }
-        }
-
-        // Auto-save when data changes
-        window.addEventListener('beforeunload', saveGalleryData);
-
-        // Load data on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadGalleryData();
-        });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97f7c611027da03c',t:'MTc1NzkzNTYzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-envelope text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Email</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50"><a href="#!">dedisuardana2001@gmail.com</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Phone</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50">+62 85238932196</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="social d-flex justify-content-center">
+                <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+            </div>-->
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="footer bg-black small text-center text-white-50">
+        <div class="container px-4 px-lg-5">Copyright &copy; dedisuardana2023</div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="script.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
 
 </html>
-
