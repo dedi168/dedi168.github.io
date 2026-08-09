@@ -1,277 +1,250 @@
-<!--<!doctype html>
-<html lang="en"> 
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Message for you</title> 
-  <link rel="stylesheet" href="style.css"> 
- </head> 
- <body> 
-  <div class="wrapper"> 
-   <h2 class="question">You like me?</h2> 
-   <img class="gif" alt="gif" src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/gifyou.webp"> 
-   <div class="btn-group"> <button class="yes-btn">Yes</button> <button class="no-btn">No</button> 
-   </div> 
-  </div> 
-  <script src="script.js"></script> 
- </body>
-</html>-->
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="id"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260807-05-4dc3575","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cetak Nota Toko</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>body{font-family:'DM Sans',sans-serif}</style>
+  <script src="/_sdk/04cc6185e046f597.resizing_sdk.js" type="text/javascript" integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="></script>
+ <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script></head>
+ <body data-template-id="__page-root" class="min-h-screen w-full" style="background: rgb(240, 253, 244);">
+  <header class="border-b border-emerald-200 px-6 py-5">
+   <h1 data-template-id="page-title" class="canva-text font-bold text-center" style="color: rgb(6, 95, 70); font-weight: bold; font-style: normal; font-size: 32px;">Cetak Nota Toko</h1>
+  </header>
+  <main class="max-w-3xl mx-auto p-6 space-y-8">
+   <section data-template-id="form-section" class="canva-card rounded-xl p-6 shadow-sm" style="background: rgb(255, 255, 255);">
+    <h2 data-template-id="form-heading" class="canva-text font-semibold mb-4" style="color: rgb(6, 95, 70); font-weight: 700; font-style: normal; font-size: 24px;">Buat Nota Baru</h2>
+    <form id="nota-form" class="space-y-4">
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+       <label data-template-id="label-shop" class="canva-text block mb-1 text-sm font-medium" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Nama Toko</label>
+       <div class="w-full border border-gray-200 bg-gray-50 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700">
+        DEDY TECHNOLOGY SOLUTION
+       </div>
+      </div>
+      <div>
+       <label data-template-id="label-customer" class="canva-text block mb-1 text-sm font-medium" for="customer_name" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Nama Pelanggan</label> <input id="customer_name" type="text" required="" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
+      </div>
+     </div>
+     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div>
+       <label data-template-id="label-date" class="canva-text block mb-1 text-sm font-medium" for="date_field" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Tanggal</label> <input id="date_field" type="date" required="" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
+      </div>
+      <div>
+       <label data-template-id="label-discount" class="canva-text block mb-1 text-sm font-medium" for="discount_field" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Diskon (Rp)</label> <input id="discount_field" type="number" min="0" value="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
+      </div>
+      <div>
+       <label data-template-id="label-notes" class="canva-text block mb-1 text-sm font-medium" for="notes_field" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Catatan</label> <input id="notes_field" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
+      </div>
+     </div>
+     <div>
+      <label data-template-id="label-items" class="canva-text block mb-2 text-sm font-medium" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Daftar Barang</label>
+      <div id="items-container" class="space-y-2"></div><button data-template-id="add-item-btn" type="button" id="add-item-btn" class="canva-button mt-2 px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1" style="background: rgb(209, 250, 229); color: rgb(6, 95, 70); font-weight: 500; font-style: normal; font-size: 16px;">Tambah Barang</button>
+     </div>
+     <div class="flex items-center justify-between bg-emerald-50 rounded-lg px-4 py-3">
+      <span data-template-id="label-total" class="canva-text font-semibold" style="color: rgb(6, 95, 70); font-weight: 600; font-style: normal; font-size: 16px;">Total</span> <span id="total-display" class="text-xl font-bold text-emerald-700">Rp 0</span>
+     </div><button data-template-id="submit-btn" type="submit" class="canva-button w-full py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Simpan Nota</button>
+    </form>
+    <p id="form-msg" class="mt-3 text-center text-sm hidden"></p>
+   </section>
+   <section>
+    <h2 data-template-id="history-heading" class="canva-text font-semibold mb-4" style="color: rgb(6, 95, 70); font-weight: 700; font-style: normal; font-size: 24px;">Riwayat Nota</h2>
+    <p data-template-id="empty-state" id="empty-state" class="canva-text text-center py-6" style="color: rgb(107, 114, 128); font-weight: 400; font-style: italic; font-size: 16px;">Belum ada nota tersimpan.</p>
+    <div id="history-list" class="space-y-4"></div>
+   </section>
+  </main>
+  <template id="nota-template">
+   <div data-template-id="nota-card" class="canva-card rounded-lg p-4 shadow-sm border border-gray-100">
+    <div class="flex justify-between items-start">
+     <div>
+      <p data-template-id="nota-shop" class="canva-text font-bold"></p>
+      <p data-template-id="nota-customer" class="canva-text text-sm"></p>
+     </div>
+     <div class="flex items-center gap-2">
+      <span data-template-id="nota-date" class="canva-tag text-xs px-2 py-1 rounded"></span> <button class="print-btn text-emerald-600 hover:text-emerald-800" title="Cetak"><i data-lucide="printer" style="width:18px;height:18px"></i></button> <button class="delete-btn text-red-400 hover:text-red-600" title="Hapus"><i data-lucide="trash-2" style="width:16px;height:16px"></i></button>
+     </div>
+    </div>
+    <div class="mt-2 text-sm text-gray-700 nota-items"></div>
+    <p class="mt-1 text-sm text-orange-600 nota-discount"></p>
+    <p class="mt-1 font-bold text-emerald-700 nota-total"></p>
+   </div>
+  </template>
+  <script src="/_sdk/571d88ca352bbccf.editing_sdk.js" integrity="sha512-jpVzCgOJfgU8ETK2cVi9ukdjrZIqXjCspYqy9afx1TyeJ4jZxisBmh2SIlonXgbaxCv9M5yrk3WY4wZKWDC3Ig=="></script>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script>
+    lucide.createIcons();
+    const SHOP_NAME = 'DEDY TECHNOLOGY SOLUTION';
+    const SHOP_CONTACT = '+62 851 5853 3379';
+				const SHOPE_ADDRESS = 'Sangketan,Kabupaten Tabanan, Bali';
+    let allData = [];
+    const form = document.getElementById('nota-form');
+    const itemsContainer = document.getElementById('items-container');
+    const historyList = document.getElementById('history-list');
+    const emptyState = document.getElementById('empty-state');
+    const formMsg = document.getElementById('form-msg');
+    const submitBtn = form.querySelector('[type="submit"]');
+    const totalDisplay = document.getElementById('total-display');
+    const discountField = document.getElementById('discount_field');
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Portofolio</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link rel="stylesheet" href="style.css">
+    document.getElementById('date_field').value = new Date().toISOString().split('T')[0];
 
-</head>
+    function createItemRow() {
+      const row = document.createElement('div');
+      row.className = 'grid grid-cols-12 gap-2 items-center';
+      row.innerHTML = `
+        <input type="text" placeholder="Nama barang" required class="col-span-4 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="name">
+        <input type="number" placeholder="Qty" min="1" required class="col-span-2 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="qty">
+        <input type="text" placeholder="Satuan" required class="col-span-2 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="unit">
+        <input type="number" placeholder="Harga" min="0" required class="col-span-3 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="price">
+        <button type="button" class="col-span-1 text-red-400 hover:text-red-600 remove-row flex justify-center"><i data-lucide="x" style="width:16px;height:16px"></i></button>`;
+      row.querySelector('.remove-row').addEventListener('click', () => { row.remove(); calcTotal(); });
+      row.querySelectorAll('input[data-field="qty"],input[data-field="price"]').forEach(i => i.addEventListener('input', calcTotal));
+      itemsContainer.appendChild(row);
+      lucide.createIcons();
+    }
 
-<body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#page-top">Dedi suardana</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Masthead-->
-    <header class="masthead">
-        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-            <div class="d-flex justify-content-center">
-                <div class="text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">PORTOFOLIO</h1>
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Portofolio dan dokumentasi</h2>
-                    <!--<a class="btn btn-primary" href="#about">Get Started</a>-->
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- About-->
-    <section class="about-section text-center" id="about">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8">
-                    <h2 class="text-white mb-4">I PUTU DEDI SUARDANA</h2>
-                    <p class="text-white-50">
-                        Saya biasa dipanggil dedi suardana, lahir pada bulan januari 2001 di banjar dinas puring desa
-                        sangketan, dari keluarga kecil yang bekerja sebagai petani,
-                        Saya pernah bekerja sebagai it support di sebuah rumahsakit swasta di daerah badung bali, dimana
-                        mengemban tugas untu melakukan instalasi jaringn, telepon dan cctv.
-                        Serta menangani komplain dari klien pada bagian hardware dan jaringan
-                    </p>
-                </div>
-            </div>
-            <img class="img-fluid" src="assets/img/pagi.jpg" alt="..." />
-        </div>
-    </section>
-    <!-- Projects-->
-    <section class="projects-section bg-light" id="projects">
-        <div class="container px-4 px-lg-5">
-            <!-- Featured Project Row-->
-            <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/web.png"
-                        alt="..." /></div>
-                <div class="col-xl-4 col-lg-5">
-                    <div class="featured-text text-center text-lg-left">
-                        <h4>Sistem Informasi koperasi</h4>
-                        <p class="text-black-50 mb-0">Sistem informasi koperasi simpan pinjam berbasis website yang
-                            dibangun menggunakan framework codeigniter,
-                            dalam sistem ini terdapat beberapa fitur seperti pengelolaan tabungan, deposito, penjaman
-                            dan pendataan anggota</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Project One Row-->
-            <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                <div class="col-lg-6"><img class="img-fluid" src="assets/img/server-7014602_1280.jpg" alt="..." /></div>
-                <div class="col-lg-6">
-                    <div class="bg-black text-center h-100 project">
-                        <div class="d-flex h-100">
-                            <div class="project-text w-100 my-auto text-center text-lg-left">
-                                <h4 class="text-white">Instalasi internet</h4>
-                                <p class="mb-0 text-white-50">Pemasangan jaringan internet, diantaranya pemasangan kabel
-                                    data menuju komputer clien dari server,
-                                    pemasangan aksespoin agar internet dapat digunakan bersama</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Project Two Row-->
-            <div class="row gx-0 justify-content-center">
-                <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-02.jpg" alt="..." /></div>
-                <div class="col-lg-6 order-lg-first">
-                    <div class="bg-black text-center h-100 project">
-                        <div class="d-flex h-100">
-                            <div class="project-text w-100 my-auto text-center text-lg-right">
-                                <h4 class="text-white">Cctv</h4>
-                                <p class="mb-0 text-white-50">Melakukan pemasangan cctv digital atau cctv analog, baik
-                                    pemasangan baru ataupun perbaikan cctv</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Gallery -->
-   <!-- <div class="row">
-        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
-                class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
+    function calcTotal() {
+      let subtotal = 0;
+      itemsContainer.querySelectorAll(':scope > div').forEach(row => {
+        const qty = Number(row.querySelector('[data-field="qty"]').value) || 0;
+        const price = Number(row.querySelector('[data-field="price"]').value) || 0;
+        subtotal += qty * price;
+      });
+      const disc = Number(discountField.value) || 0;
+      const total = Math.max(0, subtotal - disc);
+      totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
+    }
+    discountField.addEventListener('input', calcTotal);
 
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain1.webp"
-                class="w-100 shadow-1-strong rounded mb-4" alt="Wintry Mountain Landscape" />
-        </div>
+    function getItems() {
+      const items = [];
+      itemsContainer.querySelectorAll(':scope > div').forEach(row => {
+        items.push({
+          name: row.querySelector('[data-field="name"]').value.trim(),
+          qty: Number(row.querySelector('[data-field="qty"]').value),
+          unit: row.querySelector('[data-field="unit"]').value.trim(),
+          price: Number(row.querySelector('[data-field="price"]').value)
+        });
+      });
+      return items;
+    }
 
-        <div class="col-lg-4 mb-4 mb-lg-0">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain2.webp"
-                class="w-100 shadow-1-strong rounded mb-4" alt="Mountains in the Clouds" />
+    createItemRow();
+    document.getElementById('add-item-btn').addEventListener('click', createItemRow);
 
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
-                class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
-        </div>
+    const handler = {
+      onDataChanged(data) { allData = data; renderHistory(data); }
+    };
+    (async () => { const r = await window.dataSdk.init(handler); if (!r.isOk) showMsg('Gagal menghubungkan penyimpanan.', true); })();
 
-        <div class="col-lg-4 mb-4 mb-lg-0">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(18).webp"
-                class="w-100 shadow-1-strong rounded mb-4" alt="Waves at Sea" />
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (allData.length >= 999) { showMsg('Batas 999 nota tercapai.', true); return; }
+      const items = getItems();
+      if (!items.length) { showMsg('Tambahkan minimal 1 barang.', true); return; }
+      const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
+      const discount = Number(discountField.value) || 0;
+      const total = Math.max(0, subtotal - discount);
+      submitBtn.disabled = true;
+      const res = await window.dataSdk.create({
+        shop_name: SHOP_NAME,
+        customer_name: document.getElementById('customer_name').value.trim(),
+        date: document.getElementById('date_field').value,
+        items: JSON.stringify(items),
+        total,
+        discount,
+        notes: document.getElementById('notes_field').value.trim()
+      });
+      submitBtn.disabled = false;
+      if (res.isOk) { showMsg('Nota berhasil disimpan!', false); form.reset(); document.getElementById('date_field').value = new Date().toISOString().split('T')[0]; discountField.value = '0'; itemsContainer.innerHTML = ''; createItemRow(); calcTotal(); }
+      else showMsg('Gagal menyimpan nota.', true);
+    });
 
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain3.webp"
-                class="w-100 shadow-1-strong rounded mb-4" alt="Yosemite National Park" />
-        </div>
-    </div>-->
-    <!-- Gallery -->
-    <!-- Signup-->
-    <!-- <section class="signup-section" id="signup">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-md-10 col-lg-8 mx-auto text-center">
-                    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                    <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
-                    <!-- * * * * * * * * * * * * * * *-->
-    <!-- * * SB Forms Contact Form * *-->
-    <!-- * * * * * * * * * * * * * * *-->
-    <!-- This form is pre-integrated with SB Forms.-->
-    <!-- To make this form functional, sign up at-->
-    <!-- https://startbootstrap.com/solution/contact-forms-->
-    <!-- to get an API token!-->
-    <!-- <form class="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">-->
-    <!-- Email address input-->
-    <!--     <div class="row input-group-newsletter">
-                            <div class="col"><input class="form-control" id="emailAddress" type="email"
-                                    placeholder="Enter email address..." aria-label="Enter email address..."
-                                    data-sb-validations="required,email" /></div>
-                            <div class="col-auto"><button class="btn btn-primary disabled" id="submitButton"
-                                    type="submit">Notify Me!</button></div>
-                        </div>
-                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:required">An email is
-                            required.</div>
-                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:email">Email is not valid.
-                        </div>-->
-    <!-- Submit success message-->
-    <!---->
-    <!-- This is what your users will see when the form-->
-    <!-- has successfully submitted-->
-    <!--   <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3 mt-2 text-white">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br />
-                                <a
-                                    href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                            </div>
-                        </div>-->
-    <!-- Submit error message-->
-    <!---->
-    <!-- This is what your users will see when there is-->
-    <!-- an error submitting the form-->
-    <!-- <div class="d-none" id="submitErrorMessage">
-                            <div class="text-center text-danger mb-3 mt-2">Error sending message!</div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <!-- Contact-->
-    <section class="contact-section bg-black" id="contact">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Alamat</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">Desa Sangketan Kecamatan Penebel Kabupaten Tabanan</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-envelope text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Email</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50"><a href="#!">dedisuardana2001@gmail.com</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Phone</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">+62 85238932196</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="social d-flex justify-content-center">
-                <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
-            </div>-->
-        </div>
-    </section>
-    <!-- Footer-->
-    <footer class="footer bg-black small text-center text-white-50">
-        <div class="container px-4 px-lg-5">Copyright &copy; dedisuardana2023</div>
-    </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="script.js"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-</body>
+    function renderHistory(data) {
+      const sorted = [...data].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      emptyState.classList.toggle('hidden', sorted.length > 0);
+      const existing = new Map([...historyList.children].map(el => [el.dataset.id, el]));
+      const fragment = document.createDocumentFragment();
+      sorted.forEach(item => {
+        let el = existing.get(item.__backendId);
+        if (el) { updateCard(el, item); existing.delete(item.__backendId); }
+        else el = createCard(item);
+        fragment.appendChild(el);
+      });
+      existing.forEach(el => el.remove());
+      historyList.appendChild(fragment);
+    }
 
-</html>
+    function parseItems(str) { try { return JSON.parse(str); } catch { return []; } }
+
+    function createCard(item) {
+      const tpl = document.getElementById('nota-template');
+      const clone = tpl.content.cloneNode(true);
+      const div = clone.firstElementChild;
+      div.dataset.id = item.__backendId;
+      updateCard(div, item);
+      div.querySelector('.print-btn').addEventListener('click', () => printNota(item));
+      div.querySelector('.delete-btn').addEventListener('click', async () => 
+        div.querySelector('.delete-btn').disabled = true;
+        const r = await window.dataSdk.delete(item);
+        if (!r.isOk) { div.querySelector('.delete-btn').disabled = false; showMsg('Gagal menghapus.', true); }
+      });
+      lucide.createIcons();
+      return div;
+    }
+
+    function updateCard(el, item) {
+      el.querySelector('[data-template-id="nota-shop"]').textContent = item.shop_name;
+      el.querySelector('[data-template-id="nota-customer"]').textContent = 'Pelanggan: ' + item.customer_name;
+      el.querySelector('[data-template-id="nota-date"]').textContent = item.date;
+      const items = parseItems(item.items);
+      el.querySelector('.nota-items').innerHTML = items.map(i => `<div class="flex justify-between gap-3"><span>${esc(i.name)} ${i.qty} ${esc(i.unit)}<span class="block text-xs text-gray-500">Harga satuan: Rp ${i.price.toLocaleString('id-ID')}</span></span><span class="shrink-0">Rp ${(i.qty*i.price).toLocaleString('id-ID')}</span></div>`).join('');
+      const disc = Number(item.discount) || 0;
+      el.querySelector('.nota-discount').textContent = disc > 0 ? 'Diskon: -Rp ' + disc.toLocaleString('id-ID') : '';
+      el.querySelector('.nota-total').textContent = 'Total: Rp ' + Number(item.total).toLocaleString('id-ID');
+    }
+
+    function printNota(item) {
+      const items = parseItems(item.items);
+      const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
+      const disc = Number(item.discount) || 0;
+      const lineItems = items.map(i => {
+        const sub = i.qty * i.price;
+        return `${esc(i.name)}\n  Harga satuan: Rp ${i.price.toLocaleString('id-ID')}\n  ${i.qty} ${esc(i.unit)}${' '.repeat(Math.max(1,24-sub.toLocaleString('id-ID').length))}Rp ${sub.toLocaleString('id-ID')}`;
+      }).join('\n');
+      const discLine = disc > 0 ? `<div class="row"><span>Diskon</span><span>-Rp ${disc.toLocaleString('id-ID')}</span></div>` : '';
+      const w = window.open('', '_blank');
+      w.document.write(`<html><head><title>Nota</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;font-size:11px;width:58mm;padding:3mm;margin:0 auto}h2{font-size:13px;text-align:center;font-weight:bold}p.center{text-align:center;font-size:10px}.line{border-top:1px dashed #000;margin:4px 0}.row{display:flex;justify-content:space-between;font-size:11px}.bold{font-weight:bold;font-size:12px}pre{white-space:pre-wrap;font-size:10px;line-height:1.5}@media print{body{width:58mm;padding:2mm}}</style></head><body>
+<h2>${esc(SHOP_NAME)}</h2>
+<p class="center">Sangketan,Kabupaten Tabanan, Bali</p>
+<p class="center">${esc(SHOP_ADDRESS)}</p>
+<p class="center">${esc(SHOP_CONTACT)}</p>
+<div class="line"></div>
+<p class="center" style="text-align:left">${esc(item.date)}  Pelanggan: ${esc(item.customer_name)}</p>
+<div class="line"></div>
+<pre>${lineItems}</pre>
+<div class="line"></div>
+<div class="row"><span>Subtotal</span><span>Rp ${subtotal.toLocaleString('id-ID')}</span></div>
+${discLine}
+<div class="row bold"><span>TOTAL</span><span>Rp ${Number(item.total).toLocaleString('id-ID')}</span></div>
+${item.notes ? '<div class="line"></div><p style="font-size:9px">'+esc(item.notes)+'</p>' : ''}
+<div class="line"></div>
+<p class="center" style="margin-top:4px">Terima kasih atas kunjungan Anda!</p>
+<p class="center">Barang yang sudah dibeli tidak dapat</p>
+<p class="center">ditukar/dikembalikan</p>
+<script>window.print()<\/script></body></html>`);
+      w.document.close();
+    }
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+    function showMsg(text, isErr) {
+      formMsg.textContent = text;
+      formMsg.className = 'mt-3 text-center text-sm ' + (isErr ? 'text-red-600' : 'text-emerald-600');
+      formMsg.classList.remove('hidden');
+      setTimeout(() => formMsg.classList.add('hidden'), 3000);
+    }
+  </script>
+ 
+</body></html>
