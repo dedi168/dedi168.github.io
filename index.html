@@ -190,7 +190,7 @@
             
             <div>
                 Tgl : <span id="notaTgl"></span><br>
-                Ksr : KASIR ADMIN 
+                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: TRX-99882</span>
             </div>
             
             <div class="line"></div>
@@ -347,7 +347,17 @@
             document.getElementById('notaTunai').innerText = formatRupiah(uangBayar);
             document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
         }
+
+function generateNotaRandom() {
+    // Menghasilkan angka acak antara 100000 hingga 999999 (6 digit)
+    let randomNum = Math.floor(100000 + Math.random() * 900000);
+    return "NOTA-" + randomNum;
+}
+
+document.getElementById('nomer-nota').innerText = generateNotaRandom();
     </script>
+
+
 
 
 </body>
