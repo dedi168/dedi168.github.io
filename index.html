@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Kasir Struk Indomaret</title>
+    <title>Sistem Kasir - Dedy Technology Solution</title>
     <style>
         * {
             box-sizing: border-box;
@@ -65,7 +65,7 @@
         th, td { padding: 8px; text-align: left; }
         th { background-color: #f8f9fa; }
 
-        /* FORMAT TAMPILAN NOTA INDOMARET */
+        /* FORMAT TAMPILAN NOTA */
         .nota-box {
             font-family: 'Courier New', Courier, monospace;
             font-size: 12px;
@@ -84,7 +84,7 @@
             justify-content: space-between;
         }
         
-        /* CSS KHUSUS UNTUK CETAK/PRINT */
+        /* CSS UNTUK CETAK/PRINT */
         @media print {
             body * { visibility: hidden; }
             .preview-section, .preview-section * { visibility: visible; }
@@ -107,11 +107,11 @@
         
         <div class="form-group">
             <label>Nama Barang</label>
-            <input type="text" id="namaBarang" placeholder="Contoh: INDOMILK UHT 250ML">
+            <input type="text" id="namaBarang" placeholder="Contoh: LAPTOP / MOUSE WIRELESS">
         </div>
         <div class="form-group">
             <label>Harga (Rp)</label>
-            <input type="number" id="hargaBarang" placeholder="Contoh: 6500">
+            <input type="number" id="hargaBarang" placeholder="Contoh: 150000">
         </div>
         <div class="form-group">
             <label>Jumlah (Qty)</label>
@@ -133,9 +133,14 @@
             <tbody id="tabelBarang"></tbody>
         </table>
 
+        <!-- Input Diskon dan Pembayaran -->
+        <div class="form-group">
+            <label>Diskon (Rp)</label>
+            <input type="number" id="diskon" placeholder="Contoh: 10000" value="0" oninput="updateStruk()">
+        </div>
         <div class="form-group">
             <label>Uang Bayar (Rp)</label>
-            <input type="number" id="uangBayar" placeholder="Contoh: 100000" oninput="updateStruk()">
+            <input type="number" id="uangBayar" placeholder="Contoh: 200000" oninput="updateStruk()">
         </div>
 
         <button class="btn btn-print" onclick="window.print()">Cetak Struk Nota</button>
@@ -147,10 +152,10 @@
         
         <div class="nota-box">
             <div class="text-center">
-                <strong>INDOMARET</strong><br>
-                JL. JEND. SUDIRMAN NO. 12<br>
-                JAKARTA SELATAN<br>
-                TELP: 021-1500280
+                <strong>DEDY TECHNOLOGY SOLUTION</strong><br>
+                JL. TEKNOLOGI NO. 88<br>
+                JAKARTA<br>
+                TELP: 0812-3456-7890
             </div>
             
             <div class="double-line"></div>
@@ -162,7 +167,7 @@
             
             <div class="line"></div>
             
-            <!-- Daftar Barang Tercetak Di Sini -->
+            <!-- Daftar Barang -->
             <div id="notaDaftarBarang"></div>
             
             <div class="line"></div>
@@ -171,8 +176,16 @@
                 <span>Total Item : <span id="notaTotalItem">0</span></span>
             </div>
             <div class="item-row">
-                <span>Total Belanja</span>
-                <span>Rp <span id="notaTotalBelanja">0</span></span>
+                <span>Subtotal</span>
+                <span>Rp <span id="notaSubtotal">0</span></span>
+            </div>
+            <div class="item-row" id="rowDiskon" style="display: none;">
+                <span>Diskon</span>
+                <span>-Rp <span id="notaDiskon">0</span></span>
+            </div>
+            <div class="item-row">
+                <span><strong>Total Belanja</strong></span>
+                <span><strong>Rp <span id="notaTotalBelanja">0</span></strong></span>
             </div>
             <div class="item-row">
                 <span>Tunai</span>
@@ -186,7 +199,7 @@
             <div class="double-line"></div>
             
             <div class="text-center">
-                Kritik & Saran: 1500280<br>
+                Kritik & Saran: 0812-3456-7890<br>
                 <strong>TERIMA KASIH</strong><br>
                 SELAMAT BELANJA KEMBALI
             </div>
@@ -197,7 +210,7 @@
     <script>
         let daftarBarang = [];
 
-        // Inisialisasi Tanggal Otomatis
+        // Inisialisasi Tanggal
         const skrg = new Date();
         const tglStr = String(skrg.getDate()).padStart(2, '0') + '.' +
                        String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
@@ -223,7 +236,7 @@
             const subtotal = harga * qty;
             daftarBarang.push({ nama, harga, qty, subtotal });
 
-            // Reset input form
+            // Reset Form Input Barang
             document.getElementById('namaBarang').value = '';
             document.getElementById('hargaBarang').value = '';
             document.getElementById('qtyBarang').value = '1';
@@ -252,11 +265,11 @@
             const containerNota = document.getElementById('notaDaftarBarang');
             containerNota.innerHTML = '';
 
-            let totalBelanja = 0;
+            let subtotalBelanja = 0;
             let totalItem = 0;
 
             daftarBarang.forEach(item => {
-                totalBelanja += item.subtotal;
+                subtotalBelanja += item.subtotal;
                 totalItem += item.qty;
 
                 const div = document.createElement('div');
@@ -271,11 +284,25 @@
                 containerNota.appendChild(div);
             });
 
+            // Ambil Nilai Diskon dan Pembayaran
+            const diskon = parseInt(document.getElementById('diskon').value) || 0;
+            const totalAkhir = Math.max(0, subtotalBelanja - diskon);
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
-            const kembalian = uangBayar - totalBelanja;
+            const kembalian = uangBayar - totalAkhir;
 
+            // Kontrol Tampilan Diskon pada Nota
+            const rowDiskon = document.getElementById('rowDiskon');
+            if (diskon > 0) {
+                rowDiskon.style.display = 'flex';
+                document.getElementById('notaDiskon').innerText = formatRupiah(diskon);
+            } else {
+                rowDiskon.style.display = 'none';
+            }
+
+            // Update Angka di Nota
             document.getElementById('notaTotalItem').innerText = totalItem;
-            document.getElementById('notaTotalBelanja').innerText = formatRupiah(totalBelanja);
+            document.getElementById('notaSubtotal').innerText = formatRupiah(subtotalBelanja);
+            document.getElementById('notaTotalBelanja').innerText = formatRupiah(totalAkhir);
             document.getElementById('notaTunai').innerText = formatRupiah(uangBayar);
             document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
         }
