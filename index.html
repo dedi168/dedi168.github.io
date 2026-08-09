@@ -119,9 +119,13 @@
 
     <!-- SECTION FORM INPUT -->
     <div class="container form-section no-print">
-								<img src="Logo.png" alt="Logo" width="800">
+								<img src="Logo.png" alt="Logo" width="80">
         <h2>Input Transaksi Kasir</h2>
         
+        <div class="form-group">
+            <label>Ganti Logo Toko (Opsional)</label>
+            <input type="file" id="logoInput" accept="image/*" onchange="previewLogo(event)">
+        </div>
         <div class="form-group">
             <label>Nama Barang</label>
             <input type="text" id="namaBarang" placeholder="Contoh: CCTV/ROUTER">
@@ -169,7 +173,7 @@
         
         <div class="nota-box">
             <div class="text-center">
-																	<img src="Logo.png" id="notaLogo" class="logo-nota" alt="Logo Toko"><br>
+																	<img id="notaLogo" class="logo-nota" src="Logo.png" alt="Logo Toko">
                 <strong>DEDY TECHNOLOGY SOLUTION</strong><br>
                 Sangketan, Kabupaten Tabanan<br>
                 BALI<br>
@@ -276,6 +280,17 @@
                 `;
                 tbody.appendChild(tr);
             });
+        }
+        // Fungsi jika ingin mengganti logo dari perangkat
+        function previewLogo(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const imgElement = document.getElementById('notaLogo');
+                imgElement.src = reader.result;
+            };
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
         }
 
         function updateStruk() {
