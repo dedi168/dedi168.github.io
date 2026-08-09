@@ -83,6 +83,22 @@
             display: flex;
             justify-content: space-between;
         }
+/* CSS LOGO NOTA */
+        .logo-nota {
+            max-width: 70px;
+            max-height: 70px;
+            display: none;
+            margin: 0 auto 8px auto;
+            /* Filter grayscale opsional agar tampilan seperti thermal print B&W */
+            filter: grayscale(100%);
+        }
+
+        .line { border-top: 1px dashed #000; margin: 6px 0; }
+        .double-line { border-top: 2px solid #000; margin: 6px 0; }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+        }
         
         /* CSS UNTUK CETAK/PRINT */
         @media print {
@@ -103,7 +119,7 @@
 
     <!-- SECTION FORM INPUT -->
     <div class="container form-section no-print">
-								<img src="Logo.png" alt="Logo" width="200">
+								<img src="Logo.png" alt="Logo" width="800">
         <h2>Input Transaksi Kasir</h2>
         
         <div class="form-group">
@@ -153,7 +169,7 @@
         
         <div class="nota-box">
             <div class="text-center">
-																	<img src="Logo.png" alt="Logo" width="200">
+																	<img src="Logo.png" id="notaLogo" class="logo-nota" alt="Logo Toko"><br>
                 <strong>DEDY TECHNOLOGY SOLUTION</strong><br>
                 Sangketan, Kabupaten Tabanan<br>
                 BALI<br>
