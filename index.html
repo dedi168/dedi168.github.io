@@ -77,20 +77,14 @@
             line-height: 1.2;
         }
         .text-center { text-align: center; }
-        .line { border-top: 1px dashed #000; margin: 6px 0; }
-        .double-line { border-top: 2px solid #000; margin: 6px 0; }
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-        }
-/* CSS LOGO NOTA */
+        
+        /* CSS LOGO NOTA BAWAAN */
         .logo-nota {
             max-width: 70px;
             max-height: 70px;
-            display: none;
+            display: block;
             margin: 0 auto 8px auto;
-            /* Filter grayscale opsional agar tampilan seperti thermal print B&W */
-            filter: grayscale(100%);
+            filter: grayscale(100%); /* Efek cetak hitam putih thermal */
         }
 
         .line { border-top: 1px dashed #000; margin: 6px 0; }
@@ -119,16 +113,17 @@
 
     <!-- SECTION FORM INPUT -->
     <div class="container form-section no-print">
-								<img src="Logo.png" alt="Logo" width="80">
         <h2>Input Transaksi Kasir</h2>
         
+        <!-- Input Ubah Logo Opsional -->
         <div class="form-group">
             <label>Ganti Logo Toko (Opsional)</label>
             <input type="file" id="logoInput" accept="image/*" onchange="previewLogo(event)">
         </div>
+
         <div class="form-group">
             <label>Nama Barang</label>
-            <input type="text" id="namaBarang" placeholder="Contoh: CCTV/ROUTER">
+            <input type="text" id="namaBarang" placeholder="Contoh: LAPTOP / MOUSE WIRELESS">
         </div>
         <div class="form-group">
             <label>Harga (Rp)</label>
@@ -173,17 +168,20 @@
         
         <div class="nota-box">
             <div class="text-center">
-																	<img id="notaLogo" class="logo-nota" src="Logo.png" alt="Logo Toko">
+                <!-- LOGO DITETAPKAN DARI AWAL VIA SRC -->
+                <img id="notaLogo" class="logo-nota" src="Logo.png" alt="Logo Toko">
+                
                 <strong>DEDY TECHNOLOGY SOLUTION</strong><br>
                 Sangketan, Kabupaten Tabanan<br>
-                BALI<br>
+                Bali<br>
                 TELP: 0851-5853-3379
             </div>
             
             <div class="double-line"></div>
+            
             <div>
                 Tgl : <span id="notaTgl"></span><br>
-                Ksr : KASIR ADMIN <span style="float:right;">No: TRX-99882</span>
+                Ksr : KASIR ADMIN <span style="float:right;" id="nomerNota"></span>
             </div>
             
             <div class="line"></div>
@@ -230,6 +228,18 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         let daftarBarang = [];
+
+        // Fungsi jika ingin mengganti logo dari perangkat
+        function previewLogo(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const imgElement = document.getElementById('notaLogo');
+                imgElement.src = reader.result;
+            };
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
 
         // Inisialisasi Tanggal
         const skrg = new Date();
@@ -281,17 +291,6 @@
                 tbody.appendChild(tr);
             });
         }
-        // Fungsi jika ingin mengganti logo dari perangkat
-        function previewLogo(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const imgElement = document.getElementById('notaLogo');
-                imgElement.src = reader.result;
-            };
-            if (event.target.files[0]) {
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        }
 
         function updateStruk() {
             const containerNota = document.getElementById('notaDaftarBarang');
@@ -322,7 +321,7 @@
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
             const kembalian = uangBayar - totalAkhir;
 
-            // Kontrol Tampilan Diskon pada Nota
+            // Kontrol Tampilan Diskon
             const rowDiskon = document.getElementById('rowDiskon');
             if (diskon > 0) {
                 rowDiskon.style.display = 'flex';
@@ -338,6 +337,17 @@
             document.getElementById('notaTunai').innerText = formatRupiah(uangBayar);
             document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
         }
+    </script>
+
+<script>
+        function generateNota() {
+            // Menghasilkan angka acak antara 1000 hingga 9999
+            const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+            document.getElementById("nomorNota").innerText = "NO: RTX-" + randomNumber;
+        }
+
+        // Jalankan fungsi saat halaman pertama kali dimuat
+        generateNota();
     </script>
 </body>
 </html>
