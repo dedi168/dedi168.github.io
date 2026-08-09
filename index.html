@@ -1,250 +1,284 @@
-<!doctype html>
-<html lang="id"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260807-05-4dc3575","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cetak Nota Toko</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
-  <style>body{font-family:'DM Sans',sans-serif}</style>
-  <script src="/_sdk/04cc6185e046f597.resizing_sdk.js" type="text/javascript" integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="></script>
- <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script></head>
- <body data-template-id="__page-root" class="min-h-screen w-full" style="background: rgb(240, 253, 244);">
-  <header class="border-b border-emerald-200 px-6 py-5">
-   <h1 data-template-id="page-title" class="canva-text font-bold text-center" style="color: rgb(6, 95, 70); font-weight: bold; font-style: normal; font-size: 32px;">Cetak Nota Toko</h1>
-  </header>
-  <main class="max-w-3xl mx-auto p-6 space-y-8">
-   <section data-template-id="form-section" class="canva-card rounded-xl p-6 shadow-sm" style="background: rgb(255, 255, 255);">
-    <h2 data-template-id="form-heading" class="canva-text font-semibold mb-4" style="color: rgb(6, 95, 70); font-weight: 700; font-style: normal; font-size: 24px;">Buat Nota Baru</h2>
-    <form id="nota-form" class="space-y-4">
-     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-       <label data-template-id="label-shop" class="canva-text block mb-1 text-sm font-medium" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Nama Toko</label>
-       <div class="w-full border border-gray-200 bg-gray-50 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700">
-        DEDY TECHNOLOGY SOLUTION
-       </div>
-      </div>
-      <div>
-       <label data-template-id="label-customer" class="canva-text block mb-1 text-sm font-medium" for="customer_name" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Nama Pelanggan</label> <input id="customer_name" type="text" required="" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
-      </div>
-     </div>
-     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div>
-       <label data-template-id="label-date" class="canva-text block mb-1 text-sm font-medium" for="date_field" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Tanggal</label> <input id="date_field" type="date" required="" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
-      </div>
-      <div>
-       <label data-template-id="label-discount" class="canva-text block mb-1 text-sm font-medium" for="discount_field" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Diskon (Rp)</label> <input id="discount_field" type="number" min="0" value="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
-      </div>
-      <div>
-       <label data-template-id="label-notes" class="canva-text block mb-1 text-sm font-medium" for="notes_field" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Catatan</label> <input id="notes_field" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 outline-none">
-      </div>
-     </div>
-     <div>
-      <label data-template-id="label-items" class="canva-text block mb-2 text-sm font-medium" style="color: rgb(55, 65, 81); font-weight: 400; font-style: normal; font-size: 16px;">Daftar Barang</label>
-      <div id="items-container" class="space-y-2"></div><button data-template-id="add-item-btn" type="button" id="add-item-btn" class="canva-button mt-2 px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1" style="background: rgb(209, 250, 229); color: rgb(6, 95, 70); font-weight: 500; font-style: normal; font-size: 16px;">Tambah Barang</button>
-     </div>
-     <div class="flex items-center justify-between bg-emerald-50 rounded-lg px-4 py-3">
-      <span data-template-id="label-total" class="canva-text font-semibold" style="color: rgb(6, 95, 70); font-weight: 600; font-style: normal; font-size: 16px;">Total</span> <span id="total-display" class="text-xl font-bold text-emerald-700">Rp 0</span>
-     </div><button data-template-id="submit-btn" type="submit" class="canva-button w-full py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2" style="background: rgb(5, 150, 105); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Simpan Nota</button>
-    </form>
-    <p id="form-msg" class="mt-3 text-center text-sm hidden"></p>
-   </section>
-   <section>
-    <h2 data-template-id="history-heading" class="canva-text font-semibold mb-4" style="color: rgb(6, 95, 70); font-weight: 700; font-style: normal; font-size: 24px;">Riwayat Nota</h2>
-    <p data-template-id="empty-state" id="empty-state" class="canva-text text-center py-6" style="color: rgb(107, 114, 128); font-weight: 400; font-style: italic; font-size: 16px;">Belum ada nota tersimpan.</p>
-    <div id="history-list" class="space-y-4"></div>
-   </section>
-  </main>
-  <template id="nota-template">
-   <div data-template-id="nota-card" class="canva-card rounded-lg p-4 shadow-sm border border-gray-100">
-    <div class="flex justify-between items-start">
-     <div>
-      <p data-template-id="nota-shop" class="canva-text font-bold"></p>
-      <p data-template-id="nota-customer" class="canva-text text-sm"></p>
-     </div>
-     <div class="flex items-center gap-2">
-      <span data-template-id="nota-date" class="canva-tag text-xs px-2 py-1 rounded"></span> <button class="print-btn text-emerald-600 hover:text-emerald-800" title="Cetak"><i data-lucide="printer" style="width:18px;height:18px"></i></button> <button class="delete-btn text-red-400 hover:text-red-600" title="Hapus"><i data-lucide="trash-2" style="width:16px;height:16px"></i></button>
-     </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Kasir Struk Indomaret</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background-color: #f4f6f9;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .form-section {
+            flex: 1;
+        }
+        .preview-section {
+            width: 320px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            margin-top: 5px;
+        }
+        .btn-add { background-color: #28a745; }
+        .btn-print { background-color: #007bff; margin-top: 15px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 8px; text-align: left; }
+        th { background-color: #f8f9fa; }
+
+        /* FORMAT TAMPILAN NOTA INDOMARET */
+        .nota-box {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            width: 280px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 0 auto;
+            line-height: 1.2;
+        }
+        .text-center { text-align: center; }
+        .line { border-top: 1px dashed #000; margin: 6px 0; }
+        .double-line { border-top: 2px solid #000; margin: 6px 0; }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* CSS KHUSUS UNTUK CETAK/PRINT */
+        @media print {
+            body * { visibility: hidden; }
+            .preview-section, .preview-section * { visibility: visible; }
+            .preview-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .nota-box { border: none; width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECTION FORM INPUT -->
+    <div class="container form-section no-print">
+        <h2>Input Transaksi Kasir</h2>
+        
+        <div class="form-group">
+            <label>Nama Barang</label>
+            <input type="text" id="namaBarang" placeholder="Contoh: INDOMILK UHT 250ML">
+        </div>
+        <div class="form-group">
+            <label>Harga (Rp)</label>
+            <input type="number" id="hargaBarang" placeholder="Contoh: 6500">
+        </div>
+        <div class="form-group">
+            <label>Jumlah (Qty)</label>
+            <input type="number" id="qtyBarang" value="1">
+        </div>
+        
+        <button class="btn btn-add" onclick="tambahBarang()">+ Tambah Barang</button>
+
+        <!-- Tabel Item -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Qty</th>
+                    <th>Harga</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="tabelBarang"></tbody>
+        </table>
+
+        <div class="form-group">
+            <label>Uang Bayar (Rp)</label>
+            <input type="number" id="uangBayar" placeholder="Contoh: 100000" oninput="updateStruk()">
+        </div>
+
+        <button class="btn btn-print" onclick="window.print()">Cetak Struk Nota</button>
     </div>
-    <div class="mt-2 text-sm text-gray-700 nota-items"></div>
-    <p class="mt-1 text-sm text-orange-600 nota-discount"></p>
-    <p class="mt-1 font-bold text-emerald-700 nota-total"></p>
-   </div>
-  </template>
-  <script src="/_sdk/571d88ca352bbccf.editing_sdk.js" integrity="sha512-jpVzCgOJfgU8ETK2cVi9ukdjrZIqXjCspYqy9afx1TyeJ4jZxisBmh2SIlonXgbaxCv9M5yrk3WY4wZKWDC3Ig=="></script>
-  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
-  <script>
-    lucide.createIcons();
-    const SHOP_NAME = 'DEDY TECHNOLOGY SOLUTION';
-    const SHOP_CONTACT = '+62 851 5853 3379';
-				const SHOPE_ADDRESS = 'Sangketan,Kabupaten Tabanan, Bali';
-    let allData = [];
-    const form = document.getElementById('nota-form');
-    const itemsContainer = document.getElementById('items-container');
-    const historyList = document.getElementById('history-list');
-    const emptyState = document.getElementById('empty-state');
-    const formMsg = document.getElementById('form-msg');
-    const submitBtn = form.querySelector('[type="submit"]');
-    const totalDisplay = document.getElementById('total-display');
-    const discountField = document.getElementById('discount_field');
 
-    document.getElementById('date_field').value = new Date().toISOString().split('T')[0];
+    <!-- SECTION PRATINJAU STRUK NOTA -->
+    <div class="container preview-section">
+        <h3 class="no-print" style="margin-top:0;">Pratinjau Nota</h3>
+        
+        <div class="nota-box">
+            <div class="text-center">
+                <strong>INDOMARET</strong><br>
+                JL. JEND. SUDIRMAN NO. 12<br>
+                JAKARTA SELATAN<br>
+                TELP: 021-1500280
+            </div>
+            
+            <div class="double-line"></div>
+            
+            <div>
+                Tgl : <span id="notaTgl"></span><br>
+                Ksr : KASIR DEMO <span style="float:right;">No: TRX-99882</span>
+            </div>
+            
+            <div class="line"></div>
+            
+            <!-- Daftar Barang Tercetak Di Sini -->
+            <div id="notaDaftarBarang"></div>
+            
+            <div class="line"></div>
+            
+            <div class="item-row">
+                <span>Total Item : <span id="notaTotalItem">0</span></span>
+            </div>
+            <div class="item-row">
+                <span>Total Belanja</span>
+                <span>Rp <span id="notaTotalBelanja">0</span></span>
+            </div>
+            <div class="item-row">
+                <span>Tunai</span>
+                <span>Rp <span id="notaTunai">0</span></span>
+            </div>
+            <div class="item-row">
+                <span>Kembali</span>
+                <span>Rp <span id="notaKembali">0</span></span>
+            </div>
+            
+            <div class="double-line"></div>
+            
+            <div class="text-center">
+                Kritik & Saran: 1500280<br>
+                <strong>TERIMA KASIH</strong><br>
+                SELAMAT BELANJA KEMBALI
+            </div>
+        </div>
+    </div>
 
-    function createItemRow() {
-      const row = document.createElement('div');
-      row.className = 'grid grid-cols-12 gap-2 items-center';
-      row.innerHTML = `
-        <input type="text" placeholder="Nama barang" required class="col-span-4 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="name">
-        <input type="number" placeholder="Qty" min="1" required class="col-span-2 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="qty">
-        <input type="text" placeholder="Satuan" required class="col-span-2 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="unit">
-        <input type="number" placeholder="Harga" min="0" required class="col-span-3 border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-400 outline-none" data-field="price">
-        <button type="button" class="col-span-1 text-red-400 hover:text-red-600 remove-row flex justify-center"><i data-lucide="x" style="width:16px;height:16px"></i></button>`;
-      row.querySelector('.remove-row').addEventListener('click', () => { row.remove(); calcTotal(); });
-      row.querySelectorAll('input[data-field="qty"],input[data-field="price"]').forEach(i => i.addEventListener('input', calcTotal));
-      itemsContainer.appendChild(row);
-      lucide.createIcons();
-    }
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let daftarBarang = [];
 
-    function calcTotal() {
-      let subtotal = 0;
-      itemsContainer.querySelectorAll(':scope > div').forEach(row => {
-        const qty = Number(row.querySelector('[data-field="qty"]').value) || 0;
-        const price = Number(row.querySelector('[data-field="price"]').value) || 0;
-        subtotal += qty * price;
-      });
-      const disc = Number(discountField.value) || 0;
-      const total = Math.max(0, subtotal - disc);
-      totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
-    }
-    discountField.addEventListener('input', calcTotal);
+        // Inisialisasi Tanggal Otomatis
+        const skrg = new Date();
+        const tglStr = String(skrg.getDate()).padStart(2, '0') + '.' +
+                       String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
+                       String(skrg.getFullYear()).slice(-2) + '-' +
+                       String(skrg.getHours()).padStart(2, '0') + ':' +
+                       String(skrg.getMinutes()).padStart(2, '0');
+        document.getElementById('notaTgl').innerText = tglStr;
 
-    function getItems() {
-      const items = [];
-      itemsContainer.querySelectorAll(':scope > div').forEach(row => {
-        items.push({
-          name: row.querySelector('[data-field="name"]').value.trim(),
-          qty: Number(row.querySelector('[data-field="qty"]').value),
-          unit: row.querySelector('[data-field="unit"]').value.trim(),
-          price: Number(row.querySelector('[data-field="price"]').value)
-        });
-      });
-      return items;
-    }
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID').format(angka);
+        }
 
-    createItemRow();
-    document.getElementById('add-item-btn').addEventListener('click', createItemRow);
+        function tambahBarang() {
+            const nama = document.getElementById('namaBarang').value.trim().toUpperCase();
+            const harga = parseInt(document.getElementById('hargaBarang').value);
+            const qty = parseInt(document.getElementById('qtyBarang').value);
 
-    const handler = {
-      onDataChanged(data) { allData = data; renderHistory(data); }
-    };
-    (async () => { const r = await window.dataSdk.init(handler); if (!r.isOk) showMsg('Gagal menghubungkan penyimpanan.', true); })();
+            if (!nama || isNaN(harga) || isNaN(qty)) {
+                alert('Silakan isi nama barang, harga, dan jumlah dengan benar!');
+                return;
+            }
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (allData.length >= 999) { showMsg('Batas 999 nota tercapai.', true); return; }
-      const items = getItems();
-      if (!items.length) { showMsg('Tambahkan minimal 1 barang.', true); return; }
-      const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
-      const discount = Number(discountField.value) || 0;
-      const total = Math.max(0, subtotal - discount);
-      submitBtn.disabled = true;
-      const res = await window.dataSdk.create({
-        shop_name: SHOP_NAME,
-        customer_name: document.getElementById('customer_name').value.trim(),
-        date: document.getElementById('date_field').value,
-        items: JSON.stringify(items),
-        total,
-        discount,
-        notes: document.getElementById('notes_field').value.trim()
-      });
-      submitBtn.disabled = false;
-      if (res.isOk) { showMsg('Nota berhasil disimpan!', false); form.reset(); document.getElementById('date_field').value = new Date().toISOString().split('T')[0]; discountField.value = '0'; itemsContainer.innerHTML = ''; createItemRow(); calcTotal(); }
-      else showMsg('Gagal menyimpan nota.', true);
-    });
+            const subtotal = harga * qty;
+            daftarBarang.push({ nama, harga, qty, subtotal });
 
-    function renderHistory(data) {
-      const sorted = [...data].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-      emptyState.classList.toggle('hidden', sorted.length > 0);
-      const existing = new Map([...historyList.children].map(el => [el.dataset.id, el]));
-      const fragment = document.createDocumentFragment();
-      sorted.forEach(item => {
-        let el = existing.get(item.__backendId);
-        if (el) { updateCard(el, item); existing.delete(item.__backendId); }
-        else el = createCard(item);
-        fragment.appendChild(el);
-      });
-      existing.forEach(el => el.remove());
-      historyList.appendChild(fragment);
-    }
+            // Reset input form
+            document.getElementById('namaBarang').value = '';
+            document.getElementById('hargaBarang').value = '';
+            document.getElementById('qtyBarang').value = '1';
 
-    function parseItems(str) { try { return JSON.parse(str); } catch { return []; } }
+            renderTabel();
+            updateStruk();
+        }
 
-    function createCard(item) {
-      const tpl = document.getElementById('nota-template');
-      const clone = tpl.content.cloneNode(true);
-      const div = clone.firstElementChild;
-      div.dataset.id = item.__backendId;
-      updateCard(div, item);
-      div.querySelector('.print-btn').addEventListener('click', () => printNota(item));
-      div.querySelector('.delete-btn').addEventListener('click', async () => 
-        div.querySelector('.delete-btn').disabled = true;
-        const r = await window.dataSdk.delete(item);
-        if (!r.isOk) { div.querySelector('.delete-btn').disabled = false; showMsg('Gagal menghapus.', true); }
-      });
-      lucide.createIcons();
-      return div;
-    }
+        function renderTabel() {
+            const tbody = document.getElementById('tabelBarang');
+            tbody.innerHTML = '';
 
-    function updateCard(el, item) {
-      el.querySelector('[data-template-id="nota-shop"]').textContent = item.shop_name;
-      el.querySelector('[data-template-id="nota-customer"]').textContent = 'Pelanggan: ' + item.customer_name;
-      el.querySelector('[data-template-id="nota-date"]').textContent = item.date;
-      const items = parseItems(item.items);
-      el.querySelector('.nota-items').innerHTML = items.map(i => `<div class="flex justify-between gap-3"><span>${esc(i.name)} ${i.qty} ${esc(i.unit)}<span class="block text-xs text-gray-500">Harga satuan: Rp ${i.price.toLocaleString('id-ID')}</span></span><span class="shrink-0">Rp ${(i.qty*i.price).toLocaleString('id-ID')}</span></div>`).join('');
-      const disc = Number(item.discount) || 0;
-      el.querySelector('.nota-discount').textContent = disc > 0 ? 'Diskon: -Rp ' + disc.toLocaleString('id-ID') : '';
-      el.querySelector('.nota-total').textContent = 'Total: Rp ' + Number(item.total).toLocaleString('id-ID');
-    }
+            daftarBarang.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.nama}</td>
+                    <td>${item.qty}</td>
+                    <td>${formatRupiah(item.harga)}</td>
+                    <td>${formatRupiah(item.subtotal)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-    function printNota(item) {
-      const items = parseItems(item.items);
-      const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
-      const disc = Number(item.discount) || 0;
-      const lineItems = items.map(i => {
-        const sub = i.qty * i.price;
-        return `${esc(i.name)}\n  Harga satuan: Rp ${i.price.toLocaleString('id-ID')}\n  ${i.qty} ${esc(i.unit)}${' '.repeat(Math.max(1,24-sub.toLocaleString('id-ID').length))}Rp ${sub.toLocaleString('id-ID')}`;
-      }).join('\n');
-      const discLine = disc > 0 ? `<div class="row"><span>Diskon</span><span>-Rp ${disc.toLocaleString('id-ID')}</span></div>` : '';
-      const w = window.open('', '_blank');
-      w.document.write(`<html><head><title>Nota</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;font-size:11px;width:58mm;padding:3mm;margin:0 auto}h2{font-size:13px;text-align:center;font-weight:bold}p.center{text-align:center;font-size:10px}.line{border-top:1px dashed #000;margin:4px 0}.row{display:flex;justify-content:space-between;font-size:11px}.bold{font-weight:bold;font-size:12px}pre{white-space:pre-wrap;font-size:10px;line-height:1.5}@media print{body{width:58mm;padding:2mm}}</style></head><body>
-<h2>${esc(SHOP_NAME)}</h2>
-<p class="center">Sangketan,Kabupaten Tabanan, Bali</p>
-<p class="center">${esc(SHOP_ADDRESS)}</p>
-<p class="center">${esc(SHOP_CONTACT)}</p>
-<div class="line"></div>
-<p class="center" style="text-align:left">${esc(item.date)}  Pelanggan: ${esc(item.customer_name)}</p>
-<div class="line"></div>
-<pre>${lineItems}</pre>
-<div class="line"></div>
-<div class="row"><span>Subtotal</span><span>Rp ${subtotal.toLocaleString('id-ID')}</span></div>
-${discLine}
-<div class="row bold"><span>TOTAL</span><span>Rp ${Number(item.total).toLocaleString('id-ID')}</span></div>
-${item.notes ? '<div class="line"></div><p style="font-size:9px">'+esc(item.notes)+'</p>' : ''}
-<div class="line"></div>
-<p class="center" style="margin-top:4px">Terima kasih atas kunjungan Anda!</p>
-<p class="center">Barang yang sudah dibeli tidak dapat</p>
-<p class="center">ditukar/dikembalikan</p>
-<script>window.print()<\/script></body></html>`);
-      w.document.close();
-    }
+        function updateStruk() {
+            const containerNota = document.getElementById('notaDaftarBarang');
+            containerNota.innerHTML = '';
 
-    function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
-    function showMsg(text, isErr) {
-      formMsg.textContent = text;
-      formMsg.className = 'mt-3 text-center text-sm ' + (isErr ? 'text-red-600' : 'text-emerald-600');
-      formMsg.classList.remove('hidden');
-      setTimeout(() => formMsg.classList.add('hidden'), 3000);
-    }
-  </script>
- 
-</body></html>
+            let totalBelanja = 0;
+            let totalItem = 0;
+
+            daftarBarang.forEach(item => {
+                totalBelanja += item.subtotal;
+                totalItem += item.qty;
+
+                const div = document.createElement('div');
+                div.style.marginBottom = "4px";
+                div.innerHTML = `
+                    <div>${item.nama}</div>
+                    <div class="item-row">
+                        <span>&nbsp;&nbsp;${item.qty} x ${formatRupiah(item.harga)}</span>
+                        <span>${formatRupiah(item.subtotal)}</span>
+                    </div>
+                `;
+                containerNota.appendChild(div);
+            });
+
+            const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
+            const kembalian = uangBayar - totalBelanja;
+
+            document.getElementById('notaTotalItem').innerText = totalItem;
+            document.getElementById('notaTotalBelanja').innerText = formatRupiah(totalBelanja);
+            document.getElementById('notaTunai').innerText = formatRupiah(uangBayar);
+            document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
+        }
+    </script>
+</body>
+</html>
