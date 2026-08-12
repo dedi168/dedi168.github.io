@@ -44,19 +44,38 @@
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1rem 2rem;
+      padding: 0.8rem 2rem;
     }
 
-    .logo {
-      font-size: 1.3rem;
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
       font-weight: bold;
       color: var(--bg-white);
       text-transform: uppercase;
       letter-spacing: 1px;
+      line-height: 1.2;
     }
 
-    .logo span {
+    .logo-text span {
       color: var(--accent-gold);
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      font-weight: 500;
     }
 
     .nav-links {
@@ -83,6 +102,13 @@
       color: var(--bg-white);
       text-align: center;
       padding: 5rem 1rem;
+    }
+
+    .hero-logo {
+      width: 120px;
+      height: auto;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5));
     }
 
     .hero h1 {
@@ -306,10 +332,16 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR WITH LOGO -->
   <header>
     <div class="navbar">
-      <div class="logo">Dedy <span>Technology Solution</span></div>
+      <a href="#" class="logo-container">
+        <img src="Logo.png" alt="Dedy Technology Solution Logo" class="logo-img">
+        <div class="logo-text">
+          Dedy Technology
+          <span>SOLUTION</span>
+        </div>
+      </a>
       <ul class="nav-links">
         <li><a href="#profil">Profil</a></li>
         <li><a href="#layanan">Layanan</a></li>
@@ -321,6 +353,7 @@
 
   <!-- HERO SECTION -->
   <div class="hero">
+    <img src="watermarked_img_11222478530263912253.png" alt="Logo Dedy Technology Solution" class="hero-logo">
     <h1>Solusi Integrasi Keamanan & Jaringan</h1>
     <p>Spesialis instalasi CCTV, jaringan komputer, dan access door untuk hunian, villa, sekolah, dan toko ritel skala kecil-menengah.</p>
     <a href="#pemesanan" class="btn-gold">Pesan Layanan Sekarang</a>
@@ -351,9 +384,9 @@
       <div class="card">
         <h3>Jaringan Komputer</h3>
         <ul>
-          <li>Penarikan Kabel LAN & Mikrotik</li>
+          <li>Penarikan Kabel LAN</li>
           <li>Pemasangan Wi-Fi Access Point</li>
-          <li>Penataan Kabel & Optimasi Sinyal</li>
+          <li>Penataan Kabel</li>
         </ul>
       </div>
       <div class="card">
@@ -429,7 +462,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="layanan">Layanan yang Dibutuhkan</label>
+            <label for="layanan_pilih">Layanan yang Dibutuhkan</label>
             <select id="layanan_pilih" required>
               <option value="">-- Pilih Layanan --</option>
               <option value="Instalasi CCTV">Instalasi CCTV</option>
