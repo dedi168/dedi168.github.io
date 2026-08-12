@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dedy Technology Solution - Solusi Keamanan & Jaringan</title>
+  <style>
+    /* --- CSS RESET & VARIABLES --- */
+    :root {
+      --primary-blue: #0f2b48;
+      --accent-gold: #d4af37;
+      --light-gold: #f4e8c1;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --text-dark: #1a1a1a;
+      --text-gray: #666666;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      color: var(--text-dark);
+      background-color: var(--bg-white);
+      line-height: 1.6;
+    }
+
+    /* --- NAVBAR --- */
+    header {
+      background-color: var(--primary-blue);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--bg-white);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--accent-gold);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--bg-white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-gold);
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      background: linear-gradient(rgba(15, 43, 72, 0.9), rgba(0, 0, 0, 0.8)), 
+                  url('https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      color: var(--bg-white);
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-gold);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .btn-gold {
+      background-color: var(--accent-gold);
+      color: var(--primary-blue);
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+
+    .btn-gold:hover {
+      background-color: #b8962d;
+      color: var(--bg-white);
+    }
+
+    /* --- SECTIONS COMMON --- */
+    section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-gray);
+      margin-bottom: 3rem;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background-color: var(--accent-gold);
+      margin: 0.5rem auto 0;
+    }
+
+    /* --- PROFIL & LAYANAN --- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: var(--bg-white);
+      border: 1px solid #e0e0e0;
+      border-top: 4px solid var(--accent-gold);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .card h3 {
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+    }
+
+    .card ul {
+      list-style-position: inside;
+      color: var(--text-gray);
+    }
+
+    /* --- GALERI --- */
+    .bg-light {
+      background-color: var(--bg-light);
+      max-width: 100%;
+    }
+
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background-color: var(--primary-blue);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+
+    .gallery-caption {
+      padding: 0.8rem;
+      background-color: var(--primary-blue);
+      color: var(--bg-white);
+      text-align: center;
+      font-size: 0.9rem;
+      border-top: 2px solid var(--accent-gold);
+    }
+
+    /* --- KONTAK & FORM --- */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .contact-info {
+      background-color: var(--primary-blue);
+      color: var(--bg-white);
+      padding: 2.5rem;
+      border-radius: 8px;
+      border-left: 5px solid var(--accent-gold);
+    }
+
+    .contact-info h3 {
+      color: var(--accent-gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item {
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-item strong {
+      display: block;
+      color: var(--light-gold);
+    }
+
+    .order-form {
+      background-color: var(--bg-white);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border: 1px solid #eee;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: var(--text-dark);
+      color: var(--bg-white);
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 3px solid var(--accent-gold);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="navbar">
+      <div class="logo">Dedy <span>Technology Solution</span></div>
+      <ul class="nav-links">
+        <li><a href="#profil">Profil</a></li>
+        <li><a href="#layanan">Layanan</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#pemesanan">Pemesanan</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h1>Solusi Integrasi Keamanan & Jaringan</h1>
+    <p>Spesialis instalasi CCTV, jaringan komputer, dan access door untuk hunian, villa, sekolah, dan toko ritel skala kecil-menengah.</p>
+    <a href="#pemesanan" class="btn-gold">Pesan Layanan Sekarang</a>
+  </div>
+
+  <!-- PROFIL SECTION -->
+  <section id="profil">
+    <h2 class="section-title">Profil Usaha</h2>
+    <p class="section-subtitle">Mengenal Dedy Technology Solution</p>
+    <p style="text-align: center; max-width: 800px; margin: 0 auto; color: var(--text-gray);">
+      Dedy Technology Solution adalah penyedia layanan profesional yang bergerak di bidang pengadaan, instalasi, dan pemeliharaan sistem keamanan elektronik serta infrastruktur jaringan komputer. Kami berkomitmen memberikan hasil kerja yang rapi, efisien, dan bergaransi untuk menjaga keamanan aset dan kenyamanan konektivitas Anda.
+    </p>
+  </section>
+
+  <!-- LAYANAN SECTION -->
+  <section id="layanan">
+    <h2 class="section-title">Layanan Utama</h2>
+    <p class="section-subtitle">Solusi teknis yang disesuaikan dengan kebutuhan Anda</p>
+    <div class="services-grid">
+      <div class="card">
+        <h3>Instalasi CCTV</h3>
+        <ul>
+          <li>IP Camera & Analog HD</li>
+          <li>Set up Remote Monitoring Smartphone</li>
+          <li>Perbaikan & Perawatan Berkala</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Jaringan Komputer</h3>
+        <ul>
+          <li>Penarikan Kabel LAN & Mikrotik</li>
+          <li>Pemasangan Wi-Fi Access Point</li>
+          <li>Penataan Kabel & Optimasi Sinyal</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Access Door</h3>
+        <ul>
+          <li>Access Door Fingerprint/RFID/Pin</li>
+          <li>Sistem Akses Privat & Mesin Absensi</li>
+          <li>Pemasangan Kunci Pintu Elektronik</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERI SECTION -->
+  <div class="bg-light">
+    <section id="galeri" class="gallery-container">
+      <h2 class="section-title">Galeri Pengerjaan</h2>
+      <p class="section-subtitle">Dokumentasi hasil pemasangan dan standar kerapihan kami</p>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=500&q=80" alt="Instalasi CCTV">
+          <div class="gallery-caption">Instalasi Kamera Pengawas (CCTV)</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=500&q=80" alt="Instalasi Jaringan">
+          <div class="gallery-caption">Manajemen & Penataan Kabel LAN</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=500&q=80" alt="Access Door">
+          <div class="gallery-caption">Sistem Akses Kontrol Pintu</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- KONTAK & FORM PEMESANAN -->
+  <section id="pemesanan">
+    <h2 class="section-title">Form Pemesanan</h2>
+    <p class="section-subtitle">Konsultasikan kebutuhan Anda langsung via WhatsApp</p>
+    
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <h3>Kontak Kami</h3>
+        <div class="contact-item">
+          <strong>WhatsApp:</strong>
+          06976969668
+        </div>
+        <div class="contact-item">
+          <strong>Email:</strong>
+          dsuardana61@gmail.com
+        </div>
+        <div class="contact-item">
+          <strong>Target Pasar / Area:</strong>
+          Perumahan, Villa, Toko Ritel, Sekolah, & Hunian Pribadi.
+        </div>
+      </div>
+
+      <div class="order-form">
+        <form id="waForm">
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" placeholder="Masukkan nama Anda" required>
+          </div>
+          <div class="form-group">
+            <label for="kategori">Kategori Properti</label>
+            <select id="kategori" required>
+              <option value="">-- Pilih Kategori --</option>
+              <option value="Hunian Pribadi / Perumahan">Hunian Pribadi / Perumahan</option>
+              <option value="Villa">Villa</option>
+              <option value="Toko Ritel">Toko Ritel</option>
+              <option value="Sekolah">Sekolah</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="layanan">Layanan yang Dibutuhkan</label>
+            <select id="layanan_pilih" required>
+              <option value="">-- Pilih Layanan --</option>
+              <option value="Instalasi CCTV">Instalasi CCTV</option>
+              <option value="Jaringan Komputer & Wi-Fi">Jaringan Komputer & Wi-Fi</option>
+              <option value="Access Door / Akses Kontrol">Access Door / Akses Kontrol</option>
+              <option value="Paket Kombinasi">Paket Kombinasi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="catatan">Detail Kebutuhan / Catatan</label>
+            <textarea id="catatan" rows="4" placeholder="Jelaskan jumlah titik lokasi atau detail kebutuhan Anda"></textarea>
+          </div>
+          <button type="submit" class="btn-gold" style="width: 100%;">Kirim via WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Dedy Technology Solution. All Rights Reserved.</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    document.getElementById('waForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Mengambil nilai input
+      const nama = document.getElementById('nama').value;
+      const kategori = document.getElementById('kategori').value;
+      const layanan = document.getElementById('layanan_pilih').value;
+      const catatan = document.getElementById('catatan').value;
+
+      // Nomor tujuan WA
+      const noHp = '06976969668';
+
+      // Format Pesan WhatsApp
+      let pesan = `Halo *Dedy Technology Solution*, saya ingin memesan / berkonsultasi mengenai jasa Anda:%0A%0A`;
+      pesan += `*Nama:* ${nama}%0A`;
+      pesan += `*Kategori Properti:* ${kategori}%0A`;
+      pesan += `*Layanan:* ${layanan}%0A`;
+      if(catatan) {
+        pesan += `*Catatan/Kebutuhan:* ${catatan}%0A`;
+      }
+
+      // Membuka URL WhatsApp
+      const url = `https://wa.me/${noHp}?text=${pesan}`;
+      window.open(url, '_blank');
+    });
+  </script>
+</body>
+</html>
