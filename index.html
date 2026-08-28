@@ -1,18 +1,177 @@
-<!doctype html>
-<html lang="en"> 
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Message for you</title> 
-  <link rel="stylesheet" href="style.css"> 
- </head> 
- <body> 
-  <div class="wrapper"> 
-   <h2 class="question">You like me?</h2> 
-   <img class="gif" alt="gif" src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/gifyou.webp"> 
-   <div class="btn-group"> <button class="yes-btn">Yes</button> <button class="no-btn">No</button> 
-   </div> 
-  </div> 
-  <script src="script.js"></script> 
- </body>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Marry Me?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #333;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+    }
+    .heart-icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+      animation: pulse 1.5s infinite;
+    }
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: #e63946;
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      min-height: 60px;
+      position: relative;
+    }
+    button {
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    #btn-yes {
+      background-color: #e63946;
+      color: white;
+      box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+    }
+    #btn-yes:hover {
+      transform: scale(1.08);
+      background-color: #d62828;
+    }
+    #btn-no {
+      background-color: #6c757d;
+      color: white;
+      position: absolute;
+    }
+    .success-message {
+      display: none;
+    }
+    .success-message h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: #e63946;
+      margin-bottom: 15px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div id="proposal-content">
+      <div class="heart-icon">💖</div>
+      <h1>Will You Marry Me?</h1>
+      <p>
+        Sejak pertama kali bertemu denganmu, aku tahu hidupku tidak akan pernah sama lagi. 
+        Kamu adalah alasan aku tersenyum setiap hari. Maukah kamu melangkah ke jenjang berikutnya denganku?
+      </p>
+      <div class="btn-container">
+        <button id="btn-yes">Ya, Aku Mau! 💍</button>
+        <button id="btn-no">Enggak Mau 😜</button>
+      </div>
+    </div>
+
+    <div id="success-message" class="success-message">
+      <div class="heart-icon">💍✨</div>
+      <h2>She Said Yes!</h2>
+      <p>
+        Terima kasih sudah memilihku! Aku janji akan terus membahagiakanmu setiap hari. 
+        Mari kita mulai petualangan baru kita bersama! ❤️
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const btnYes = document.getElementById('btn-yes');
+    const btnNo = document.getElementById('btn-no');
+    const proposalContent = document.getElementById('proposal-content');
+    const successMessage = document.getElementById('success-message');
+    const btnContainer = document.querySelector('.btn-container');
+
+    // Atur posisi awal tombol "No"
+    function setInitialNoPosition() {
+      btnNo.style.right = '30px';
+    }
+    setInitialNoPosition();
+
+    // Fungsi membuat tombol "No" berpindah tempat saat disentuh/diarahkan mouse
+    function moveNoButton() {
+      const containerRect = btnContainer.getBoundingClientRect();
+      const btnRect = btnNo.getBoundingClientRect();
+
+      // Hitung batas posisi acak di dalam area tombol
+      const maxX = containerRect.width - btnRect.width;
+      const maxY = 150; // Jangkauan pergerakan vertikal
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY) - 50;
+
+      btnNo.style.left = ${randomX}px;
+      btnNo.style.top = ${randomY}px;
+    }
+
+    btnNo.addEventListener('mouseover', moveNoButton);
+    btnNo.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // Aksi saat tombol "Yes" diklik
+    btnYes.addEventListener('click', () => {
+      proposalContent.style.display = 'none';
+      successMessage.style.display = 'block';
+
+      // Efek Kembang Api (Confetti)
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    });
+  </script>
+
+</body>
 </html>
