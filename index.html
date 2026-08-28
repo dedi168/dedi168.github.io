@@ -116,21 +116,11 @@
       50% { transform: scale(1.15); }
       100% { transform: scale(1); }
     }
-
-    /* Penyesuaian Khusus Layar HP Sangat Kecil */
-    @media (max-width: 360px) {
-      .card {
-        padding: 1.8rem 1rem;
-      }
-      button {
-        padding: 10px 18px;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <div class="card" id="card-box">
+  <div class="card">
     <div id="proposal-content">
       <div class="heart-icon">💖</div>
       <h1>Will You Marry Me?</h1>
@@ -150,63 +140,63 @@
       <div class="heart-icon">💍✨</div>
       <h2>She Said Yes!</h2>
       <p>
-        Terima kasih sudah memilihku! Aku janji akan terus membahagiakanmu setiap hari. 
-        Mari kita mulai petualangan baru kita bersama! ❤️
+        Terima kasih sudah memilihku! Mengalihkan kamu ke WhatsApp untuk mengirim pesan balasan... ❤️
       </p>
     </div>
   </div>
 
   <script>
+    // -------------------------------------------------------------
+    // PENTING: Ganti nomor WA Anda di bawah ini!
+    // Format: Gunakan kode negara "62" tanpa tanda '+' atau angka '0' di depan.
+    // Contoh: 6281234567890
+    const nomorWA = "085238932196"; 
+    const isiPesan = "I YES! Aku mau menikah sama kamu! 💍❤️";
+    // -------------------------------------------------------------
+
     const btnYes = document.getElementById('btn-yes');
     const btnNo = document.getElementById('btn-no');
     const proposalContent = document.getElementById('proposal-content');
     const successMessage = document.getElementById('success-message');
     const btnContainer = document.getElementById('btn-container');
 
-    // Menentukan posisi awal tombol No secara aman
-    function resetNoButtonPosition() {
-      btnNo.style.position = 'relative';
-      btnNo.style.left = '0px';
-      btnNo.style.top = '0px';
-    }
-
-    // Fungsi gerak acak yang aman di dalam area kontainer/kartu
     function moveNoButton() {
       const containerRect = btnContainer.getBoundingClientRect();
       const btnRect = btnNo.getBoundingClientRect();
 
       btnNo.style.position = 'absolute';
 
-      // Hitung batas maksimal posisi X dan Y di dalam container
       const maxX = containerRect.width - btnRect.width;
       const maxY = containerRect.height - btnRect.height;
 
-      // Hasilkan posisi acak di dalam batas area tombol
       const randomX = Math.max(0, Math.floor(Math.random() * maxX));
-      const randomY = Math.max(-40, Math.floor(Math.random() * (maxY + 60))); // Toleransi vertikal sedikit
+      const randomY = Math.max(-40, Math.floor(Math.random() * (maxY + 60)));
 
       btnNo.style.left = `${randomX}px`;
       btnNo.style.top = `${randomY}px`;
     }
 
-    // Event listener untuk Laptop/Desktop & Perangkat Sentuh (HP)
     btnNo.addEventListener('mouseover', moveNoButton);
     btnNo.addEventListener('touchstart', (e) => {
-      e.preventDefault(); // Mencegah klik terdaftar pada HP
+      e.preventDefault();
       moveNoButton();
     });
 
-    // Aksi saat tombol "Yes" diklik
     btnYes.addEventListener('click', () => {
       proposalContent.style.display = 'none';
       successMessage.style.display = 'block';
 
-      // Efek Confetti (Kembang Api)
       confetti({
-        particleCount: 120,
-        spread: 70,
+        particleCount: 150,
+        spread: 80,
         origin: { y: 0.6 }
       });
+
+      // Buka WA secara otomatis setelah jeda 2 detik
+      setTimeout(() => {
+        const urlWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(isiPesan)}`;
+        window.location.href = urlWA;
+      }, 2000);
     });
   </script>
 
