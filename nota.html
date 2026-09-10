@@ -95,6 +95,16 @@
             font-size: 12px;
         }
 
+        .btn-reprint {
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -267,6 +277,7 @@
                         <th>Total Items</th>
                         <th>Total Belanja</th>
                         <th>Uang Bayar</th>
+                        <th style="width: 90px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="tabelRiwayat"></tbody>
@@ -356,7 +367,7 @@
             { nama: "DVR HILOOK DVR-204G-F1(S)", harga: 590000 },
             { nama: "DVR HILOOK DVR-208G-M1/T", harga: 1060000 },
             { nama: "DVR HILOOK DVR-216G-M1/T", harga: 1866000 },
-            { nama: "HDD CCTV WD PURPLE 2TB", harga: 300000000 },
+            { nama: "HDD CCTV WD PURPLE 2TB", harga: 3000000 }, // Perbaikan harga sesuai permintaan (Rp 3.000.000)
             { nama: "RUIJIE RG-EW1200G PRO", harga: 658000 },
             { nama: "RUIJIE RG-EW1200", harga: 450000 },
             { nama: "RUIJIE RG-EW1300G", harga: 585000 },
@@ -551,7 +562,8 @@
                 tanggal: document.getElementById('notaTgl').innerText,
                 totalItem: parseInt(document.getElementById('notaTotalItem').innerText),
                 totalBelanja: totalBelanja,
-                uangBayar: uangBayar
+                uangBayar: uangBayar,
+                items: JSON.parse(JSON.stringify(daftarBarang)) // Simpan detail daftar barang
             };
             simpanKeRiwayat(transaksiBaru);
 
@@ -573,11 +585,11 @@
             let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
 
             if (riwayat.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada riwayat transaksi</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Belum ada riwayat transaksi</td></tr>';
                 return;
             }
 
-            riwayat.forEach(item => {
+            riwayat.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${item.noNota}</strong></td>
@@ -585,9 +597,68 @@
                     <td>${item.totalItem} item</td>
                     <td>Rp ${formatRupiah(item.totalBelanja)}</td>
                     <td>Rp ${formatRupiah(item.uangBayar)}</td>
+                    <td><button class="btn-reprint" onclick="cetakUlangNota(${index})">Cetak Ulang</button></td>
                 `;
                 tbody.appendChild(tr);
             });
+        }
+
+        function cetakUlangNota(index) {
+            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
+            const dataNota = riwayat[index];
+
+            if (!dataNota) return;
+
+            // Update elemen nota dengan data riwayat lama
+            document.getElementById('nomer-nota').innerText = dataNota.noNota;
+            document.getElementById('notaTgl').innerText = dataNota.tanggal;
+
+            const containerNota = document.getElementById('notaDaftarBarang');
+            containerNota.innerHTML = '';
+
+            let akumulasiDiskon = 0;
+
+            if (dataNota.items && dataNota.items.length > 0) {
+                dataNota.items.forEach(item => {
+                    akumulasiDiskon += (item.totalDiskonItem || 0);
+
+                    const div = document.createElement('div');
+                    div.style.marginBottom = "4px";
+
+                    let infoDiskonText = '';
+                    if (item.diskon > 0) {
+                        infoDiskonText = `<div class="discount-text">&nbsp;&nbsp;(Disc: -Rp ${formatRupiah(item.diskon)}/item)</div>`;
+                    }
+
+                    div.innerHTML = `
+                        <div>${item.nama}</div>
+                        <div class="item-row">
+                            <span>&nbsp;&nbsp;${item.qty} x ${formatRupiah(item.harga - item.diskon)}</span>
+                            <span>${formatRupiah(item.subtotal)}</span>
+                        </div>
+                        ${infoDiskonText}
+                    `;
+                    containerNota.appendChild(div);
+                });
+            }
+
+            const kembalian = dataNota.uangBayar - dataNota.totalBelanja;
+            const rowTotalDiskon = document.getElementById('rowTotalDiskon');
+
+            if (akumulasiDiskon > 0) {
+                rowTotalDiskon.style.display = 'flex';
+                document.getElementById('notaTotalDiskon').innerText = formatRupiah(akumulasiDiskon);
+            } else {
+                rowTotalDiskon.style.display = 'none';
+            }
+
+            document.getElementById('notaTotalItem').innerText = dataNota.totalItem;
+            document.getElementById('notaTotalBelanja').innerText = formatRupiah(dataNota.totalBelanja);
+            document.getElementById('notaTunai').innerText = formatRupiah(dataNota.uangBayar);
+            document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
+
+            // Cetak langsung
+            window.print();
         }
 
         function hapusSemuaRiwayat() {
