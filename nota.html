@@ -54,6 +54,16 @@
         }
         .btn-add { background-color: #28a745; }
         .btn-print { background-color: #007bff; margin-top: 15px; }
+        .btn-reset { background-color: #dc3545; margin-top: 5px; }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
 
         table {
             width: 100%;
@@ -78,21 +88,19 @@
         }
         .text-center { text-align: center; }
         
-        /* CSS LOGO NOTA BAWAAN */
         .logo-nota {
             max-width: 70px;
             max-height: 70px;
             display: block;
             margin: 0 auto 8px auto;
-            filter: grayscale(100%); /* Efek cetak hitam putih thermal */
+            filter: grayscale(100%);
         }
 
-.logo-form {
+        .logo-form {
             max-width: 70px;
             max-height: 70px;
             display: block;
             margin: 0 auto 8px auto;
-           
         }
         .line { border-top: 1px dashed #000; margin: 6px 0; }
         .double-line { border-top: 2px solid #000; margin: 6px 0; }
@@ -120,11 +128,9 @@
 
     <!-- SECTION FORM INPUT -->
     <div class="container form-section no-print">
-
-                <img class="logo-form" src="Logo.png" alt="Logo Toko">
+        <img class="logo-form" id="formLogo" src="Logo.png" alt="Logo Toko">
         <h2>Input Transaksi Kasir</h2>
         
-        <!-- Input Ubah Logo Opsional -->
         <div class="form-group">
             <label>Ganti Logo Toko (Opsional)</label>
             <input type="file" id="logoInput" accept="image/*" onchange="previewLogo(event)">
@@ -132,15 +138,15 @@
 
         <div class="form-group">
             <label>Nama Barang</label>
-            <input type="text" id="namaBarang" placeholder="Contoh: LAPTOP / MOUSE WIRELESS">
+            <input type="text" id="namaBarang" placeholder="Contoh: LAPTOP / MOUSE WIRELESS" onkeydown="checkEnter(event)">
         </div>
         <div class="form-group">
             <label>Harga (Rp)</label>
-            <input type="number" id="hargaBarang" placeholder="Contoh: 150000">
+            <input type="number" id="hargaBarang" placeholder="Contoh: 150000" onkeydown="checkEnter(event)">
         </div>
         <div class="form-group">
             <label>Jumlah (Qty)</label>
-            <input type="number" id="qtyBarang" value="1">
+            <input type="number" id="qtyBarang" value="1" onkeydown="checkEnter(event)">
         </div>
         
         <button class="btn btn-add" onclick="tambahBarang()">+ Tambah Barang</button>
@@ -153,6 +159,7 @@
                     <th>Qty</th>
                     <th>Harga</th>
                     <th>Subtotal</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody id="tabelBarang"></tbody>
@@ -168,7 +175,8 @@
             <input type="number" id="uangBayar" placeholder="Contoh: 200000" oninput="updateStruk()">
         </div>
 
-        <button class="btn btn-print" onclick="window.print()">Cetak Struk Nota</button>
+        <button class="btn btn-print" onclick="cetakStruk()">Cetak Struk Nota</button>
+        <button class="btn btn-reset" onclick="resetTransaksi()">Transaksi Baru</button>
     </div>
 
     <!-- SECTION PRATINJAU STRUK NOTA -->
@@ -177,7 +185,6 @@
         
         <div class="nota-box">
             <div class="text-center">
-                <!-- LOGO DITETAPKAN DARI AWAL VIA SRC -->
                 <img id="notaLogo" class="logo-nota" src="Logo.png" alt="Logo Toko">
                 
                 <strong>DEDY TECHNOLOGY SOLUTION</strong><br>
@@ -190,7 +197,7 @@
             
             <div>
                 Tgl : <span id="notaTgl"></span><br>
-                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: TRX-99882</span>
+                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: NOTA-000000</span>
             </div>
             
             <div class="line"></div>
@@ -230,7 +237,7 @@
                 Kritik & Saran: 0851-5859-3379<br>
                 <strong>TERIMA KASIH</strong><br>
                 SELAMAT BELANJA KEMBALI<br>
-																	*Barang yang sudah dibeli tidak dapat ditukar atau dikembalikan
+                <small>*Barang yang sudah dibeli tidak dapat ditukar atau dikembalikan</small>
             </div>
         </div>
     </div>
@@ -239,37 +246,52 @@
     <script>
         let daftarBarang = [];
 
-        // Fungsi jika ingin mengganti logo dari perangkat
         function previewLogo(event) {
             const reader = new FileReader();
             reader.onload = function() {
-                const imgElement = document.getElementById('notaLogo');
-                imgElement.src = reader.result;
+                document.getElementById('notaLogo').src = reader.result;
+                document.getElementById('formLogo').src = reader.result;
             };
             if (event.target.files[0]) {
                 reader.readAsDataURL(event.target.files[0]);
             }
         }
 
-        // Inisialisasi Tanggal
-        const skrg = new Date();
-        const tglStr = String(skrg.getDate()).padStart(2, '0') + '.' +
-                       String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
-                       String(skrg.getFullYear()).slice(-2) + '-' +
-                       String(skrg.getHours()).padStart(2, '0') + ':' +
-                       String(skrg.getMinutes()).padStart(2, '0');
-        document.getElementById('notaTgl').innerText = tglStr;
+        function initTanggal() {
+            const skrg = new Date();
+            const tglStr = String(skrg.getDate()).padStart(2, '0') + '.' +
+                           String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
+                           String(skrg.getFullYear()).slice(-2) + '-' +
+                           String(skrg.getHours()).padStart(2, '0') + ':' +
+                           String(skrg.getMinutes()).padStart(2, '0');
+            document.getElementById('notaTgl').innerText = tglStr;
+        }
+
+        function generateNotaRandom() {
+            let randomNum = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('nomer-nota').innerText = "No: NOTA-" + randomNum;
+        }
 
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID').format(angka);
         }
 
-        function tambahBarang() {
-            const nama = document.getElementById('namaBarang').value.trim().toUpperCase();
-            const harga = parseInt(document.getElementById('hargaBarang').value);
-            const qty = parseInt(document.getElementById('qtyBarang').value);
+        function checkEnter(e) {
+            if (e.key === 'Enter') {
+                tambahBarang();
+            }
+        }
 
-            if (!nama || isNaN(harga) || isNaN(qty)) {
+        function tambahBarang() {
+            const namaInput = document.getElementById('namaBarang');
+            const hargaInput = document.getElementById('hargaBarang');
+            const qtyInput = document.getElementById('qtyBarang');
+
+            const nama = namaInput.value.trim().toUpperCase();
+            const harga = parseInt(hargaInput.value);
+            const qty = parseInt(qtyInput.value);
+
+            if (!nama || isNaN(harga) || isNaN(qty) || harga <= 0 || qty <= 0) {
                 alert('Silakan isi nama barang, harga, dan jumlah dengan benar!');
                 return;
             }
@@ -277,11 +299,17 @@
             const subtotal = harga * qty;
             daftarBarang.push({ nama, harga, qty, subtotal });
 
-            // Reset Form Input Barang
-            document.getElementById('namaBarang').value = '';
-            document.getElementById('hargaBarang').value = '';
-            document.getElementById('qtyBarang').value = '1';
+            namaInput.value = '';
+            hargaInput.value = '';
+            qtyInput.value = '1';
+            namaInput.focus();
 
+            renderTabel();
+            updateStruk();
+        }
+
+        function hapusBarang(index) {
+            daftarBarang.splice(index, 1);
             renderTabel();
             updateStruk();
         }
@@ -290,13 +318,14 @@
             const tbody = document.getElementById('tabelBarang');
             tbody.innerHTML = '';
 
-            daftarBarang.forEach(item => {
+            daftarBarang.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${item.nama}</td>
                     <td>${item.qty}</td>
                     <td>${formatRupiah(item.harga)}</td>
                     <td>${formatRupiah(item.subtotal)}</td>
+                    <td><button class="btn-delete" onclick="hapusBarang(${index})">Hapus</button></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -325,13 +354,11 @@
                 containerNota.appendChild(div);
             });
 
-            // Ambil Nilai Diskon dan Pembayaran
             const diskon = parseInt(document.getElementById('diskon').value) || 0;
             const totalAkhir = Math.max(0, subtotalBelanja - diskon);
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
             const kembalian = uangBayar - totalAkhir;
 
-            // Kontrol Tampilan Diskon
             const rowDiskon = document.getElementById('rowDiskon');
             if (diskon > 0) {
                 rowDiskon.style.display = 'flex';
@@ -340,7 +367,6 @@
                 rowDiskon.style.display = 'none';
             }
 
-            // Update Angka di Nota
             document.getElementById('notaTotalItem').innerText = totalItem;
             document.getElementById('notaSubtotal').innerText = formatRupiah(subtotalBelanja);
             document.getElementById('notaTotalBelanja').innerText = formatRupiah(totalAkhir);
@@ -348,17 +374,44 @@
             document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
         }
 
-function generateNotaRandom() {
-    // Menghasilkan angka acak antara 100000 hingga 999999 (6 digit)
-    let randomNum = Math.floor(100000 + Math.random() * 900000);
-    return "NOTA-" + randomNum;
-}
+        function cetakStruk() {
+            if (daftarBarang.length === 0) {
+                alert('Belum ada barang yang ditambahkan!');
+                return;
+            }
 
-document.getElementById('nomer-nota').innerText = generateNotaRandom();
+            const subtotal = daftarBarang.reduce((acc, item) => acc + item.subtotal, 0);
+            const diskon = parseInt(document.getElementById('diskon').value) || 0;
+            const totalAkhir = Math.max(0, subtotal - diskon);
+            const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
+
+            if (uangBayar < totalAkhir) {
+                alert('Jumlah uang bayar masih kurang!');
+                return;
+            }
+
+            window.print();
+        }
+
+        function resetTransaksi() {
+            if (confirm('Apakah Anda yakin ingin memulai transaksi baru?')) {
+                daftarBarang = [];
+                document.getElementById('namaBarang').value = '';
+                document.getElementById('hargaBarang').value = '';
+                document.getElementById('qtyBarang').value = '1';
+                document.getElementById('diskon').value = '0';
+                document.getElementById('uangBayar').value = '';
+                
+                initTanggal();
+                generateNotaRandom();
+                renderTabel();
+                updateStruk();
+            }
+        }
+
+        // Inisialisasi awal
+        initTanggal();
+        generateNotaRandom();
     </script>
-
-
-
-
 </body>
 </html>
