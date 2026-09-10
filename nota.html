@@ -42,6 +42,13 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
         .btn {
             width: 100%;
             padding: 10px;
@@ -108,6 +115,10 @@
             display: flex;
             justify-content: space-between;
         }
+        .discount-text {
+            font-size: 11px;
+            color: #555;
+        }
         
         /* CSS UNTUK CETAK/PRINT */
         @media print {
@@ -128,25 +139,28 @@
 
     <!-- SECTION FORM INPUT -->
     <div class="container form-section no-print">
-        <img class="logo-form" src="Logo.png" alt="Logo Toko" id="formLogo">
+        <img class="logo-form" src="Logo.png" alt="Logo Toko">
         <h2>Input Transaksi Kasir</h2>
-        
-        <div class="form-group">
-            <label>Ganti Logo Toko (Opsional)</label>
-            <input type="file" id="logoInput" accept="image/*" onchange="previewLogo(event)">
-        </div>
 
         <div class="form-group">
-            <label>Nama Barang</label>
-            <input type="text" id="namaBarang" placeholder="Contoh: LAPTOP / MOUSE WIRELESS" onkeypress="handleEnter(event)">
+            <label>Nama Barang (Pilih / Ketik)</label>
+            <input type="text" id="namaBarang" list="listBarang" placeholder="Ketik atau pilih barang..." oninput="autoIsiHarga()" onkeypress="handleEnter(event)">
+            <datalist id="listBarang"></datalist>
         </div>
-        <div class="form-group">
-            <label>Harga (Rp)</label>
-            <input type="number" id="hargaBarang" placeholder="Contoh: 150000" onkeypress="handleEnter(event)">
-        </div>
-        <div class="form-group">
-            <label>Jumlah (Qty)</label>
-            <input type="number" id="qtyBarang" value="1" onkeypress="handleEnter(event)">
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Harga (Rp)</label>
+                <input type="number" id="hargaBarang" placeholder="Harga..." onkeypress="handleEnter(event)">
+            </div>
+            <div class="form-group">
+                <label>Jumlah (Qty)</label>
+                <input type="number" id="qtyBarang" value="1" onkeypress="handleEnter(event)">
+            </div>
+            <div class="form-group">
+                <label>Diskon / Item (Rp)</label>
+                <input type="number" id="diskonItem" placeholder="0" value="0" onkeypress="handleEnter(event)">
+            </div>
         </div>
         
         <button class="btn btn-add" onclick="tambahBarang()">+ Tambah Barang</button>
@@ -158,6 +172,7 @@
                     <th>Nama</th>
                     <th>Qty</th>
                     <th>Harga</th>
+                    <th>Disc/Item</th>
                     <th>Subtotal</th>
                     <th style="width: 50px;">Aksi</th>
                 </tr>
@@ -165,11 +180,7 @@
             <tbody id="tabelBarang"></tbody>
         </table>
 
-        <!-- Input Diskon dan Pembayaran -->
-        <div class="form-group">
-            <label>Diskon (Rp)</label>
-            <input type="number" id="diskon" placeholder="Contoh: 10000" value="0" oninput="updateStruk()">
-        </div>
+        <!-- Input Pembayaran -->
         <div class="form-group">
             <label>Uang Bayar (Rp)</label>
             <input type="number" id="uangBayar" placeholder="Contoh: 200000" oninput="updateStruk()">
@@ -228,13 +239,9 @@
             <div class="item-row">
                 <span>Total Item : <span id="notaTotalItem">0</span></span>
             </div>
-            <div class="item-row">
-                <span>Subtotal</span>
-                <span>Rp <span id="notaSubtotal">0</span></span>
-            </div>
-            <div class="item-row" id="rowDiskon" style="display: none;">
-                <span>Diskon</span>
-                <span>-Rp <span id="notaDiskon">0</span></span>
+            <div class="item-row" id="rowTotalDiskon" style="display: none;">
+                <span>Total Hemat</span>
+                <span>-Rp <span id="notaTotalDiskon">0</span></span>
             </div>
             <div class="item-row">
                 <span><strong>Total Belanja</strong></span>
@@ -262,16 +269,37 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        const masterBarang = [
+            { nama: "LAPTOP", harga: 7500000 },
+            { nama: "MOUSE WIRELESS", harga: 85000 },
+            { nama: "KEYBOARD MECHANICAL", harga: 350000 },
+            { nama: "FLASHDISK 32GB", harga: 65000 },
+            { nama: "MONITOR 24 INCH", harga: 1450000 },
+            { nama: "HEADSET GAMING", harga: 220000 },
+            { nama: "PRINTER THERMAL", harga: 450000 },
+            { nama: "KABEL HDMI 1.5M", harga: 35000 }
+        ];
+
         let daftarBarang = [];
 
-        function previewLogo(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                document.getElementById('notaLogo').src = reader.result;
-                document.getElementById('formLogo').src = reader.result;
-            };
-            if (event.target.files[0]) {
-                reader.readAsDataURL(event.target.files[0]);
+        function muatMasterBarang() {
+            const datalist = document.getElementById('listBarang');
+            datalist.innerHTML = '';
+            masterBarang.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.nama;
+                option.label = `Rp ${formatRupiah(item.harga)}`;
+                datalist.appendChild(option);
+            });
+        }
+
+        function autoIsiHarga() {
+            const inputNama = document.getElementById('namaBarang').value.trim().toUpperCase();
+            const inputHarga = document.getElementById('hargaBarang');
+
+            const barangDitemukan = masterBarang.find(item => item.nama === inputNama);
+            if (barangDitemukan) {
+                inputHarga.value = barangDitemukan.harga;
             }
         }
 
@@ -304,22 +332,33 @@
             const namaInput = document.getElementById('namaBarang');
             const hargaInput = document.getElementById('hargaBarang');
             const qtyInput = document.getElementById('qtyBarang');
+            const diskonInput = document.getElementById('diskonItem');
 
             const nama = namaInput.value.trim().toUpperCase();
             const harga = parseInt(hargaInput.value);
             const qty = parseInt(qtyInput.value);
+            const diskon = parseInt(diskonInput.value) || 0;
 
             if (!nama || isNaN(harga) || isNaN(qty) || harga <= 0 || qty <= 0) {
                 alert('Silakan isi nama barang, harga, dan jumlah dengan benar!');
                 return;
             }
 
-            const subtotal = harga * qty;
-            daftarBarang.push({ nama, harga, qty, subtotal });
+            if (diskon >= harga) {
+                alert('Diskon per item tidak boleh melebihi atau sama dengan harga barang!');
+                return;
+            }
+
+            const hargaSetelahDiskon = harga - diskon;
+            const subtotal = hargaSetelahDiskon * qty;
+            const totalDiskonItem = diskon * qty;
+
+            daftarBarang.push({ nama, harga, qty, diskon, subtotal, totalDiskonItem });
 
             namaInput.value = '';
             hargaInput.value = '';
             qtyInput.value = '1';
+            diskonInput.value = '0';
             namaInput.focus();
 
             renderTabel();
@@ -342,6 +381,7 @@
                     <td>${item.nama}</td>
                     <td>${item.qty}</td>
                     <td>${formatRupiah(item.harga)}</td>
+                    <td>${formatRupiah(item.diskon)}</td>
                     <td>${formatRupiah(item.subtotal)}</td>
                     <td><button class="btn-delete" onclick="hapusBarang(${index})">Hapus</button></td>
                 `;
@@ -353,41 +393,47 @@
             const containerNota = document.getElementById('notaDaftarBarang');
             containerNota.innerHTML = '';
 
-            let subtotalBelanja = 0;
+            let totalBelanja = 0;
             let totalItem = 0;
+            let akumulasiDiskon = 0;
 
             daftarBarang.forEach(item => {
-                subtotalBelanja += item.subtotal;
+                totalBelanja += item.subtotal;
                 totalItem += item.qty;
+                akumulasiDiskon += item.totalDiskonItem;
 
                 const div = document.createElement('div');
                 div.style.marginBottom = "4px";
+                
+                let infoDiskonText = '';
+                if (item.diskon > 0) {
+                    infoDiskonText = `<div class="discount-text">&nbsp;&nbsp;(Disc: -Rp ${formatRupiah(item.diskon)}/item)</div>`;
+                }
+
                 div.innerHTML = `
                     <div>${item.nama}</div>
                     <div class="item-row">
-                        <span>&nbsp;&nbsp;${item.qty} x ${formatRupiah(item.harga)}</span>
+                        <span>&nbsp;&nbsp;${item.qty} x ${formatRupiah(item.harga - item.diskon)}</span>
                         <span>${formatRupiah(item.subtotal)}</span>
                     </div>
+                    ${infoDiskonText}
                 `;
                 containerNota.appendChild(div);
             });
 
-            const diskon = parseInt(document.getElementById('diskon').value) || 0;
-            const totalAkhir = Math.max(0, subtotalBelanja - diskon);
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
-            const kembalian = uangBayar - totalAkhir;
+            const kembalian = uangBayar - totalBelanja;
 
-            const rowDiskon = document.getElementById('rowDiskon');
-            if (diskon > 0) {
-                rowDiskon.style.display = 'flex';
-                document.getElementById('notaDiskon').innerText = formatRupiah(diskon);
+            const rowTotalDiskon = document.getElementById('rowTotalDiskon');
+            if (akumulasiDiskon > 0) {
+                rowTotalDiskon.style.display = 'flex';
+                document.getElementById('notaTotalDiskon').innerText = formatRupiah(akumulasiDiskon);
             } else {
-                rowDiskon.style.display = 'none';
+                rowTotalDiskon.style.display = 'none';
             }
 
             document.getElementById('notaTotalItem').innerText = totalItem;
-            document.getElementById('notaSubtotal').innerText = formatRupiah(subtotalBelanja);
-            document.getElementById('notaTotalBelanja').innerText = formatRupiah(totalAkhir);
+            document.getElementById('notaTotalBelanja').innerText = formatRupiah(totalBelanja);
             document.getElementById('notaTunai').innerText = formatRupiah(uangBayar);
             document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
         }
@@ -398,22 +444,19 @@
                 return;
             }
 
-            const subtotalBelanja = daftarBarang.reduce((sum, item) => sum + item.subtotal, 0);
-            const diskon = parseInt(document.getElementById('diskon').value) || 0;
-            const totalAkhir = Math.max(0, subtotalBelanja - diskon);
+            const totalBelanja = daftarBarang.reduce((sum, item) => sum + item.subtotal, 0);
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
 
-            if (uangBayar < totalAkhir) {
+            if (uangBayar < totalBelanja) {
                 alert('Uang pembayaran masih kurang!');
                 return;
             }
 
-            // Simpan ke LocalStorage
             const transaksiBaru = {
                 noNota: document.getElementById('nomer-nota').innerText,
                 tanggal: document.getElementById('notaTgl').innerText,
                 totalItem: parseInt(document.getElementById('notaTotalItem').innerText),
-                totalBelanja: totalAkhir,
+                totalBelanja: totalBelanja,
                 uangBayar: uangBayar
             };
             simpanKeRiwayat(transaksiBaru);
@@ -463,7 +506,6 @@
         function resetTransaksi() {
             if (confirm('Apakah Anda yakin ingin memulai transaksi baru?')) {
                 daftarBarang = [];
-                document.getElementById('diskon').value = '0';
                 document.getElementById('uangBayar').value = '';
                 document.getElementById('nomer-nota').innerText = generateNotaRandom();
                 setTanggal();
@@ -472,8 +514,8 @@
             }
         }
 
-        // Inisialisasi awal saat halaman dibuka
         document.addEventListener("DOMContentLoaded", function() {
+            muatMasterBarang();
             setTanggal();
             document.getElementById('nomer-nota').innerText = generateNotaRandom();
             renderTabelRiwayat();
