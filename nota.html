@@ -54,13 +54,13 @@
         }
         .btn-add { background-color: #28a745; }
         .btn-print { background-color: #007bff; margin-top: 15px; }
-        .btn-reset { background-color: #dc3545; margin-top: 5px; }
+        .btn-reset { background-color: #dc3545; margin-top: 10px; }
         .btn-delete {
             background-color: #dc3545;
             color: white;
             border: none;
-            padding: 3px 8px;
-            border-radius: 3px;
+            padding: 4px 8px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
         }
@@ -128,7 +128,7 @@
 
     <!-- SECTION FORM INPUT -->
     <div class="container form-section no-print">
-        <img class="logo-form" id="formLogo" src="Logo.png" alt="Logo Toko">
+        <img class="logo-form" src="Logo.png" alt="Logo Toko" id="formLogo">
         <h2>Input Transaksi Kasir</h2>
         
         <div class="form-group">
@@ -138,15 +138,15 @@
 
         <div class="form-group">
             <label>Nama Barang</label>
-            <input type="text" id="namaBarang" placeholder="Contoh: LAPTOP / MOUSE WIRELESS" onkeydown="checkEnter(event)">
+            <input type="text" id="namaBarang" placeholder="Contoh: LAPTOP / MOUSE WIRELESS" onkeypress="handleEnter(event)">
         </div>
         <div class="form-group">
             <label>Harga (Rp)</label>
-            <input type="number" id="hargaBarang" placeholder="Contoh: 150000" onkeydown="checkEnter(event)">
+            <input type="number" id="hargaBarang" placeholder="Contoh: 150000" onkeypress="handleEnter(event)">
         </div>
         <div class="form-group">
             <label>Jumlah (Qty)</label>
-            <input type="number" id="qtyBarang" value="1" onkeydown="checkEnter(event)">
+            <input type="number" id="qtyBarang" value="1" onkeypress="handleEnter(event)">
         </div>
         
         <button class="btn btn-add" onclick="tambahBarang()">+ Tambah Barang</button>
@@ -159,7 +159,7 @@
                     <th>Qty</th>
                     <th>Harga</th>
                     <th>Subtotal</th>
-                    <th>Aksi</th>
+                    <th style="width: 50px;">Aksi</th>
                 </tr>
             </thead>
             <tbody id="tabelBarang"></tbody>
@@ -175,8 +175,26 @@
             <input type="number" id="uangBayar" placeholder="Contoh: 200000" oninput="updateStruk()">
         </div>
 
-        <button class="btn btn-print" onclick="cetakStruk()">Cetak Struk Nota</button>
+        <button class="btn btn-print" onclick="cetakNota()">Cetak Struk Nota</button>
         <button class="btn btn-reset" onclick="resetTransaksi()">Transaksi Baru</button>
+
+        <!-- TABEL RIWAYAT TRANSAKSI -->
+        <div style="margin-top: 30px;">
+            <h3>Riwayat Transaksi (LocalStorage)</h3>
+            <button class="btn btn-reset" onclick="hapusSemuaRiwayat()" style="width: auto; padding: 6px 12px; margin-bottom: 10px;">Hapus Semua Riwayat</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No. Nota</th>
+                        <th>Tanggal</th>
+                        <th>Total Items</th>
+                        <th>Total Belanja</th>
+                        <th>Uang Bayar</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelRiwayat"></tbody>
+            </table>
+        </div>
     </div>
 
     <!-- SECTION PRATINJAU STRUK NOTA -->
@@ -197,7 +215,7 @@
             
             <div>
                 Tgl : <span id="notaTgl"></span><br>
-                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: NOTA-000000</span>
+                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: TRX-99882</span>
             </div>
             
             <div class="line"></div>
@@ -237,7 +255,7 @@
                 Kritik & Saran: 0851-5859-3379<br>
                 <strong>TERIMA KASIH</strong><br>
                 SELAMAT BELANJA KEMBALI<br>
-                <small>*Barang yang sudah dibeli tidak dapat ditukar atau dikembalikan</small>
+                *Barang yang sudah dibeli tidak dapat ditukar atau dikembalikan
             </div>
         </div>
     </div>
@@ -257,7 +275,7 @@
             }
         }
 
-        function initTanggal() {
+        function setTanggal() {
             const skrg = new Date();
             const tglStr = String(skrg.getDate()).padStart(2, '0') + '.' +
                            String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
@@ -269,15 +287,15 @@
 
         function generateNotaRandom() {
             let randomNum = Math.floor(100000 + Math.random() * 900000);
-            document.getElementById('nomer-nota').innerText = "No: NOTA-" + randomNum;
+            return "NOTA-" + randomNum;
         }
 
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID').format(angka);
         }
 
-        function checkEnter(e) {
-            if (e.key === 'Enter') {
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
                 tambahBarang();
             }
         }
@@ -374,44 +392,92 @@
             document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
         }
 
-        function cetakStruk() {
+        function cetakNota() {
             if (daftarBarang.length === 0) {
-                alert('Belum ada barang yang ditambahkan!');
+                alert('Belum ada barang dalam daftar transaksi!');
                 return;
             }
 
-            const subtotal = daftarBarang.reduce((acc, item) => acc + item.subtotal, 0);
+            const subtotalBelanja = daftarBarang.reduce((sum, item) => sum + item.subtotal, 0);
             const diskon = parseInt(document.getElementById('diskon').value) || 0;
-            const totalAkhir = Math.max(0, subtotal - diskon);
+            const totalAkhir = Math.max(0, subtotalBelanja - diskon);
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
 
             if (uangBayar < totalAkhir) {
-                alert('Jumlah uang bayar masih kurang!');
+                alert('Uang pembayaran masih kurang!');
                 return;
             }
 
+            // Simpan ke LocalStorage
+            const transaksiBaru = {
+                noNota: document.getElementById('nomer-nota').innerText,
+                tanggal: document.getElementById('notaTgl').innerText,
+                totalItem: parseInt(document.getElementById('notaTotalItem').innerText),
+                totalBelanja: totalAkhir,
+                uangBayar: uangBayar
+            };
+            simpanKeRiwayat(transaksiBaru);
+
             window.print();
+        }
+
+        function simpanKeRiwayat(notaData) {
+            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
+            riwayat.unshift(notaData);
+            localStorage.setItem('riwayatKasir', JSON.stringify(riwayat));
+            renderTabelRiwayat();
+        }
+
+        function renderTabelRiwayat() {
+            const tbody = document.getElementById('tabelRiwayat');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
+
+            if (riwayat.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada riwayat transaksi</td></tr>';
+                return;
+            }
+
+            riwayat.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${item.noNota}</strong></td>
+                    <td>${item.tanggal}</td>
+                    <td>${item.totalItem} item</td>
+                    <td>Rp ${formatRupiah(item.totalBelanja)}</td>
+                    <td>Rp ${formatRupiah(item.uangBayar)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function hapusSemuaRiwayat() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua riwayat transaksi?')) {
+                localStorage.removeItem('riwayatKasir');
+                renderTabelRiwayat();
+            }
         }
 
         function resetTransaksi() {
             if (confirm('Apakah Anda yakin ingin memulai transaksi baru?')) {
                 daftarBarang = [];
-                document.getElementById('namaBarang').value = '';
-                document.getElementById('hargaBarang').value = '';
-                document.getElementById('qtyBarang').value = '1';
                 document.getElementById('diskon').value = '0';
                 document.getElementById('uangBayar').value = '';
-                
-                initTanggal();
-                generateNotaRandom();
+                document.getElementById('nomer-nota').innerText = generateNotaRandom();
+                setTanggal();
                 renderTabel();
                 updateStruk();
             }
         }
 
-        // Inisialisasi awal
-        initTanggal();
-        generateNotaRandom();
+        // Inisialisasi awal saat halaman dibuka
+        document.addEventListener("DOMContentLoaded", function() {
+            setTanggal();
+            document.getElementById('nomer-nota').innerText = generateNotaRandom();
+            renderTabelRiwayat();
+        });
     </script>
 </body>
 </html>
