@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,46 +10,56 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
+
         body {
             display: flex;
             gap: 20px;
             padding: 20px;
             background-color: #f4f6f9;
         }
+
         .container {
             background: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         .form-section {
             flex: 1;
         }
+
         .preview-section {
             width: 320px;
         }
+
         .form-group {
             margin-bottom: 12px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
             font-size: 14px;
         }
+
         input {
             width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         .form-row {
             display: flex;
             gap: 10px;
         }
+
         .form-row .form-group {
             flex: 1;
         }
+
         .btn {
             width: 100%;
             padding: 10px;
@@ -59,9 +70,21 @@
             color: white;
             margin-top: 5px;
         }
-        .btn-add { background-color: #28a745; }
-        .btn-print { background-color: #007bff; margin-top: 15px; }
-        .btn-reset { background-color: #dc3545; margin-top: 10px; }
+
+        .btn-add {
+            background-color: #28a745;
+        }
+
+        .btn-print {
+            background-color: #007bff;
+            margin-top: 15px;
+        }
+
+        .btn-reset {
+            background-color: #dc3545;
+            margin-top: 10px;
+        }
+
         .btn-delete {
             background-color: #dc3545;
             color: white;
@@ -78,9 +101,22 @@
             margin: 15px 0;
             font-size: 13px;
         }
-        table, th, td { border: 1px solid #ddd; }
-        th, td { padding: 8px; text-align: left; }
-        th { background-color: #f8f9fa; }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
 
         /* FORMAT TAMPILAN NOTA */
         .nota-box {
@@ -93,8 +129,11 @@
             margin: 0 auto;
             line-height: 1.2;
         }
-        .text-center { text-align: center; }
-        
+
+        .text-center {
+            text-align: center;
+        }
+
         .logo-nota {
             max-width: 70px;
             max-height: 70px;
@@ -109,32 +148,57 @@
             display: block;
             margin: 0 auto 8px auto;
         }
-        .line { border-top: 1px dashed #000; margin: 6px 0; }
-        .double-line { border-top: 2px solid #000; margin: 6px 0; }
+
+        .line {
+            border-top: 1px dashed #000;
+            margin: 6px 0;
+        }
+
+        .double-line {
+            border-top: 2px solid #000;
+            margin: 6px 0;
+        }
+
         .item-row {
             display: flex;
             justify-content: space-between;
         }
+
         .discount-text {
             font-size: 11px;
             color: #555;
         }
-        
+
         /* CSS UNTUK CETAK/PRINT */
         @media print {
-            body * { visibility: hidden; }
-            .preview-section, .preview-section * { visibility: visible; }
+            body * {
+                visibility: hidden;
+            }
+
+            .preview-section,
+            .preview-section * {
+                visibility: visible;
+            }
+
             .preview-section {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
             }
-            .nota-box { border: none; width: 100%; }
-            .no-print { display: none !important; }
+
+            .nota-box {
+                border: none;
+                width: 100%;
+            }
+
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- SECTION FORM INPUT -->
@@ -144,10 +208,11 @@
 
         <div class="form-group">
             <label>Nama Barang (Pilih / Ketik)</label>
-            <input type="text" id="namaBarang" list="listBarang" placeholder="Ketik atau pilih barang..." oninput="autoIsiHarga()" onkeypress="handleEnter(event)">
+            <input type="text" id="namaBarang" list="listBarang" placeholder="Ketik atau pilih barang..."
+                oninput="autoIsiHarga()" onkeypress="handleEnter(event)">
             <datalist id="listBarang"></datalist>
         </div>
-        
+
         <div class="form-row">
             <div class="form-group">
                 <label>Harga (Rp)</label>
@@ -162,7 +227,7 @@
                 <input type="number" id="diskonItem" placeholder="0" value="0" onkeypress="handleEnter(event)">
             </div>
         </div>
-        
+
         <button class="btn btn-add" onclick="tambahBarang()">+ Tambah Barang</button>
 
         <!-- Tabel Item -->
@@ -192,7 +257,8 @@
         <!-- TABEL RIWAYAT TRANSAKSI -->
         <div style="margin-top: 30px;">
             <h3>Riwayat Transaksi (LocalStorage)</h3>
-            <button class="btn btn-reset" onclick="hapusSemuaRiwayat()" style="width: auto; padding: 6px 12px; margin-bottom: 10px;">Hapus Semua Riwayat</button>
+            <button class="btn btn-reset" onclick="hapusSemuaRiwayat()"
+                style="width: auto; padding: 6px 12px; margin-bottom: 10px;">Hapus Semua Riwayat</button>
             <table>
                 <thead>
                     <tr>
@@ -211,31 +277,31 @@
     <!-- SECTION PRATINJAU STRUK NOTA -->
     <div class="container preview-section">
         <h3 class="no-print" style="margin-top:0;">Pratinjau Nota</h3>
-        
+
         <div class="nota-box">
             <div class="text-center">
                 <img id="notaLogo" class="logo-nota" src="Logo.png" alt="Logo Toko">
-                
+
                 <strong>DEDY TECHNOLOGY SOLUTION</strong><br>
                 Sangketan, Kabupaten Tabanan<br>
                 Bali<br>
                 TELP: 0851-5859-3379
             </div>
-            
+
             <div class="double-line"></div>
-            
+
             <div>
                 Tgl : <span id="notaTgl"></span><br>
                 Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: TRX-99882</span>
             </div>
-            
+
             <div class="line"></div>
-            
+
             <!-- Daftar Barang -->
             <div id="notaDaftarBarang"></div>
-            
+
             <div class="line"></div>
-            
+
             <div class="item-row">
                 <span>Total Item : <span id="notaTotalItem">0</span></span>
             </div>
@@ -255,9 +321,9 @@
                 <span>Kembali</span>
                 <span>Rp <span id="notaKembali">0</span></span>
             </div>
-            
+
             <div class="double-line"></div>
-            
+
             <div class="text-center">
                 Kritik & Saran: 0851-5859-3379<br>
                 <strong>TERIMA KASIH</strong><br>
@@ -270,42 +336,42 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         const masterBarang = [
-            { nama: "CCTV INDOOR EZVIZ H6C PRO 2K/3MP", harga: 490,000.00 },
-            { nama: "CCTV INDOOR EZVIZ TY1 1080P", harga: 470,000.00 },
-            { nama: "CCTV INDOOR EZVIZ C6N 1080P", harga: 470,000.00 },
-            { nama: "CCTV OUTDOOR EZVIZ H8C 1080P", harga: 735,000.00 },
-            { nama: "CCTV OUTDOOR EZVIZ H8C COLOR", harga: 750,000.00 },
-            { nama: "CCTV INDOOR EZVIZ H1C ", harga: 835,000.00 },
-            { nama: "CCTV INDOOR EZVIZ H6 3K", harga: 835,000.00 },
-            { nama: "ACOME APC01 INDOOR 3MP", harga: 405,000.00 },
-            { nama: "ACONE APC06 DUAL LENS", harga: 535,000.00 },
-            { nama: "ACOME APC62 DUAL LENS PTZ", harga: 514,000.00 },
-            { nama: "ACOME APC72 OUTDOOR", harga: 413,000.00 },
-            { nama: "ACOME APC9S", harga: 370,000.00 },
-            { nama: "ACOMME WEBCAM AWC12", harga: 415,000.00 },
-            { nama: "INDOOR HILOOK IPC-T221H", harga: 555,000.00 },
-            { nama: "HILOOK THC-B120", harga: 339,000.00 },
-            { nama: "OUTDOOR HILOOK THC-B127-P", harga: 340,000.00 },
-            { nama: "INDOOR HILOOK THC-T127-P", harga: 320,000.00 },
-            { nama: "DVR HILOOK DVR-204G-F1(S)", harga: 590,000.00 },
-            { nama: "DVR HILOOK DVR-208G-M1/T", harga: 1,060,000.00 },
-            { nama: "DVR HILOOK DVR-216G-M1/T", harga: 1,866,000.00 },
-            { nama: "HDD CCTV WD PURPLE 2TB", harga: 3,000,000.00 },
-            { nama: "RUIJIE RG-EW1200G PRO", harga: 658,000.00 },
-            { nama: "RUIJIE RG-EW1200", harga: 450,000.00 },
-            { nama: "RUIJIE RG-EW1300G", harga: 585,000.00 },
-            { nama: "RUUIJIE RG-EW300N", harga: 290,000.00 },
-            { nama: "TP-LINK ROUTER TL-WR840N", harga: 240,000.00 },
-            { nama: "TENDA F3 4 IN 1 ROUTER", harga: 250,000.00 },
-            { nama: "Kabel UTP Cat6 Eceran / meter", harga: 8,500.00 },
-            { nama: "kabel ftp spectra outdoor / meter", harga: 4,500.00 },
-            { nama: "Jasa Instalasi CCTV per Titik", harga: 150,000.00 },
-            { nama: "Jasa Setting NVR / DVR + Remote Smartphone", harga: 300,000.00 },
-            { nama: "Jasa Tarik Kabel LAN & Penataan Rack", harga: 120,000.00 },
-            { nama: "Jasa Instalasi & Setting Access Door", harga: 500,000.00 },
+            { nama: "CCTV INDOOR EZVIZ H6C PRO 2K/3MP", harga: 490000 },
+            { nama: "CCTV INDOOR EZVIZ TY1 1080P", harga: 470000 },
+            { nama: "CCTV INDOOR EZVIZ C6N 1080P", harga: 470000 },
+            { nama: "CCTV OUTDOOR EZVIZ H8C 1080P", harga: 735000 },
+            { nama: "CCTV OUTDOOR EZVIZ H8C COLOR", harga: 750000 },
+            { nama: "CCTV INDOOR EZVIZ H1C ", harga: 835000 },
+            { nama: "CCTV INDOOR EZVIZ H6 3K", harga: 835000 },
+            { nama: "ACOME APC01 INDOOR 3MP", harga: 405000 },
+            { nama: "ACONE APC06 DUAL LENS", harga: 535000 },
+            { nama: "ACOME APC62 DUAL LENS PTZ", harga: 514000 },
+            { nama: "ACOME APC72 OUTDOOR", harga: 413000 },
+            { nama: "ACOME APC9S", harga: 370000 },
+            { nama: "ACOMME WEBCAM AWC12", harga: 415000 },
+            { nama: "INDOOR HILOOK IPC-T221H", harga: 555000 },
+            { nama: "HILOOK THC-B120", harga: 339000 },
+            { nama: "OUTDOOR HILOOK THC-B127-P", harga: 340000 },
+            { nama: "INDOOR HILOOK THC-T127-P", harga: 320000 },
+            { nama: "DVR HILOOK DVR-204G-F1(S)", harga: 590000 },
+            { nama: "DVR HILOOK DVR-208G-M1/T", harga: 1060000 },
+            { nama: "DVR HILOOK DVR-216G-M1/T", harga: 1866000 },
+            { nama: "HDD CCTV WD PURPLE 2TB", harga: 300000000 },
+            { nama: "RUIJIE RG-EW1200G PRO", harga: 658000 },
+            { nama: "RUIJIE RG-EW1200", harga: 450000 },
+            { nama: "RUIJIE RG-EW1300G", harga: 585000 },
+            { nama: "RUUIJIE RG-EW300N", harga: 290000 },
+            { nama: "TP-LINK ROUTER TL-WR840N", harga: 240000 },
+            { nama: "TENDA F3 4 IN 1 ROUTER", harga: 250000 },
+            { nama: "Kabel UTP Cat6 Eceran / meter", harga: 8500 },
+            { nama: "kabel ftp spectra outdoor / meter", harga: 4500 },
+            { nama: "Jasa Instalasi CCTV per Titik", harga: 150000 },
+            { nama: "Jasa Setting NVR / DVR + Remote Smartphone", harga: 300000 },
+            { nama: "Jasa Tarik Kabel LAN & Penataan Rack", harga: 120000 },
+            { nama: "Jasa Instalasi & Setting Access Door", harga: 500000. },
             { nama: "Jasa Instalasi box mcb/rcbo", harga: 150000 },
-            { nama: "MICRO SD CARD 32GB CLASS 10", harga: 173,000.00 },
-            { nama: "MICRO SD CARD 32GB CLASS 10", harga: 237,000.00 }
+            { nama: "MICRO SD CARD 32GB CLASS 10", harga: 173000 },
+            { nama: "MICRO SD CARD 32GB CLASS 10", harga: 237000 }
         ];
 
         let daftarBarang = [];
@@ -334,10 +400,10 @@
         function setTanggal() {
             const skrg = new Date();
             const tglStr = String(skrg.getDate()).padStart(2, '0') + '.' +
-                           String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
-                           String(skrg.getFullYear()).slice(-2) + '-' +
-                           String(skrg.getHours()).padStart(2, '0') + ':' +
-                           String(skrg.getMinutes()).padStart(2, '0');
+                String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
+                String(skrg.getFullYear()).slice(-2) + '-' +
+                String(skrg.getHours()).padStart(2, '0') + ':' +
+                String(skrg.getMinutes()).padStart(2, '0');
             document.getElementById('notaTgl').innerText = tglStr;
         }
 
@@ -432,7 +498,7 @@
 
                 const div = document.createElement('div');
                 div.style.marginBottom = "4px";
-                
+
                 let infoDiskonText = '';
                 if (item.diskon > 0) {
                     infoDiskonText = `<div class="discount-text">&nbsp;&nbsp;(Disc: -Rp ${formatRupiah(item.diskon)}/item)</div>`;
@@ -502,7 +568,7 @@
         function renderTabelRiwayat() {
             const tbody = document.getElementById('tabelRiwayat');
             if (!tbody) return;
-            
+
             tbody.innerHTML = '';
             let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
 
@@ -542,7 +608,7 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             muatMasterBarang();
             setTanggal();
             document.getElementById('nomer-nota').innerText = generateNotaRandom();
@@ -550,4 +616,5 @@
         });
     </script>
 </body>
+
 </html>
