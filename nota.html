@@ -128,6 +128,14 @@
             background-color: #f8f9fa;
         }
 
+        .info-pembayaran {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
         /* FORMAT TAMPILAN NOTA */
         .nota-box {
             font-family: 'Courier New', Courier, monospace;
@@ -230,7 +238,7 @@
             </div>
             <div class="form-group">
                 <label>Jumlah (Qty)</label>
-                <input type="number" id="qtyBarang" value="1" onkeypress="handleEnter(event)">
+                <input type="number" id="qtyBarang" value="1" min="1" onkeypress="handleEnter(event)">
             </div>
             <div class="form-group">
                 <label>Diskon / Item (Rp)</label>
@@ -259,6 +267,10 @@
         <div class="form-group">
             <label>Uang Bayar (Rp)</label>
             <input type="number" id="uangBayar" placeholder="Contoh: 200000" oninput="updateStruk()">
+        </div>
+
+        <div class="info-pembayaran">
+            <strong>Status Bayar:</strong> <span id="statusKembalian">Rp 0</span>
         </div>
 
         <button class="btn btn-print" onclick="cetakNota()">Cetak Struk Nota</button>
@@ -303,7 +315,7 @@
 
             <div>
                 Tgl : <span id="notaTgl"></span><br>
-                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: TRX-99882</span>
+                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: TRX-00000000-000</span>
             </div>
 
             <div class="line"></div>
@@ -352,7 +364,7 @@
             { nama: "CCTV INDOOR EZVIZ C6N 1080P", harga: 470000 },
             { nama: "CCTV OUTDOOR EZVIZ H8C 1080P", harga: 735000 },
             { nama: "CCTV OUTDOOR EZVIZ H8C COLOR", harga: 750000 },
-            { nama: "CCTV INDOOR EZVIZ H1C ", harga: 835000 },
+            { nama: "CCTV INDOOR EZVIZ H1C", harga: 835000 },
             { nama: "CCTV INDOOR EZVIZ H6 3K", harga: 835000 },
             { nama: "ACOME APC01 INDOOR 3MP", harga: 405000 },
             { nama: "ACONE APC06 DUAL LENS", harga: 535000 },
@@ -367,7 +379,7 @@
             { nama: "DVR HILOOK DVR-204G-F1(S)", harga: 590000 },
             { nama: "DVR HILOOK DVR-208G-M1/T", harga: 1060000 },
             { nama: "DVR HILOOK DVR-216G-M1/T", harga: 1866000 },
-            { nama: "HDD CCTV WD PURPLE 2TB", harga: 3000000 }, // Perbaikan harga sesuai permintaan (Rp 3.000.000)
+            { nama: "HDD CCTV WD PURPLE 2TB", harga: 3000000 },
             { nama: "RUIJIE RG-EW1200G PRO", harga: 658000 },
             { nama: "RUIJIE RG-EW1200", harga: 450000 },
             { nama: "RUIJIE RG-EW1300G", harga: 585000 },
@@ -382,7 +394,13 @@
             { nama: "JASA INSTALASI DAN SETTING ACCESS DOOR", harga: 500000 },
             { nama: "JASA INSTALASI BOX MCB", harga: 150000 },
             { nama: "MICRO SD CARD 32GB CLASS 10", harga: 173000 },
-            { nama: "MICRO SD CARD 64GB CLASS 10", harga: 237000 }
+            { nama: "MICRO SD CARD 64GB CLASS 10", harga: 237000 },
+            { nama: "KABEL POWER", harga: 8000 },
+            { nama: "DURADUS", harga: 15000 },
+            { nama: "KLEM 6MM", harga: 6500 },
+            { nama: "KLEM 10MM", harga: 12500 },
+            { nama: "KABEL TIES 3.6X250", harga: 26000 },
+            { nama: "AKSESORIS CCTV(KABEL 5M, DURADUS, KLEM, DLL)", harga: 100000 }
         ];
 
         let daftarBarang = [];
@@ -418,9 +436,31 @@
             document.getElementById('notaTgl').innerText = tglStr;
         }
 
-        function generateNotaRandom() {
-            let randomNum = Math.floor(100000 + Math.random() * 900000);
-            return "NOTA-" + randomNum;
+        // FUNGSI NOMOR NOTA OTOMATIS BERDASARKAN TANGGAL & URUTAN LOCALSTORAGE
+        function generateNotaOtomatis() {
+            const skrg = new Date();
+            const thn = skrg.getFullYear();
+            const bln = String(skrg.getMonth() + 1).padStart(2, '0');
+            const tgl = String(skrg.getDate()).padStart(2, '0');
+
+            // Format Prefix Tanggal Hari Ini: TRX-YYYYMMDD
+            const prefixHariIni = `TRX-${thn}${bln}${tgl}`;
+
+            // Ambil riwayat dari LocalStorage
+            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
+
+            // Filter riwayat yang dibuat pada tanggal yang sama hari ini
+            let transaksiHariIni = riwayat.filter(item => {
+                return item.noNota && item.noNota.includes(prefixHariIni);
+            });
+
+            // Urutan baru = Jumlah transaksi hari ini + 1
+            let nomorUrut = transaksiHariIni.length + 1;
+
+            // Format ke 3 Digit dengan Leading Zero (Contoh: 001, 002, 010)
+            let strUrut = String(nomorUrut).padStart(3, '0');
+
+            return `No: ${prefixHariIni}-${strUrut}`;
         }
 
         function formatRupiah(angka) {
@@ -454,11 +494,19 @@
                 return;
             }
 
-            const hargaSetelahDiskon = harga - diskon;
-            const subtotal = hargaSetelahDiskon * qty;
-            const totalDiskonItem = diskon * qty;
+            // Cek apakah barang sudah ada dalam transaksi (Update Qty)
+            const indexEksis = daftarBarang.findIndex(item => item.nama === nama && item.diskon === diskon);
 
-            daftarBarang.push({ nama, harga, qty, diskon, subtotal, totalDiskonItem });
+            if (indexEksis !== -1) {
+                daftarBarang[indexEksis].qty += qty;
+                daftarBarang[indexEksis].subtotal = (daftarBarang[indexEksis].harga - diskon) * daftarBarang[indexEksis].qty;
+                daftarBarang[indexEksis].totalDiskonItem = diskon * daftarBarang[indexEksis].qty;
+            } else {
+                const hargaSetelahDiskon = harga - diskon;
+                const subtotal = hargaSetelahDiskon * qty;
+                const totalDiskonItem = diskon * qty;
+                daftarBarang.push({ nama, harga, qty, diskon, subtotal, totalDiskonItem });
+            }
 
             namaInput.value = '';
             hargaInput.value = '';
@@ -529,6 +577,18 @@
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
             const kembalian = uangBayar - totalBelanja;
 
+            const statusKembalian = document.getElementById('statusKembalian');
+            if (uangBayar === 0) {
+                statusKembalian.innerText = "Rp 0";
+                statusKembalian.style.color = "black";
+            } else if (kembalian < 0) {
+                statusKembalian.innerText = `Kurang Rp ${formatRupiah(Math.abs(kembalian))}`;
+                statusKembalian.style.color = "red";
+            } else {
+                statusKembalian.innerText = `Kembali Rp ${formatRupiah(kembalian)}`;
+                statusKembalian.style.color = "green";
+            }
+
             const rowTotalDiskon = document.getElementById('rowTotalDiskon');
             if (akumulasiDiskon > 0) {
                 rowTotalDiskon.style.display = 'flex';
@@ -563,8 +623,9 @@
                 totalItem: parseInt(document.getElementById('notaTotalItem').innerText),
                 totalBelanja: totalBelanja,
                 uangBayar: uangBayar,
-                items: JSON.parse(JSON.stringify(daftarBarang)) // Simpan detail daftar barang
+                items: JSON.parse(JSON.stringify(daftarBarang))
             };
+
             simpanKeRiwayat(transaksiBaru);
 
             window.print();
@@ -609,7 +670,6 @@
 
             if (!dataNota) return;
 
-            // Update elemen nota dengan data riwayat lama
             document.getElementById('nomer-nota').innerText = dataNota.noNota;
             document.getElementById('notaTgl').innerText = dataNota.tanggal;
 
@@ -657,7 +717,6 @@
             document.getElementById('notaTunai').innerText = formatRupiah(dataNota.uangBayar);
             document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
 
-            // Cetak langsung
             window.print();
         }
 
@@ -665,24 +724,23 @@
             if (confirm('Apakah Anda yakin ingin menghapus semua riwayat transaksi?')) {
                 localStorage.removeItem('riwayatKasir');
                 renderTabelRiwayat();
+                resetTransaksi();
             }
         }
 
         function resetTransaksi() {
-            if (confirm('Apakah Anda yakin ingin memulai transaksi baru?')) {
-                daftarBarang = [];
-                document.getElementById('uangBayar').value = '';
-                document.getElementById('nomer-nota').innerText = generateNotaRandom();
-                setTanggal();
-                renderTabel();
-                updateStruk();
-            }
+            daftarBarang = [];
+            document.getElementById('uangBayar').value = '';
+            document.getElementById('nomer-nota').innerText = generateNotaOtomatis();
+            setTanggal();
+            renderTabel();
+            updateStruk();
         }
 
         document.addEventListener("DOMContentLoaded", function () {
             muatMasterBarang();
             setTanggal();
-            document.getElementById('nomer-nota').innerText = generateNotaRandom();
+            document.getElementById('nomer-nota').innerText = generateNotaOtomatis();
             renderTabelRiwayat();
         });
     </script>
