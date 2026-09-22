@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Kasir - Dedy Technology Solution</title>
+    <title>Sistem Kasir & Dokumen - Dedy Technology Solution</title>
     <style>
         * {
             box-sizing: border-box;
@@ -30,12 +30,34 @@
         .form-section {
             flex: 1;
             min-width: 0;
-            /* Mencegah flex child meluap */
         }
 
         .preview-section {
-            width: 320px;
+            width: 360px;
             flex-shrink: 0;
+        }
+
+        /* TAB NAVIGATION */
+        .tab-menu {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            padding: 10px 15px;
+            border: none;
+            background: #e9ecef;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 6px 6px 0 0;
+            font-size: 14px;
+        }
+
+        .tab-btn.active {
+            background: #007bff;
+            color: white;
         }
 
         .form-group {
@@ -49,12 +71,17 @@
             font-size: 14px;
         }
 
-        input {
+        input, textarea, select {
             width: 100%;
             padding: 10px 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
+        }
+
+        input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
         }
 
         .form-row {
@@ -80,41 +107,11 @@
             font-size: 14px;
         }
 
-        .btn-add {
-            background-color: #28a745;
-        }
+        .btn-add { background-color: #28a745; }
+        .btn-print { background-color: #007bff; margin-top: 15px; }
+        .btn-reset { background-color: #dc3545; margin-top: 10px; }
+        .btn-delete { background-color: #dc3545; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
 
-        .btn-print {
-            background-color: #007bff;
-            margin-top: 15px;
-        }
-
-        .btn-reset {
-            background-color: #dc3545;
-            margin-top: 10px;
-        }
-
-        .btn-delete {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .btn-reprint {
-            background-color: #17a2b8;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        /* Pembungkus Tabel Agar Bisa Di-scroll di Layar Kecil */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -129,21 +126,9 @@
             white-space: nowrap;
         }
 
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f8f9fa;
-        }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 8px; text-align: left; }
+        th { background-color: #f8f9fa; }
 
         .info-pembayaran {
             margin-top: 10px;
@@ -153,116 +138,53 @@
             font-size: 15px;
         }
 
-        /* FORMAT TAMPILAN NOTA */
+        /* NOTA / DOKUMEN PREVIEW */
         .nota-box {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: Arial, sans-serif;
             font-size: 12px;
             width: 100%;
-            max-width: 280px;
             background: white;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ddd;
             margin: 0 auto;
-            line-height: 1.2;
+            line-height: 1.3;
         }
 
-        .text-center {
-            text-align: center;
-        }
+        .text-center { text-align: center; }
+        .logo-nota { max-width: 70px; max-height: 70px; display: block; margin: 0 auto 8px auto; }
+        .logo-form { max-width: 70px; max-height: 70px; display: block; margin: 0 auto 8px auto; }
 
-        .logo-nota {
-            max-width: 70px;
-            max-height: 70px;
-            display: block;
-            margin: 0 auto 8px auto;
-            filter: grayscale(100%);
-        }
+        .line { border-top: 1px dashed #000; margin: 8px 0; }
+        .double-line { border-top: 2px solid #000; margin: 8px 0; }
+        .item-row { display: flex; justify-content: space-between; }
+        .discount-text { font-size: 11px; color: #555; }
 
-        .logo-form {
-            max-width: 70px;
-            max-height: 70px;
-            display: block;
-            margin: 0 auto 8px auto;
-        }
-
-        .line {
-            border-top: 1px dashed #000;
-            margin: 6px 0;
-        }
-
-        .double-line {
-            border-top: 2px solid #000;
-            margin: 6px 0;
-        }
-
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .discount-text {
+        .client-info-preview {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
             font-size: 11px;
-            color: #555;
         }
 
-        /* MEDIA QUERY RESPONSIVE UNTUK HP */
         @media screen and (max-width: 768px) {
-            body {
-                flex-direction: column;
-                padding: 10px;
-                gap: 15px;
-            }
-
-            .container {
-                padding: 15px;
-            }
-
-            .preview-section {
-                width: 100%;
-            }
-
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .form-row .form-group {
-                width: 100%;
-            }
+            body { flex-direction: column; padding: 10px; gap: 15px; }
+            .preview-section { width: 100%; }
+            .form-row { flex-direction: column; gap: 0; }
         }
 
-        /* CSS UNTUK CETAK/PRINT */
         @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-
-            body * {
-                visibility: hidden;
-            }
-
-            .preview-section,
-            .preview-section * {
-                visibility: visible;
-            }
-
+            body { background: white; padding: 0; }
+            body * { visibility: hidden; }
+            .preview-section, .preview-section * { visibility: visible; }
             .preview-section {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
             }
-
-            .nota-box {
-                border: none;
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .no-print {
-                display: none !important;
-            }
+            .nota-box { border: none; width: 100%; max-width: 100%; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
@@ -272,19 +194,56 @@
     <!-- SECTION FORM INPUT -->
     <div class="container form-section no-print">
         <img class="logo-form" src="Logo.png" alt="Logo Toko">
-        <h2 style="text-align: center; font-size: 20px; margin-top: 5px;">Input Transaksi Kasir</h2>
+        <h2 style="text-align: center; font-size: 20px; margin-top: 5px; margin-bottom: 15px;">Aplikasi Kasir & Dokumen Usaha</h2>
 
+        <!-- NAVIGATION TAB -->
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchMode('pos')">Kasir (Struk)</button>
+            <button class="tab-btn" onclick="switchMode('invoice')">Invoice</button>
+            <button class="tab-btn" onclick="switchMode('penawaran')">Penawaran Harga</button>
+        </div>
+
+        <!-- CLIENT INFO SECTION (INVOICE & PENAWARAN ONLY) -->
+        <div id="sectionKlien" style="display: none; background: #eef2f7; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+            <h4 style="margin: 0 0 10px 0;">Informasi Klien / Pelanggan</h4>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nama Klien / Perusahaan</label>
+                    <input type="text" id="namaKlien" placeholder="Contoh: PT Sukses Mandiri" oninput="updateStruk()">
+                </div>
+                <div class="form-group">
+                    <label>No. Telepon / WA</label>
+                    <input type="text" id="telpKlien" placeholder="Contoh: 08123456789" oninput="updateStruk()">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Alamat Klien</label>
+                <input type="text" id="alamatKlien" placeholder="Alamat lengkap klien..." oninput="updateStruk()">
+            </div>
+            <div class="form-row">
+                <div class="form-group" id="groupJatuhTempo">
+                    <label>Tanggal Jatuh Tempo</label>
+                    <input type="date" id="tglJatuhTempo" onchange="updateStruk()">
+                </div>
+                <div class="form-group" id="groupMasaBerlaku" style="display: none;">
+                    <label>Masa Berlaku Penawaran</label>
+                    <input type="text" id="masaBerlaku" placeholder="Contoh: 14 Hari" value="14 Hari" oninput="updateStruk()">
+                </div>
+            </div>
+        </div>
+
+        <!-- INPUT BARANG -->
         <div class="form-group">
-            <label>Nama Barang (Pilih / Ketik)</label>
-            <input type="text" id="namaBarang" list="listBarang" placeholder="Ketik atau pilih barang..."
+            <label>Pilih Barang / Jasa (Dari Master Data)</label>
+            <input type="text" id="namaBarang" list="listBarang" placeholder="Ketik atau pilih nama barang/jasa..."
                 oninput="autoIsiHarga()" onkeypress="handleEnter(event)">
             <datalist id="listBarang"></datalist>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>Harga (Rp)</label>
-                <input type="number" id="hargaBarang" placeholder="Harga..." onkeypress="handleEnter(event)">
+                <label>Harga Master (Rp)</label>
+                <input type="number" id="hargaBarang" placeholder="Otomatis terisi..." readonly>
             </div>
             <div class="form-group">
                 <label>Jumlah (Qty)</label>
@@ -296,14 +255,14 @@
             </div>
         </div>
 
-        <button class="btn btn-add" onclick="tambahBarang()">+ Tambah Barang</button>
+        <button class="btn btn-add" onclick="tambahBarang()">+ Tambah ke Daftar</button>
 
-        <!-- Tabel Item -->
+        <!-- TABEL BARANG -->
         <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
-                        <th>Nama</th>
+                        <th>Nama Item</th>
                         <th>Qty</th>
                         <th>Harga</th>
                         <th>Disc/Item</th>
@@ -315,62 +274,52 @@
             </table>
         </div>
 
-        <!-- Input Pembayaran -->
-        <div class="form-group">
-            <label>Uang Bayar (Rp)</label>
-            <input type="number" id="uangBayar" placeholder="Contoh: 200000" oninput="updateStruk()">
-        </div>
+        <!-- SECTION PEMBAYARAN KASIR -->
+        <div id="sectionPembayaran">
+            <div class="form-group">
+                <label>Uang Bayar (Rp)</label>
+                <input type="number" id="uangBayar" placeholder="Contoh: 200000" oninput="updateStruk()">
+            </div>
 
-        <div class="info-pembayaran">
-            <strong>Status Bayar:</strong> <span id="statusKembalian">Rp 0</span>
-        </div>
-
-        <button class="btn btn-print" onclick="cetakNota()">Cetak Struk Nota</button>
-        <button class="btn btn-reset" onclick="resetTransaksi()">Transaksi Baru</button>
-
-        <!-- TABEL RIWAYAT TRANSAKSI -->
-        <div style="margin-top: 30px;">
-            <h3>Riwayat Transaksi (LocalStorage)</h3>
-            <button class="btn btn-reset" onclick="hapusSemuaRiwayat()"
-                style="width: auto; padding: 6px 12px; margin-bottom: 10px;">Hapus Semua Riwayat</button>
-
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No. Nota</th>
-                            <th>Tanggal</th>
-                            <th>Total Items</th>
-                            <th>Total Belanja</th>
-                            <th>Uang Bayar</th>
-                            <th style="width: 90px;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelRiwayat"></tbody>
-                </table>
+            <div class="info-pembayaran">
+                <strong>Status Bayar:</strong> <span id="statusKembalian">Rp 0</span>
             </div>
         </div>
+
+        <button class="btn btn-print" id="btnCetak" onclick="cetakNota()">Cetak Struk Nota</button>
+        <button class="btn btn-reset" onclick="resetTransaksi()">Buat Dokumen Baru</button>
     </div>
 
-    <!-- SECTION PRATINJAU STRUK NOTA -->
+    <!-- SECTION PRATINJAU DOKUMEN -->
     <div class="container preview-section">
-        <h3 class="no-print" style="margin-top:0; text-align: center;">Pratinjau Nota</h3>
+        <h3 class="no-print" style="margin-top:0; text-align: center;">Pratinjau Dokumen</h3>
 
         <div class="nota-box">
             <div class="text-center">
                 <img id="notaLogo" class="logo-nota" src="Logo.png" alt="Logo Toko">
-
                 <strong>DEDY TECHNOLOGY SOLUTION</strong><br>
-                Sangketan, Kabupaten Tabanan<br>
-                Bali<br>
+                Sangketan, Kabupaten Tabanan - Bali<br>
                 TELP: 0851-5859-3379
             </div>
 
             <div class="double-line"></div>
 
+            <div class="text-center" style="margin-bottom: 8px;">
+                <strong id="previewJudulDokumen" style="font-size: 14px;">STRUK PENJUALAN</strong>
+            </div>
+
             <div>
                 Tgl : <span id="notaTgl"></span><br>
-                Ksr : KASIR ADMIN <span style="float:right;" id="nomer-nota">No: TRX-00000000-000</span>
+                <span id="previewNoDokumen">No: TRX-00000000-000</span>
+            </div>
+
+            <!-- PREVIEW KLIEN -->
+            <div id="previewKlienBox" class="client-info-preview" style="display: none; margin-top: 8px;">
+                <strong>Kepada Yth:</strong><br>
+                <span id="pNamaKlien">-</span><br>
+                <span id="pTelpKlien">-</span><br>
+                <span id="pAlamatKlien">-</span><br>
+                <span id="pEkstraInfo"></span>
             </div>
 
             <div class="line"></div>
@@ -388,16 +337,19 @@
                 <span>-Rp <span id="notaTotalDiskon">0</span></span>
             </div>
             <div class="item-row">
-                <span><strong>Total Belanja</strong></span>
+                <span><strong>Total Tagihan</strong></span>
                 <span><strong>Rp <span id="notaTotalBelanja">0</span></strong></span>
             </div>
-            <div class="item-row">
-                <span>Tunai</span>
-                <span>Rp <span id="notaTunai">0</span></span>
-            </div>
-            <div class="item-row">
-                <span>Kembali</span>
-                <span>Rp <span id="notaKembali">0</span></span>
+
+            <div id="previewRowKasir">
+                <div class="item-row">
+                    <span>Tunai</span>
+                    <span>Rp <span id="notaTunai">0</span></span>
+                </div>
+                <div class="item-row">
+                    <span>Kembali</span>
+                    <span>Rp <span id="notaKembali">0</span></span>
+                </div>
             </div>
 
             <div class="double-line"></div>
@@ -405,8 +357,7 @@
             <div class="text-center">
                 Kritik & Saran: 0851-5859-3379<br>
                 <strong>TERIMA KASIH</strong><br>
-                SELAMAT BELANJA KEMBALI<br>
-                *Barang yang sudah dibeli tidak dapat ditukar atau dikembalikan
+                <span id="previewFooterText">SELAMAT BELANJA KEMBALI</span>
             </div>
         </div>
     </div>
@@ -422,11 +373,11 @@
             { nama: "CCTV INDOOR EZVIZ H1C", harga: 835000 },
             { nama: "CCTV INDOOR EZVIZ H6 3K", harga: 835000 },
             { nama: "ACOME APC01 INDOOR 3MP", harga: 405000 },
-            { nama: "ACONE APC06 DUAL LENS", harga: 535000 },
+            { nama: "ACOME APC06 DUAL LENS", harga: 535000 },
             { nama: "ACOME APC62 DUAL LENS PTZ", harga: 514000 },
             { nama: "ACOME APC72 OUTDOOR", harga: 413000 },
             { nama: "ACOME APC9S", harga: 370000 },
-            { nama: "ACOMME WEBCAM AWC12", harga: 415000 },
+            { nama: "ACOME WEBCAM AWC12", harga: 415000 },
             { nama: "INDOOR HILOOK IPC-T221H", harga: 555000 },
             { nama: "HILOOK THC-B120", harga: 339000 },
             { nama: "OUTDOOR HILOOK THC-B127-P", harga: 340000 },
@@ -438,7 +389,7 @@
             { nama: "RUIJIE RG-EW1200G PRO", harga: 658000 },
             { nama: "RUIJIE RG-EW1200", harga: 450000 },
             { nama: "RUIJIE RG-EW1300G", harga: 585000 },
-            { nama: "RUUIJIE RG-EW300N", harga: 290000 },
+            { nama: "RUIJIE RG-EW300N", harga: 290000 },
             { nama: "TP-LINK ROUTER TL-WR840N", harga: 240000 },
             { nama: "TENDA F3 4 IN 1 ROUTER", harga: 250000 },
             { nama: "KABEL UTP CAT6 ECERAN METERAN", harga: 8500 },
@@ -459,6 +410,57 @@
         ];
 
         let daftarBarang = [];
+        let modeAktif = 'pos'; // pos, invoice, penawaran
+
+        function switchMode(mode) {
+            modeAktif = mode;
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            const sectionKlien = document.getElementById('sectionKlien');
+            const sectionPembayaran = document.getElementById('sectionPembayaran');
+            const previewRowKasir = document.getElementById('previewRowKasir');
+            const previewKlienBox = document.getElementById('previewKlienBox');
+
+            const groupJatuhTempo = document.getElementById('groupJatuhTempo');
+            const groupMasaBerlaku = document.getElementById('groupMasaBerlaku');
+
+            const previewJudul = document.getElementById('previewJudulDokumen');
+            const btnCetak = document.getElementById('btnCetak');
+
+            if (mode === 'pos') {
+                buttons[0].classList.add('active');
+                sectionKlien.style.display = 'none';
+                sectionPembayaran.style.display = 'block';
+                previewRowKasir.style.display = 'block';
+                previewKlienBox.style.display = 'none';
+                previewJudul.innerText = "STRUK PENJUALAN";
+                btnCetak.innerText = "Cetak Struk Nota";
+            } else if (mode === 'invoice') {
+                buttons[1].classList.add('active');
+                sectionKlien.style.display = 'block';
+                groupJatuhTempo.style.display = 'block';
+                groupMasaBerlaku.style.display = 'none';
+                sectionPembayaran.style.display = 'none';
+                previewRowKasir.style.display = 'none';
+                previewKlienBox.style.display = 'block';
+                previewJudul.innerText = "INVOICE / TAGIHAN";
+                btnCetak.innerText = "Cetak Dokumen Invoice";
+            } else if (mode === 'penawaran') {
+                buttons[2].classList.add('active');
+                sectionKlien.style.display = 'block';
+                groupJatuhTempo.style.display = 'none';
+                groupMasaBerlaku.style.display = 'block';
+                sectionPembayaran.style.display = 'none';
+                previewRowKasir.style.display = 'none';
+                previewKlienBox.style.display = 'block';
+                previewJudul.innerText = "PENAWARAN HARGA";
+                btnCetak.innerText = "Cetak Dokumen Penawaran";
+            }
+
+            document.getElementById('previewNoDokumen').innerText = generateNoDokumenOtomatis();
+            updateStruk();
+        }
 
         function muatMasterBarang() {
             const datalist = document.getElementById('listBarang');
@@ -478,6 +480,8 @@
             const barangDitemukan = masterBarang.find(item => item.nama === inputNama);
             if (barangDitemukan) {
                 inputHarga.value = barangDitemukan.harga;
+            } else {
+                inputHarga.value = '';
             }
         }
 
@@ -489,25 +493,25 @@
                 String(skrg.getHours()).padStart(2, '0') + ':' +
                 String(skrg.getMinutes()).padStart(2, '0');
             document.getElementById('notaTgl').innerText = tglStr;
+
+            // Set default jatuh tempo +7 hari
+            const jatuhTempoDate = new Date();
+            jatuhTempoDate.setDate(skrg.getDate() + 7);
+            document.getElementById('tglJatuhTempo').valueAsDate = jatuhTempoDate;
         }
 
-        function generateNotaOtomatis() {
+        function generateNoDokumenOtomatis() {
             const skrg = new Date();
             const thn = skrg.getFullYear();
             const bln = String(skrg.getMonth() + 1).padStart(2, '0');
             const tgl = String(skrg.getDate()).padStart(2, '0');
 
-            const prefixHariIni = `TRX-${thn}${bln}${tgl}`;
-            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
+            let prefix = "TRX";
+            if (modeAktif === 'invoice') prefix = "INV";
+            if (modeAktif === 'penawaran') prefix = "OFF";
 
-            let transaksiHariIni = riwayat.filter(item => {
-                return item.noNota && item.noNota.includes(prefixHariIni);
-            });
-
-            let nomorUrut = transaksiHariIni.length + 1;
-            let strUrut = String(nomorUrut).padStart(3, '0');
-
-            return `No: ${prefixHariIni}-${strUrut}`;
+            const acak = Math.floor(100 + Math.random() * 900);
+            return `No: ${prefix}-${thn}${bln}${tgl}-${acak}`;
         }
 
         function formatRupiah(angka) {
@@ -522,22 +526,29 @@
 
         function tambahBarang() {
             const namaInput = document.getElementById('namaBarang');
-            const hargaInput = document.getElementById('hargaBarang');
             const qtyInput = document.getElementById('qtyBarang');
             const diskonInput = document.getElementById('diskonItem');
 
             const nama = namaInput.value.trim().toUpperCase();
-            const harga = parseInt(hargaInput.value);
             const qty = parseInt(qtyInput.value);
             const diskon = parseInt(diskonInput.value) || 0;
 
-            if (!nama || isNaN(harga) || isNaN(qty) || harga <= 0 || qty <= 0) {
-                alert('Silakan isi nama barang, harga, dan jumlah dengan benar!');
+            const barangMaster = masterBarang.find(item => item.nama === nama);
+
+            if (!barangMaster) {
+                alert('Barang/Jasa tidak ditemukan di Data Master! Silakan pilih dari daftar.');
                 return;
             }
 
+            if (isNaN(qty) || qty <= 0) {
+                alert('Jumlah (Qty) harus lebih besar dari 0!');
+                return;
+            }
+
+            const harga = barangMaster.harga;
+
             if (diskon >= harga) {
-                alert('Diskon per item tidak boleh melebihi atau sama dengan harga barang!');
+                alert('Diskon per item tidak boleh melebihi atau sama dengan harga dasar!');
                 return;
             }
 
@@ -545,17 +556,16 @@
 
             if (indexEksis !== -1) {
                 daftarBarang[indexEksis].qty += qty;
-                daftarBarang[indexEksis].subtotal = (daftarBarang[indexEksis].harga - diskon) * daftarBarang[indexEksis].qty;
+                daftarBarang[indexEksis].subtotal = (harga - diskon) * daftarBarang[indexEksis].qty;
                 daftarBarang[indexEksis].totalDiskonItem = diskon * daftarBarang[indexEksis].qty;
             } else {
-                const hargaSetelahDiskon = harga - diskon;
-                const subtotal = hargaSetelahDiskon * qty;
+                const subtotal = (harga - diskon) * qty;
                 const totalDiskonItem = diskon * qty;
                 daftarBarang.push({ nama, harga, qty, diskon, subtotal, totalDiskonItem });
             }
 
             namaInput.value = '';
-            hargaInput.value = '';
+            document.getElementById('hargaBarang').value = '';
             qtyInput.value = '1';
             diskonInput.value = '0';
             namaInput.focus();
@@ -620,6 +630,22 @@
                 containerNota.appendChild(div);
             });
 
+            // Update Info Klien
+            if (modeAktif !== 'pos') {
+                document.getElementById('pNamaKlien').innerText = document.getElementById('namaKlien').value || '-';
+                document.getElementById('pTelpKlien').innerText = document.getElementById('telpKlien').value || '-';
+                document.getElementById('pAlamatKlien').innerText = document.getElementById('alamatKlien').value || '-';
+
+                if (modeAktif === 'invoice') {
+                    const tglJatuh = document.getElementById('tglJatuhTempo').value;
+                    document.getElementById('pEkstraInfo').innerText = `Jatuh Tempo: ${tglJatuh || '-'}`;
+                } else if (modeAktif === 'penawaran') {
+                    const berlaku = document.getElementById('masaBerlaku').value;
+                    document.getElementById('pEkstraInfo').innerText = `Masa Berlaku: ${berlaku || '-'}`;
+                }
+            }
+
+            // Calculations
             const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
             const kembalian = uangBayar - totalBelanja;
 
@@ -651,132 +677,36 @@
 
         function cetakNota() {
             if (daftarBarang.length === 0) {
-                alert('Belum ada barang dalam daftar transaksi!');
+                alert('Daftar barang/jasa masih kosong!');
                 return;
             }
 
             const totalBelanja = daftarBarang.reduce((sum, item) => sum + item.subtotal, 0);
-            const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
 
-            if (uangBayar < totalBelanja) {
-                alert('Uang pembayaran masih kurang!');
-                return;
-            }
-
-            const transaksiBaru = {
-                noNota: document.getElementById('nomer-nota').innerText,
-                tanggal: document.getElementById('notaTgl').innerText,
-                totalItem: parseInt(document.getElementById('notaTotalItem').innerText),
-                totalBelanja: totalBelanja,
-                uangBayar: uangBayar,
-                items: JSON.parse(JSON.stringify(daftarBarang))
-            };
-
-            simpanKeRiwayat(transaksiBaru);
-            window.print();
-        }
-
-        function simpanKeRiwayat(notaData) {
-            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
-            riwayat.unshift(notaData);
-            localStorage.setItem('riwayatKasir', JSON.stringify(riwayat));
-            renderTabelRiwayat();
-        }
-
-        function renderTabelRiwayat() {
-            const tbody = document.getElementById('tabelRiwayat');
-            if (!tbody) return;
-
-            tbody.innerHTML = '';
-            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
-
-            if (riwayat.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Belum ada riwayat transaksi</td></tr>';
-                return;
-            }
-
-            riwayat.forEach((item, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${item.noNota}</strong></td>
-                    <td>${item.tanggal}</td>
-                    <td>${item.totalItem} item</td>
-                    <td>Rp ${formatRupiah(item.totalBelanja)}</td>
-                    <td>Rp ${formatRupiah(item.uangBayar)}</td>
-                    <td><button class="btn-reprint" onclick="cetakUlangNota(${index})">Cetak Ulang</button></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function cetakUlangNota(index) {
-            let riwayat = JSON.parse(localStorage.getItem('riwayatKasir')) || [];
-            const dataNota = riwayat[index];
-
-            if (!dataNota) return;
-
-            document.getElementById('nomer-nota').innerText = dataNota.noNota;
-            document.getElementById('notaTgl').innerText = dataNota.tanggal;
-
-            const containerNota = document.getElementById('notaDaftarBarang');
-            containerNota.innerHTML = '';
-
-            let akumulasiDiskon = 0;
-
-            if (dataNota.items && dataNota.items.length > 0) {
-                dataNota.items.forEach(item => {
-                    akumulasiDiskon += (item.totalDiskonItem || 0);
-
-                    const div = document.createElement('div');
-                    div.style.marginBottom = "4px";
-
-                    let infoDiskonText = '';
-                    if (item.diskon > 0) {
-                        infoDiskonText = `<div class="discount-text">&nbsp;&nbsp;(Disc: -Rp ${formatRupiah(item.diskon)}/item)</div>`;
-                    }
-
-                    div.innerHTML = `
-                        <div>${item.nama}</div>
-                        <div class="item-row">
-                            <span>&nbsp;&nbsp;${item.qty} x ${formatRupiah(item.harga - item.diskon)}</span>
-                            <span>${formatRupiah(item.subtotal)}</span>
-                        </div>
-                        ${infoDiskonText}
-                    `;
-                    containerNota.appendChild(div);
-                });
-            }
-
-            const kembalian = dataNota.uangBayar - dataNota.totalBelanja;
-            const rowTotalDiskon = document.getElementById('rowTotalDiskon');
-
-            if (akumulasiDiskon > 0) {
-                rowTotalDiskon.style.display = 'flex';
-                document.getElementById('notaTotalDiskon').innerText = formatRupiah(akumulasiDiskon);
+            if (modeAktif === 'pos') {
+                const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
+                if (uangBayar < totalBelanja) {
+                    alert('Uang pembayaran masih kurang!');
+                    return;
+                }
             } else {
-                rowTotalDiskon.style.display = 'none';
+                const namaKlien = document.getElementById('namaKlien').value.trim();
+                if (!namaKlien) {
+                    alert('Silakan isi nama klien / perusahaan terlebih dahulu!');
+                    return;
+                }
             }
-
-            document.getElementById('notaTotalItem').innerText = dataNota.totalItem;
-            document.getElementById('notaTotalBelanja').innerText = formatRupiah(dataNota.totalBelanja);
-            document.getElementById('notaTunai').innerText = formatRupiah(dataNota.uangBayar);
-            document.getElementById('notaKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
 
             window.print();
-        }
-
-        function hapusSemuaRiwayat() {
-            if (confirm('Apakah Anda yakin ingin menghapus semua riwayat transaksi?')) {
-                localStorage.removeItem('riwayatKasir');
-                renderTabelRiwayat();
-                resetTransaksi();
-            }
         }
 
         function resetTransaksi() {
             daftarBarang = [];
             document.getElementById('uangBayar').value = '';
-            document.getElementById('nomer-nota').innerText = generateNotaOtomatis();
+            document.getElementById('namaKlien').value = '';
+            document.getElementById('telpKlien').value = '';
+            document.getElementById('alamatKlien').value = '';
+            document.getElementById('previewNoDokumen').innerText = generateNoDokumenOtomatis();
             setTanggal();
             renderTabel();
             updateStruk();
@@ -785,8 +715,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             muatMasterBarang();
             setTanggal();
-            document.getElementById('nomer-nota').innerText = generateNotaOtomatis();
-            renderTabelRiwayat();
+            switchMode('pos');
         });
     </script>
 </body>
