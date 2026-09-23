@@ -242,6 +242,8 @@
                             </path>
                         </svg>
                         <span>Cetak Dokumen</span>
+                        <span id="statusProses" style="display:none; margin-left: 10px; color: blue;">Menyimpan
+                            data...</span>
                     </button>
                     <button onclick="resetTransaksi()"
                         class="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold text-sm rounded-lg border border-rose-200 transition duration-150">
@@ -443,7 +445,6 @@
         </svg>
         Riwayat Transaksi
     </button>
-
     <!-- MODAL RIWAYAT TRANSAKSI -->
     <div id="modalRiwayat"
         class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
@@ -615,20 +616,7 @@
             if (elDocNo) elDocNo.innerText = nomorDokumenOtomatis;
         }
 
-        // SIMPAN TRANSAKSI KE LOCALSTORAGE & UPDATE URUTAN NOMOR
-        function simpanTransaksiKeStorage(dataTransaksi) {
-            let riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
-            riwayat.push(dataTransaksi);
-            localStorage.setItem('riwayat_transaksi', JSON.stringify(riwayat));
 
-            // Tambah urutan nomor dokumen untuk transaksi berikutnya
-            let keyCounter = "counter_pos";
-            if (modeAktif === 'invoice') keyCounter = "counter_invoice";
-            if (modeAktif === 'penawaran') keyCounter = "counter_penawaran";
-
-            let nomorUrut = parseInt(localStorage.getItem(keyCounter)) || 1;
-            localStorage.setItem(keyCounter, nomorUrut + 1);
-        }
 
         // AMBIL DAFTAR RIWAYAT TRANSAKSI (Bisa digunakan untuk tabel riwayat)
         function ambilRiwayatTransaksi() {
@@ -1108,37 +1096,67 @@
             renderRiwayat();
         }
 
-        // GANTI DENGAN URL GOOGLE APPS SCRIPT ANDA DARI LANGKAH 1
-        const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbw_mCkhiBcQTYy6Qw78C4TKMjjAEzUzV-SCyvPTW7o_H_U7zwRGR0wNeWjXlu6Hh8__/exec";
-
-        // FUNGSI SIMPAN TRANSAKSI (LOCALSTORAGE + GOOGLE SHEETS)
         function simpanTransaksiKeStorage(dataTransaksi) {
-            // 1. Simpan ke LocalStorage Browser
+            const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbxIyjO4_kNG52E5wIzGBeDtRTFJljmLQQhYCqO_tlgY3xLCOPBvZ6Fml-Kl50zZ-EqXzw/exec";
+
+            // 1. Tampilkan indikator loading di UI
+            const elStatus = document.getElementById('statusProses');
+            const btnCetak = document.getElementById('btnCetak');
+
+            if (elStatus) {
+                elStatus.style.display = 'inline';
+                elStatus.innerText = 'Menyimpan...';
+            }
+            if (btnCetak) btnCetak.disabled = true;
+
+            // 2. Simpan ke LocalStorage Browser
             let riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
             riwayat.push(dataTransaksi);
             localStorage.setItem('riwayat_transaksi', JSON.stringify(riwayat));
 
-            // 2. Update counter penomoran otomatis
+            // 3. Update counter penomoran
             let keyCounter = "counter_pos";
-            if (modeAktif === 'invoice') keyCounter = "counter_invoice";
-            if (modeAktif === 'penawaran') keyCounter = "counter_penawaran";
+            if (typeof modeAktif !== 'undefined') {
+                if (modeAktif === 'invoice') keyCounter = "counter_invoice";
+                if (modeAktif === 'penawaran') keyCounter = "counter_penawaran";
+            }
 
             let nomorUrut = parseInt(localStorage.getItem(keyCounter)) || 1;
             localStorage.setItem(keyCounter, nomorUrut + 1);
 
-            // 3. Kirim Data Otomatis ke Google Sheets
-            if (URL_GOOGLE_SHEETS && !URL_GOOGLE_SHEETS.includes("AKfycbw_mCkhiBcQTYy6Qw78C4TKMjjAEzUzV-SCyvPTW7o_H_U7zwRGR0wNeWjXlu6Hh8__")) {
+            // 4. Kirim Data ke Google Sheets (Pengecekan Validasi URL yang Benar)
+            const isValidUrl = URL_GOOGLE_SHEETS && URL_GOOGLE_SHEETS.startsWith("https://script.google.com");
+
+            if (isValidUrl) {
                 fetch(URL_GOOGLE_SHEETS, {
                     method: 'POST',
-                    mode: 'no-cors', // Mencegah pembatasan CORS browser
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dataTransaksi)
                 })
-                    .then(() => console.log('Data transaksi berhasil dikirim ke Google Sheets'))
-                    .catch(err => console.error('Gagal mengirim ke Google Sheets:', err));
+                    .then(() => {
+                        console.log('Data transaksi berhasil dikirim ke Google Sheets');
+                        selesaiProsesUI('Berhasil disimpan!');
+                    })
+                    .catch(err => {
+                        console.error('Gagal mengirim ke Google Sheets:', err);
+                        selesaiProsesUI('Tersimpan secara lokal (Offline)');
+                    });
+            } else {
+                selesaiProsesUI('Tersimpan lokal (URL Sheet belum diisi)');
             }
+        }
+
+        // Fungsi pembantu untuk mengembalikan status UI
+        function selesaiProsesUI(pesan) {
+            const elStatus = document.getElementById('statusProses');
+            const btnCetak = document.getElementById('btnCetak');
+
+            if (elStatus) {
+                elStatus.innerText = pesan;
+                setTimeout(() => { elStatus.style.display = 'none'; }, 3000);
+            }
+            if (btnCetak) btnCetak.disabled = false;
         }
 
         // FUNGSI EKSPOR KE EXCEL (.XLS) AGAR LANGSUNG TERBENTUK KOLOM KANAN-KIRI
@@ -1152,39 +1170,39 @@
 
             // Buat Struktur Tabel HTML murni untuk Excel
             let excelContent = `
-    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-    <head>
-        <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
-        <!--[if gte mso 9]>
-        <xml>
-            <x:ExcelWorkbook>
-                <x:ExcelWorksheets>
-                    <x:ExcelWorksheet>
-                        <x:Name>Riwayat Transaksi</x:Name>
-                        <x:WorksheetOptions>
-                            <x:DisplayGridlines/>
-                        </x:WorksheetOptions>
-                    </x:ExcelWorksheet>
-                </x:ExcelWorksheets>
-            </x:ExcelWorkbook>
-        </xml>
-        <![endif]-->
-    </head>
-    <body>
-        <table border="1">
-            <thead>
-                <tr style="background-color: #f2f2f2; font-weight: bold;">
-                    <th>No Dokumen</th>
-                    <th>Tanggal</th>
-                    <th>Jam</th>
-                    <th>Jenis Dokumen</th>
-                    <th>Nama Klien / Pelanggan</th>
-                    <th>Rincian Barang (Item x Qty)</th>
-                    <th>Total Belanja (Rp)</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
+                    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                    <head>
+                        <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
+                        <!--[if gte mso 9]>
+                        <xml>
+                            <x:ExcelWorkbook>
+                                <x:ExcelWorksheets>
+                                    <x:ExcelWorksheet>
+                                        <x:Name>Riwayat Transaksi</x:Name>
+                                        <x:WorksheetOptions>
+                                            <x:DisplayGridlines/>
+                                        </x:WorksheetOptions>
+                                    </x:ExcelWorksheet>
+                                </x:ExcelWorksheets>
+                            </x:ExcelWorkbook>
+                        </xml>
+                        <![endif]-->
+                    </head>
+                    <body>
+                        <table border="1">
+                            <thead>
+                                <tr style="background-color: #f2f2f2; font-weight: bold;">
+                                    <th>No Dokumen</th>
+                                    <th>Tanggal</th>
+                                    <th>Jam</th>
+                                    <th>Jenis Dokumen</th>
+                                    <th>Nama Klien / Pelanggan</th>
+                                    <th>Rincian Barang (Item x Qty)</th>
+                                    <th>Total Belanja (Rp)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
 
             // Masukkan data baris demi baris
             riwayat.forEach(transaksi => {
@@ -1196,24 +1214,24 @@
                 const detailBarang = transaksi.items.map(item => `${item.nama} (${item.qty}x)`).join(", ");
 
                 excelContent += `
-            <tr>
-                <td>${transaksi.noDokumen}</td>
-                <td>${tgl}</td>
-                <td style="mso-number-format:'\\@';">${jam}</td>
-                <td>${mode}</td>
-                <td>${namaKlien}</td>
-                <td>${detailBarang}</td>
-                <td align="right">${transaksi.totalBelanja}</td>
-            </tr>
-        `;
+                    <tr>
+                        <td>${transaksi.noDokumen}</td>
+                        <td>${tgl}</td>
+                        <td style="mso-number-format:'\\@';">${jam}</td>
+                        <td>${mode}</td>
+                        <td>${namaKlien}</td>
+                        <td>${detailBarang}</td>
+                        <td align="right">${transaksi.totalBelanja}</td>
+                    </tr>
+                `;
             });
 
             excelContent += `
-            </tbody>
-        </table>
-    </body>
-    </html>
-    `;
+                    </tbody>
+                </table>
+            </body>
+            </html>
+            `;
 
             // Buat Blob File Excel (.xls)
             const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel;charset=utf-8' });
