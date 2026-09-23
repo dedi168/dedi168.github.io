@@ -1141,7 +1141,7 @@
             }
         }
 
-        // FUNGSI EKSPOR RIWAYAT TRANSAKSI KE FILE CSV / EXCEL
+        // FUNGSI EKSPOR KE EXCEL (.XLS) AGAR LANGSUNG TERBENTUK KOLOM KANAN-KIRI
         function eksporRiwayatKeCSV() {
             const riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
 
@@ -1150,52 +1150,73 @@
                 return;
             }
 
-            // Header Kolom CSV
-            const headers = [
-                "No Dokumen",
-                "Tanggal",
-                "Mode Dokumen",
-                "Nama Klien",
-                "Jabatan Klien",
-                "Alamat Klien",
-                "Detail Barang/Jasa",
-                "Total Belanja (Rp)"
-            ];
+            // Buat Struktur Tabel HTML murni untuk Excel
+            let excelContent = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <head>
+        <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
+        <!--[if gte mso 9]>
+        <xml>
+            <x:ExcelWorkbook>
+                <x:ExcelWorksheets>
+                    <x:ExcelWorksheet>
+                        <x:Name>Riwayat Transaksi</x:Name>
+                        <x:WorksheetOptions>
+                            <x:DisplayGridlines/>
+                        </x:WorksheetOptions>
+                    </x:ExcelWorksheet>
+                </x:ExcelWorksheets>
+            </x:ExcelWorkbook>
+        </xml>
+        <![endif]-->
+    </head>
+    <body>
+        <table border="1">
+            <thead>
+                <tr style="background-color: #f2f2f2; font-weight: bold;">
+                    <th>No Dokumen</th>
+                    <th>Tanggal</th>
+                    <th>Jam</th>
+                    <th>Jenis Dokumen</th>
+                    <th>Nama Klien / Pelanggan</th>
+                    <th>Rincian Barang (Item x Qty)</th>
+                    <th>Total Belanja (Rp)</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
-            const barisCSV = [];
-            barisCSV.push(headers.join(";")); // Menggunakan pemisah titik koma (;) agar otomatis rapi di Excel Indonesia
+            // Masukkan data baris demi baris
+            riwayat.forEach(transaksi => {
+                const objTgl = new Date(transaksi.tanggal);
+                const tgl = `${objTgl.getDate()}/${objTgl.getMonth() + 1}/${objTgl.getFullYear()}`;
+                const jam = `${String(objTgl.getHours()).padStart(2, '0')}.${String(objTgl.getMinutes()).padStart(2, '0')}`;
+                const mode = transaksi.mode ? transaksi.mode.toUpperCase() : 'POS';
+                const namaKlien = transaksi.klien?.nama || 'Tunai / POS';
+                const detailBarang = transaksi.items.map(item => `${item.nama} (${item.qty}x)`).join(", ");
 
-            // Olah Data Transaksi
-            riwayat.forEach(item => {
-                const tgl = new Date(item.tanggal).toLocaleString('id-ID');
-                const mode = item.mode ? item.mode.toUpperCase() : 'POS';
-                const namaKlien = item.klien?.nama ? `"${item.klien.nama.replace(/"/g, '""')}"` : 'Tunai / POS';
-                const jabatanKlien = item.klien?.jabatan ? `"${item.klien.jabatan.replace(/"/g, '""')}"` : '-';
-                const alamatKlien = item.klien?.alamat ? `"${item.klien.alamat.replace(/"/g, '""')}"` : '-';
-
-                // Format gabungan daftar barang: "Nama Barang (Qty x Harga)"
-                const daftarBarangStr = item.items.map(b => `${b.nama} (${b.qty}x @Rp${b.harga - b.diskon})`).join(" | ");
-                const rincianBarangEscaped = `"${daftarBarangStr.replace(/"/g, '""')}"`;
-
-                const baris = [
-                    `"${item.noDokumen}"`,
-                    `"${tgl}"`,
-                    `"${mode}"`,
-                    namaKlien,
-                    jabatanKlien,
-                    alamatKlien,
-                    rincianBarangEscaped,
-                    item.totalBelanja
-                ];
-
-                barisCSV.push(baris.join(";"));
+                excelContent += `
+            <tr>
+                <td>${transaksi.noDokumen}</td>
+                <td>${tgl}</td>
+                <td style="mso-number-format:'\\@';">${jam}</td>
+                <td>${mode}</td>
+                <td>${namaKlien}</td>
+                <td>${detailBarang}</td>
+                <td align="right">${transaksi.totalBelanja}</td>
+            </tr>
+        `;
             });
 
-            // Buat Blob File CSV dengan Encoding UTF-8 (BOM) agar Karakter/Simbol Tidak Rusak
-            const isiCSV = "\uFEFF" + barisCSV.join("\n");
-            const blob = new Blob([isiCSV], { type: 'text/csv;charset=utf-8;' });
+            excelContent += `
+            </tbody>
+        </table>
+    </body>
+    </html>
+    `;
 
-            // Buat URL dan Unduh File
+            // Buat Blob File Excel (.xls)
+            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const linkA = document.createElement("a");
 
@@ -1203,13 +1224,14 @@
             const tglFile = `${skrg.getFullYear()}${String(skrg.getMonth() + 1).padStart(2, '0')}${String(skrg.getDate()).padStart(2, '0')}`;
 
             linkA.setAttribute("href", url);
-            linkA.setAttribute("download", `Riwayat_Transaksi_${tglFile}.csv`);
+            linkA.setAttribute("download", `Riwayat_Transaksi_${tglFile}.xls`);
             document.body.appendChild(linkA);
 
             linkA.click();
             document.body.removeChild(linkA);
             URL.revokeObjectURL(url);
         }
+
     </script>
 </body>
 
