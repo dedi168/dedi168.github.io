@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
         }
@@ -18,27 +18,39 @@
             height: 6px;
             width: 6px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 4px;
         }
 
         /* Warna khusus tema dokumen surat (Cokelat Keemasan) */
-        .bg-doc-gold { background-color: #b07d38; }
-        .border-doc-gold { border-color: #b07d38; }
-        .text-doc-gold { color: #b07d38; }
+        .bg-doc-gold {
+            background-color: #b07d38;
+        }
+
+        .border-doc-gold {
+            border-color: #b07d38;
+        }
+
+        .text-doc-gold {
+            color: #b07d38;
+        }
 
         @media print {
             body {
                 background: white !important;
                 padding: 0 !important;
             }
+
             .no-print {
                 display: none !important;
             }
+
             .print-area {
                 position: absolute;
                 left: 0;
@@ -47,6 +59,7 @@
                 margin: 0 !important;
                 padding: 0 !important;
             }
+
             .paper-preview {
                 box-shadow: none !important;
                 border: none !important;
@@ -67,7 +80,8 @@
 
             <!-- HEADER CARD -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 p-5 flex items-center gap-4">
-                <img src="Logo.png" alt="Logo" class="h-12 w-12 object-contain rounded-lg bg-slate-50 p-1 border border-slate-100">
+                <img src="Logo.png" alt="Logo"
+                    class="h-12 w-12 object-contain rounded-lg bg-slate-50 p-1 border border-slate-100">
                 <div>
                     <h1 class="text-xl font-bold text-slate-900 leading-tight">Dedy Technology Solution</h1>
                     <p class="text-xs text-slate-500">Sistem POS, Invoice & Penawaran Harga</p>
@@ -76,15 +90,15 @@
 
             <!-- TAB NAVIGATION -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 p-1.5 flex gap-1">
-                <button id="tabPos" onclick="switchMode('pos')" 
+                <button id="tabPos" onclick="switchMode('pos')"
                     class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-sm">
                     Kasir (POS)
                 </button>
-                <button id="tabInvoice" onclick="switchMode('invoice')" 
+                <button id="tabInvoice" onclick="switchMode('invoice')"
                     class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200">
                     Invoice
                 </button>
-                <button id="tabPenawaran" onclick="switchMode('penawaran')" 
+                <button id="tabPenawaran" onclick="switchMode('penawaran')"
                     class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200">
                     Penawaran
                 </button>
@@ -98,12 +112,14 @@
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Informasi Klien & Surat</h3>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Jabatan / Yth.</label>
-                        <input type="text" id="jabatanKlien" placeholder="Contoh: Kepala Divisi IT" oninput="updateStruk()"
+                        <input type="text" id="jabatanKlien" placeholder="Contoh: Kepala Divisi IT"
+                            oninput="updateStruk()"
                             class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Klien / Perusahaan</label>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Klien /
+                                Perusahaan</label>
                             <input type="text" id="namaKlien" placeholder="Utan Boutique Hotel" oninput="updateStruk()"
                                 class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
                         </div>
@@ -115,12 +131,14 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Alamat Lengkap Klien</label>
-                        <input type="text" id="alamatKlien" placeholder="Jl. Guru Gatot 45, Bondowoso, Jawa Timur" oninput="updateStruk()"
+                        <input type="text" id="alamatKlien" placeholder="Jl. Guru Gatot 45, Bondowoso, Jawa Timur"
+                            oninput="updateStruk()"
                             class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Perihal Dokumen</label>
-                        <input type="text" id="perihalDokumen" placeholder="Penawaran Harga Pemasangan CCTV" oninput="updateStruk()"
+                        <input type="text" id="perihalDokumen" placeholder="Penawaran Harga Pemasangan CCTV"
+                            oninput="updateStruk()"
                             class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -130,7 +148,8 @@
                                 class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
                         </div>
                         <div id="groupMasaBerlaku" class="hidden">
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Masa Berlaku Penawaran</label>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Masa Berlaku
+                                Penawaran</label>
                             <input type="text" id="masaBerlaku" value="14 Hari" oninput="updateStruk()"
                                 class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
                         </div>
@@ -140,7 +159,8 @@
                 <!-- ITEM SELECTION -->
                 <div class="space-y-3">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Barang / Jasa (Master Data)</label>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Barang / Jasa (Master
+                            Data)</label>
                         <input type="text" id="namaBarang" list="listBarang" placeholder="Ketik atau pilih nama item..."
                             oninput="autoIsiHarga()" onkeypress="handleEnter(event)"
                             class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
@@ -165,9 +185,12 @@
                         </div>
                     </div>
 
-                    <button onclick="tambahBarang()" 
+                    <button onclick="tambahBarang()"
                         class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg shadow-sm transition duration-150 flex items-center justify-center gap-1.5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
+                        </svg>
                         Tambah Item
                     </button>
                 </div>
@@ -199,21 +222,28 @@
                             <input type="number" id="uangBayar" placeholder="0" oninput="updateStruk()"
                                 class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-medium">
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 flex justify-between items-center">
+                        <div
+                            class="bg-slate-50 p-3 rounded-lg border border-slate-200 flex justify-between items-center">
                             <span class="text-xs font-semibold text-slate-600">Status:</span>
-                            <span id="statusKembalian" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700">Rp 0</span>
+                            <span id="statusKembalian"
+                                class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700">Rp
+                                0</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- ACTION BUTTONS -->
                 <div class="pt-2 flex flex-col sm:flex-row gap-2">
-                    <button id="btnCetak" onclick="cetakNota()" 
+                    <button id="btnCetak" onclick="cetakNota()"
                         class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-lg shadow-sm transition duration-150 flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
+                            </path>
+                        </svg>
                         <span>Cetak Dokumen</span>
                     </button>
-                    <button onclick="resetTransaksi()" 
+                    <button onclick="resetTransaksi()"
                         class="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold text-sm rounded-lg border border-rose-200 transition duration-150">
                         Reset
                     </button>
@@ -224,9 +254,10 @@
 
         <!-- RIGHT COLUMN: DOCUMENT PREVIEW (PRINT AREA) -->
         <div class="lg:col-span-7 print-area">
-            
+
             <!-- MODE STRUK (POS ONLY) -->
-            <div id="previewStrukPos" class="bg-white rounded-xl shadow-md border border-slate-200/80 p-6 paper-preview sticky top-6 max-w-md mx-auto">
+            <div id="previewStrukPos"
+                class="bg-white rounded-xl shadow-md border border-slate-200/80 p-6 paper-preview sticky top-6 max-w-md mx-auto">
                 <div class="text-center pb-4 border-b border-slate-200">
                     <img class="h-12 w-12 mx-auto object-contain mb-2" src="Logo.png" alt="Logo">
                     <h2 class="text-sm font-bold text-slate-900 tracking-wide uppercase">Dedy Technology Solution</h2>
@@ -236,7 +267,9 @@
 
                 <div class="py-3 border-b border-slate-200">
                     <div class="text-center mb-2">
-                        <span class="inline-block px-3 py-1 bg-slate-100 text-slate-800 text-xs font-bold rounded-full uppercase tracking-wider">STRUK PENJUALAN</span>
+                        <span
+                            class="inline-block px-3 py-1 bg-slate-100 text-slate-800 text-xs font-bold rounded-full uppercase tracking-wider">STRUK
+                            PENJUALAN</span>
                     </div>
                     <div class="flex justify-between text-[11px] text-slate-500">
                         <span>Tgl: <strong id="posNotaTgl" class="text-slate-700"></strong></span>
@@ -282,29 +315,42 @@
             </div>
 
             <!-- MODE SURAT / INVOICE & PENAWARAN (SESUAI FORMAT GAMBAR) -->
-            <div id="previewSurat" class="hidden bg-white rounded-xl shadow-md border border-slate-200/80 p-8 md:p-12 paper-preview sticky top-6 font-serif text-slate-800 text-sm leading-relaxed">
-                
+            <div id="previewSurat"
+                class="hidden bg-white rounded-xl shadow-md border border-slate-200/80 p-8 md:p-12 paper-preview sticky top-6 font-serif text-slate-800 text-sm leading-relaxed">
+
                 <!-- HEADER SURAT -->
                 <div class="flex justify-between items-start border-b-2 border-slate-300 pb-6 mb-6">
                     <div class="flex items-center gap-4">
                         <img src="Logo.png" alt="Logo" class="h-16 w-16 object-contain">
                         <div>
-                            <h2 class="text-xl font-bold tracking-wider text-slate-900 uppercase font-sans">DEDY TECHNOLOGY</h2>
+                            <h2 class="text-xl font-bold tracking-wider text-slate-900 uppercase font-sans">DEDY
+                                TECHNOLOGY</h2>
                             <p class="text-sm font-bold tracking-widest text-slate-700 uppercase font-sans">SOLUTION</p>
                         </div>
                     </div>
                     <div class="text-right text-xs text-slate-600 font-sans space-y-1">
                         <p class="flex items-center justify-end gap-1.5">
                             <span>Sangketan, Tabanan, Bali 82152</span>
-                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                         </p>
                         <p class="flex items-center justify-end gap-1.5">
                             <span>0851-5859-3379</span>
-                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z">
+                                </path>
+                            </svg>
                         </p>
                         <p class="flex items-center justify-end gap-1.5">
                             <span>dedytechsolution@gmail.com</span>
-                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
                         </p>
                     </div>
                 </div>
@@ -318,14 +364,15 @@
                 <div class="space-y-1 font-sans text-xs md:text-sm mb-6">
                     <p><strong>Nomor:</strong> <span id="docNomorSurat">001/DTS/23/01/2026</span></p>
                     <p><strong>Lampiran:</strong> -</p>
-                    <p><strong>Perihal:</strong> <span id="docPerihalSurat">Penawaran Harga Pengadaan & Instalasi</span></p>
+                    <p><strong>Perihal:</strong> <span id="docPerihalSurat">Penawaran Harga Pengadaan & Instalasi</span>
+                    </p>
                 </div>
 
                 <!-- KEPADA YTH -->
                 <div class="space-y-0.5 font-sans text-xs md:text-sm mb-6">
                     <p class="font-bold text-slate-900" id="docYthJabatan">Yth. Kepala Divisi IT</p>
-                    <p class="font-bold text-slate-900" id="docYthNama">Utan Boutique Hotel</p>
-                    <p class="text-slate-600" id="docYthAlamat">Jl. Guru Gatot 45, Bondowoso, Jawa Timur 69393</p>
+                    <p class="font-bold text-slate-900" id="docYthNama">Perusahan Bapak/Ibu</p>
+                    <p class="text-slate-600" id="docYthAlamat">Ditempat</p>
                 </div>
 
                 <div class="w-12 h-0.5 bg-doc-gold mb-6"></div>
@@ -334,7 +381,10 @@
                 <div class="space-y-3 font-serif text-slate-800 text-xs md:text-sm mb-6 text-justify">
                     <p>Dengan hormat,</p>
                     <p id="docParagrafPembuka">
-                        Melalui surat ini, kami ingin menindaklanjuti hasil pembahasan mengenai kebutuhan perangkat serta sistem teknologi informasi untuk <span id="docNamaKlienBody" class="font-semibold">Utan Boutique Hotel</span>. Kami ingin mengajukan rincian harga sebagai berikut:
+                        Melalui surat ini, kami ingin menindak lanjuti hasil pembahasan mengenai kebutuhan perangkat
+                        serta sistem teknologi informasi untuk <span id="docNamaKlienBody"
+                            class="font-semibold">Perusahaan Bapak/Ibu</span>. Kami ingin mengajukan rincian harga
+                        sebagai berikut:
                     </p>
                 </div>
 
@@ -358,7 +408,9 @@
                 <!-- PARAGRAF PENUTUP -->
                 <div class="space-y-3 font-serif text-slate-800 text-xs md:text-sm mb-8 text-justify">
                     <p>
-                        Jika Anda memiliki pertanyaan lebih lanjut terkait <span id="docKataKunci">penawaran</span> ini atau tertarik untuk bekerja sama, Anda dapat menghubungi 0851-5859-3379 atau mengirim email ke dedytechsolution@gmail.com. Kami akan senang menjawab semua pertanyaan dan membantu Anda.
+                        Jika Anda memiliki pertanyaan lebih lanjut terkait <span id="docKataKunci">penawaran</span> ini
+                        atau tertarik untuk bekerja sama, Anda dapat menghubungi 0851-5859-3379 atau mengirim email ke
+                        dedytechsolution@gmail.com. Kami akan senang menjawab semua pertanyaan dan membantu Anda.
                     </p>
                     <p>Kami berharap bisa melakukan kerja sama dengan perusahaan Anda.</p>
                 </div>
@@ -371,8 +423,8 @@
                         <p class="font-medium text-slate-800">Hormat kami,</p>
                     </div>
                     <div>
-                        <p class="font-bold text-slate-900 underline">Dedy Kurnia</p>
-                        <p class="text-slate-600 text-xs">Account Manager</p>
+                        <p class="font-bold text-slate-900 underline">I Putu Dedi Suardana</p>
+                        <p class="text-slate-600 text-xs">Pemilik / Owner</p>
                         <p class="text-slate-600 text-xs font-semibold">Dedy Technology Solution</p>
                     </div>
                 </div>
@@ -382,9 +434,99 @@
         </div>
 
     </div>
+    <!-- Tombol Buka Riwayat (Bisa diletakkan di header / navbar aplikasi Anda) -->
+    <button onclick="bukaModalRiwayat()"
+        class="flex items-center gap-2 px-3 py-2 bg-slate-800 text-white rounded-lg text-xs font-semibold hover:bg-slate-700 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Riwayat Transaksi
+    </button>
 
+    <!-- MODAL RIWAYAT TRANSAKSI -->
+    <div id="modalRiwayat"
+        class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div
+            class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-100">
+
+            <!-- Header Modal -->
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div>
+                    <h3 class="text-base font-bold text-slate-800">Riwayat Transaksi Tersimpan</h3>
+                    <p class="text-xs text-slate-500">Daftar transaksi yang tersimpan di penyimpanan lokal browser.</p>
+                </div>
+                <button onclick="tutupModalRiwayat()"
+                    class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-lg transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Filter & Pencarian -->
+            <div
+                class="p-4 bg-white border-b border-slate-100 flex flex-wrap gap-3 items-center justify-between text-xs">
+                <input type="text" id="cariRiwayat" onkeyup="renderRiwayat()" placeholder="Cari No Dokumen / Klien..."
+                    class="px-3 py-2 border border-slate-200 rounded-lg w-full sm:w-64 focus:outline-none focus:border-indigo-500">
+                <div class="flex items-center gap-2">
+                    <select id="filterMode" onchange="renderRiwayat()"
+                        class="px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                        <option value="semua">Semua Dokumen</option>
+                        <option value="pos">POS Struk</option>
+                        <option value="invoice">Invoice</option>
+                        <option value="penawaran">Penawaran</option>
+                    </select>
+                    <button onclick="hapusSemuaRiwayat()"
+                        class="px-3 py-2 bg-rose-50 text-rose-600 font-semibold rounded-lg hover:bg-rose-100 transition">
+                        Hapus Semua
+                    </button>
+                    <!-- Diletakkan di dalam kontainer filter modal riwayat -->
+                    <button onclick="eksporRiwayatKeCSV()"
+                        class="flex items-center gap-1.5 px-3 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition text-xs">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        Ekspor CSV / Excel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabel Riwayat -->
+            <div class="overflow-y-auto flex-1 p-4">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50">
+                            <th class="p-3">No. Dokumen</th>
+                            <th class="p-3">Tanggal</th>
+                            <th class="p-3">Jenis</th>
+                            <th class="p-3">Klien / Detail</th>
+                            <th class="p-3 text-right">Total</th>
+                            <th class="p-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelRiwayatBody" class="divide-y divide-slate-100">
+                        <!-- Data dimasukkan via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="p-4 border-t border-slate-100 bg-slate-50 text-right">
+                <button onclick="tutupModalRiwayat()"
+                    class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300 transition text-xs">
+                    Tutup
+                </button>
+            </div>
+
+        </div>
+    </div>
     <!-- LOGIC SYSTEM -->
     <script>
+        // MASTER DATA BARANG & JASA
         const masterBarang = [
             { nama: "CCTV INDOOR EZVIZ H6C PRO 2K/3MP", harga: 490000 },
             { nama: "CCTV INDOOR EZVIZ TY1 1080P", harga: 470000 },
@@ -430,9 +572,70 @@
             { nama: "AKSESORIS CCTV(KABEL 5M, DURADUS, KLEM, DLL)", harga: 100000 }
         ];
 
+        // STATE APLIKASI
         let daftarBarang = [];
         let modeAktif = 'pos';
+        let nomorDokumenOtomatis = '';
 
+        // INITIALIZATION
+        document.addEventListener("DOMContentLoaded", function () {
+            muatMasterBarang();
+            setTanggal();
+            generateNoDokumen();
+            switchMode('pos');
+        });
+
+        // GENERATE NOMOR DOKUMEN BERURUTAN (AUTO-INCREMENT)
+        function generateNoDokumen() {
+            const skrg = new Date();
+            const thn = skrg.getFullYear();
+            const bln = String(skrg.getMonth() + 1).padStart(2, '0');
+            const tgl = String(skrg.getDate()).padStart(2, '0');
+
+            let prefix = "TRX";
+            let keyCounter = "counter_pos";
+            if (modeAktif === 'invoice') {
+                prefix = "INV";
+                keyCounter = "counter_invoice";
+            } else if (modeAktif === 'penawaran') {
+                prefix = "OFF";
+                keyCounter = "counter_penawaran";
+            }
+
+            // Ambil nomor urut terakhir dari LocalStorage
+            let nomorUrut = parseInt(localStorage.getItem(keyCounter)) || 1;
+            const nomorFormatted = String(nomorUrut).padStart(4, '0');
+
+            nomorDokumenOtomatis = `${prefix}-${nomorFormatted}/${tgl}/${bln}/${thn}`;
+
+            // Update Tampilan DOM
+            const elPosNo = document.getElementById('posNoDokumen');
+            const elDocNo = document.getElementById('docNomorSurat');
+            if (elPosNo) elPosNo.innerText = nomorDokumenOtomatis;
+            if (elDocNo) elDocNo.innerText = nomorDokumenOtomatis;
+        }
+
+        // SIMPAN TRANSAKSI KE LOCALSTORAGE & UPDATE URUTAN NOMOR
+        function simpanTransaksiKeStorage(dataTransaksi) {
+            let riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
+            riwayat.push(dataTransaksi);
+            localStorage.setItem('riwayat_transaksi', JSON.stringify(riwayat));
+
+            // Tambah urutan nomor dokumen untuk transaksi berikutnya
+            let keyCounter = "counter_pos";
+            if (modeAktif === 'invoice') keyCounter = "counter_invoice";
+            if (modeAktif === 'penawaran') keyCounter = "counter_penawaran";
+
+            let nomorUrut = parseInt(localStorage.getItem(keyCounter)) || 1;
+            localStorage.setItem(keyCounter, nomorUrut + 1);
+        }
+
+        // AMBIL DAFTAR RIWAYAT TRANSAKSI (Bisa digunakan untuk tabel riwayat)
+        function ambilRiwayatTransaksi() {
+            return JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
+        }
+
+        // SWITCH TABS (POS / INVOICE / PENAWARAN)
         function switchMode(mode) {
             modeAktif = mode;
 
@@ -443,10 +646,12 @@
             };
 
             Object.keys(tabs).forEach(key => {
-                if (key === mode) {
-                    tabs[key].className = "tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-sm";
-                } else {
-                    tabs[key].className = "tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200";
+                if (tabs[key]) {
+                    if (key === mode) {
+                        tabs[key].className = "tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-sm";
+                    } else {
+                        tabs[key].className = "tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200";
+                    }
                 }
             });
 
@@ -457,38 +662,42 @@
 
             const groupJatuhTempo = document.getElementById('groupJatuhTempo');
             const groupMasaBerlaku = document.getElementById('groupMasaBerlaku');
-            const btnCetak = id => document.getElementById('btnCetak').querySelector('span').innerText = id;
+            const btnCetak = document.getElementById('btnCetak');
 
             if (mode === 'pos') {
-                sectionKlien.classList.add('hidden');
-                sectionPembayaran.classList.remove('hidden');
-                previewStrukPos.classList.remove('hidden');
-                previewSurat.classList.add('hidden');
-                btnCetak("Cetak Struk Nota");
+                if (sectionKlien) sectionKlien.classList.add('hidden');
+                if (sectionPembayaran) sectionPembayaran.classList.remove('hidden');
+                if (previewStrukPos) previewStrukPos.classList.remove('hidden');
+                if (previewSurat) previewSurat.classList.add('hidden');
+                if (btnCetak) btnCetak.querySelector('span').innerText = "Cetak Struk Nota";
             } else {
-                sectionKlien.classList.remove('hidden');
-                sectionPembayaran.classList.add('hidden');
-                previewStrukPos.classList.add('hidden');
-                previewSurat.classList.remove('hidden');
+                if (sectionKlien) sectionKlien.classList.remove('hidden');
+                if (sectionPembayaran) sectionPembayaran.classList.add('hidden');
+                if (previewStrukPos) previewStrukPos.classList.add('hidden');
+                if (previewSurat) previewSurat.classList.remove('hidden');
 
+                const perihalInput = document.getElementById('perihalDokumen');
                 if (mode === 'invoice') {
-                    groupJatuhTempo.classList.remove('hidden');
-                    groupMasaBerlaku.classList.add('hidden');
-                    btnCetak("Cetak Dokumen Invoice");
-                    document.getElementById('perihalDokumen').value = "Tagihan Pembayaran (Invoice) Pengadaan / Jasa";
+                    if (groupJatuhTempo) groupJatuhTempo.classList.remove('hidden');
+                    if (groupMasaBerlaku) groupMasaBerlaku.classList.add('hidden');
+                    if (btnCetak) btnCetak.querySelector('span').innerText = "Cetak Dokumen Invoice";
+                    if (perihalInput) perihalInput.value = "Tagihan Pembayaran (Invoice) Pengadaan / Jasa";
                 } else {
-                    groupJatuhTempo.classList.add('hidden');
-                    groupMasaBerlaku.classList.remove('hidden');
-                    btnCetak("Cetak Dokumen Penawaran");
-                    document.getElementById('perihalDokumen').value = "Penawaran Harga Pengadaan & Jasa";
+                    if (groupJatuhTempo) groupJatuhTempo.classList.add('hidden');
+                    if (groupMasaBerlaku) groupMasaBerlaku.classList.remove('hidden');
+                    if (btnCetak) btnCetak.querySelector('span').innerText = "Cetak Dokumen Penawaran";
+                    if (perihalInput) perihalInput.value = "Penawaran Harga Pengadaan & Jasa";
                 }
             }
 
+            generateNoDokumen();
             updateStruk();
         }
 
+        // POPULATE DATALIST AUTOCOMPLETE
         function muatMasterBarang() {
             const datalist = document.getElementById('listBarang');
+            if (!datalist) return;
             datalist.innerHTML = '';
             masterBarang.forEach(item => {
                 const option = document.createElement('option');
@@ -498,61 +707,55 @@
             });
         }
 
+        // AUTOFILL HARGA
         function autoIsiHarga() {
             const inputNama = document.getElementById('namaBarang').value.trim().toUpperCase();
             const inputHarga = document.getElementById('hargaBarang');
             const barangDitemukan = masterBarang.find(item => item.nama === inputNama);
-            inputHarga.value = barangDitemukan ? barangDitemukan.harga : '';
+            if (inputHarga) {
+                inputHarga.value = barangDitemukan ? barangDitemukan.harga : '';
+            }
         }
 
+        // SET TANGGAL OTOMATIS
         function setTanggal() {
             const skrg = new Date();
-            const opsiBulan = { day: 'numeric', month: 'Long', year: 'numeric' };
             const tglLengkap = skrg.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-            
-            document.getElementById('docTanggalSurat').innerText = tglLengkap;
+
+            const elDocTgl = document.getElementById('docTanggalSurat');
+            if (elDocTgl) elDocTgl.innerText = tglLengkap;
 
             const tglJam = String(skrg.getDate()).padStart(2, '0') + '.' +
                 String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
                 String(skrg.getFullYear()).slice(-2) + ' ' +
                 String(skrg.getHours()).padStart(2, '0') + ':' +
                 String(skrg.getMinutes()).padStart(2, '0');
-            document.getElementById('posNotaTgl').innerText = tglJam;
+
+            const elPosTgl = document.getElementById('posNotaTgl');
+            if (elPosTgl) elPosTgl.innerText = tglJam;
 
             const jatuhTempoDate = new Date();
             jatuhTempoDate.setDate(skrg.getDate() + 7);
-            document.getElementById('tglJatuhTempo').valueAsDate = jatuhTempoDate;
-        }
-
-        function generateNoDokumenOtomatis() {
-            const skrg = new Date();
-            const thn = skrg.getFullYear();
-            const bln = String(skrg.getMonth() + 1).padStart(2, '0');
-            const tgl = String(skrg.getDate()).padStart(2, '0');
-
-            let prefix = "TRX";
-            if (modeAktif === 'invoice') prefix = "INV";
-            if (modeAktif === 'penawaran') prefix = "OFF";
-
-            const acak = Math.floor(100 + Math.random() * 900);
-            return `${acak}/${prefix}/${tgl}/${bln}/${thn}`;
+            const elJatuhTempo = document.getElementById('tglJatuhTempo');
+            if (elJatuhTempo) elJatuhTempo.valueAsDate = jatuhTempoDate;
         }
 
         function formatRupiah(angka) {
-            return new Intl.NumberFormat('id-ID').format(angka);
+            return new Intl.NumberFormat('id-ID').format(angka || 0);
         }
 
         function handleEnter(event) {
             if (event.key === 'Enter') tambahBarang();
         }
 
+        // TAMBAH ITEM KE DAFTAR
         function tambahBarang() {
             const namaInput = document.getElementById('namaBarang');
             const qtyInput = document.getElementById('qtyBarang');
             const diskonInput = document.getElementById('diskonItem');
 
             const nama = namaInput.value.trim().toUpperCase();
-            const qty = parseInt(qtyInput.value);
+            const qty = parseInt(qtyInput.value) || 0;
             const diskon = parseInt(diskonInput.value) || 0;
 
             const barangMaster = masterBarang.find(item => item.nama === nama);
@@ -562,7 +765,7 @@
                 return;
             }
 
-            if (isNaN(qty) || qty <= 0) {
+            if (qty <= 0) {
                 alert('Jumlah Qty minimal 1');
                 return;
             }
@@ -570,7 +773,7 @@
             const harga = barangMaster.harga;
 
             if (diskon >= harga) {
-                alert('Diskon tidak boleh melebihi harga!');
+                alert('Diskon tidak boleh melebihi atau sama dengan harga barang!');
                 return;
             }
 
@@ -596,14 +799,17 @@
             updateStruk();
         }
 
+        // HAPUS ITEM
         function hapusBarang(index) {
             daftarBarang.splice(index, 1);
             renderTabel();
             updateStruk();
         }
 
+        // RENDER TABEL INPUT
         function renderTabel() {
             const tbody = document.getElementById('tabelBarang');
+            if (!tbody) return;
             tbody.innerHTML = '';
 
             if (daftarBarang.length === 0) {
@@ -614,102 +820,118 @@
             daftarBarang.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-2.5 font-medium text-slate-800">${item.nama}</td>
-                    <td class="p-2.5 text-center">${item.qty}</td>
-                    <td class="p-2.5 text-right">Rp ${formatRupiah(item.harga)}</td>
-                    <td class="p-2.5 text-right text-rose-500">Rp ${formatRupiah(item.diskon)}</td>
-                    <td class="p-2.5 text-right font-semibold text-slate-800">Rp ${formatRupiah(item.subtotal)}</td>
-                    <td class="p-2.5 text-center">
-                        <button onclick="hapusBarang(${index})" class="p-1 text-rose-600 hover:bg-rose-50 rounded transition">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                        </button>
-                    </td>
-                `;
+                <td class="p-2.5 font-medium text-slate-800">${item.nama}</td>
+                <td class="p-2.5 text-center">${item.qty}</td>
+                <td class="p-2.5 text-right">Rp ${formatRupiah(item.harga)}</td>
+                <td class="p-2.5 text-right text-rose-500">Rp ${formatRupiah(item.diskon)}</td>
+                <td class="p-2.5 text-right font-semibold text-slate-800">Rp ${formatRupiah(item.subtotal)}</td>
+                <td class="p-2.5 text-center">
+                    <button onclick="hapusBarang(${index})" class="p-1 text-rose-600 hover:bg-rose-50 rounded transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                </td>
+            `;
                 tbody.appendChild(tr);
             });
         }
 
+        // UPDATE PREVIEW REALTIME
         function updateStruk() {
             const posDaftarBarang = document.getElementById('posDaftarBarang');
             const docTabelItems = document.getElementById('docTabelItems');
-            
-            posDaftarBarang.innerHTML = '';
-            docTabelItems.innerHTML = '';
+
+            if (posDaftarBarang) posDaftarBarang.innerHTML = '';
+            if (docTabelItems) docTabelItems.innerHTML = '';
 
             let totalBelanja = 0;
             let totalItem = 0;
             let akumulasiDiskon = 0;
 
             if (daftarBarang.length === 0) {
-                posDaftarBarang.innerHTML = `<div class="text-center text-slate-400 italic py-2">Belum ada item ditambahkan</div>`;
-                docTabelItems.innerHTML = `<tr><td colspan="4" class="border border-slate-300 p-4 text-center text-slate-400 italic">Belum ada item ditambahkan</td></tr>`;
+                if (posDaftarBarang) posDaftarBarang.innerHTML = `<div class="text-center text-slate-400 italic py-2">Belum ada item ditambahkan</div>`;
+                if (docTabelItems) docTabelItems.innerHTML = `<tr><td colspan="4" class="border border-slate-300 p-4 text-center text-slate-400 italic">Belum ada item ditambahkan</td></tr>`;
             } else {
                 daftarBarang.forEach((item, index) => {
                     totalBelanja += item.subtotal;
                     totalItem += item.qty;
                     akumulasiDiskon += item.totalDiskonItem;
 
-                    // Rendering POS Struk
-                    const divPos = document.createElement('div');
-                    divPos.className = "flex justify-between items-start text-xs text-slate-700";
-                    let infoDiskonText = item.diskon > 0 ? `<span class="text-[10px] text-rose-500 block">(Disc: -Rp ${formatRupiah(item.diskon)})</span>` : '';
-                    divPos.innerHTML = `
+                    if (posDaftarBarang) {
+                        const divPos = document.createElement('div');
+                        divPos.className = "flex justify-between items-start text-xs text-slate-700";
+                        let infoDiskonText = item.diskon > 0 ? `<span class="text-[10px] text-rose-500 block">(Disc: -Rp ${formatRupiah(item.diskon)})</span>` : '';
+                        divPos.innerHTML = `
                         <div class="space-y-0.5">
                             <div class="font-medium text-slate-800">${item.nama}</div>
                             <div class="text-slate-500 text-[11px]">${item.qty} x Rp ${formatRupiah(item.harga - item.diskon)} ${infoDiskonText}</div>
                         </div>
                         <div class="font-semibold text-slate-800">Rp ${formatRupiah(item.subtotal)}</div>
                     `;
-                    posDaftarBarang.appendChild(divPos);
+                        posDaftarBarang.appendChild(divPos);
+                    }
 
-                    // Rendering Document Table (Gambar Reference Style)
-                    const trDoc = document.createElement('tr');
-                    trDoc.innerHTML = `
+                    if (docTabelItems) {
+                        const trDoc = document.createElement('tr');
+                        trDoc.innerHTML = `
                         <td class="border border-slate-300 p-2.5 text-center">${index + 1}</td>
                         <td class="border border-slate-300 p-2.5 font-medium">${item.nama}</td>
-                        <td class="border border-slate-300 p-2.5 text-right font-semibold">Rp${formatRupiah(item.subtotal)}</td>
+                        <td class="border border-slate-300 p-2.5 text-right font-semibold">Rp ${formatRupiah(item.subtotal)}</td>
                         <td class="border border-slate-300 p-2.5 text-center">${item.qty} Unit</td>
                     `;
-                    docTabelItems.appendChild(trDoc);
+                        docTabelItems.appendChild(trDoc);
+                    }
                 });
             }
 
-            // Sync Data Klien ke Dokumen Surat
-            const namaKlienVal = document.getElementById('namaKlien').value.trim() || 'Utan Boutique Hotel';
-            const jabatanKlienVal = document.getElementById('jabatanKlien').value.trim() || 'Yth. Kepala Divisi IT';
-            const alamatKlienVal = document.getElementById('alamatKlien').value.trim() || 'Jl. Guru Gatot 45, Bondowoso, Jawa Timur 69393';
-            const perihalVal = document.getElementById('perihalDokumen').value.trim() || (modeAktif === 'invoice' ? 'Tagihan Pembayaran (Invoice)' : 'Penawaran Harga Pengadaan');
+            const namaKlienVal = document.getElementById('namaKlien')?.value.trim() || 'Utan Boutique Hotel';
+            const jabatanKlienVal = document.getElementById('jabatanKlien')?.value.trim() || 'Yth. Kepala Divisi IT';
+            const alamatKlienVal = document.getElementById('alamatKlien')?.value.trim() || 'Jl. Guru Gatot 45, Bondowoso, Jawa Timur 69393';
+            const perihalVal = document.getElementById('perihalDokumen')?.value.trim() || (modeAktif === 'invoice' ? 'Tagihan Pembayaran (Invoice)' : 'Penawaran Harga Pengadaan');
 
-            document.getElementById('docYthJabatan').innerText = jabatanKlienVal;
-            document.getElementById('docYthNama').innerText = namaKlienVal;
-            document.getElementById('docYthAlamat').innerText = alamatKlienVal;
-            document.getElementById('docPerihalSurat').innerText = perihalVal;
-            document.getElementById('docNamaKlienBody').innerText = namaKlienVal;
-            document.getElementById('docNomorSurat').innerText = generateNoDokumenOtomatis();
-            document.getElementById('docKataKunci').innerText = modeAktif === 'invoice' ? 'tagihan' : 'penawaran';
+            const elDocJabatan = document.getElementById('docYthJabatan');
+            const elDocNama = document.getElementById('docYthNama');
+            const elDocAlamat = document.getElementById('docYthAlamat');
+            const elDocPerihal = document.getElementById('docPerihalSurat');
+            const elDocKlienBody = document.getElementById('docNamaKlienBody');
+            const elDocKataKunci = document.getElementById('docKataKunci');
 
-            // Calculations POS
-            const uangBayar = parseInt(document.getElementById('uangBayar').value) || 0;
+            if (elDocJabatan) elDocJabatan.innerText = jabatanKlienVal;
+            if (elDocNama) elDocNama.innerText = namaKlienVal;
+            if (elDocAlamat) elDocAlamat.innerText = alamatKlienVal;
+            if (elDocPerihal) elDocPerihal.innerText = perihalVal;
+            if (elDocKlienBody) elDocKlienBody.innerText = namaKlienVal;
+            if (elDocKataKunci) elDocKataKunci.innerText = modeAktif === 'invoice' ? 'tagihan' : 'penawaran';
+
+            const uangBayarInput = document.getElementById('uangBayar');
+            const uangBayar = parseInt(uangBayarInput ? uangBayarInput.value : 0) || 0;
             const kembalian = uangBayar - totalBelanja;
             const statusKembalian = document.getElementById('statusKembalian');
 
-            if (uangBayar === 0) {
-                statusKembalian.innerText = "Rp 0";
-                statusKembalian.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700";
-            } else if (kembalian < 0) {
-                statusKembalian.innerText = `Kurang Rp ${formatRupiah(Math.abs(kembalian))}`;
-                statusKembalian.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-rose-100 text-rose-700";
-            } else {
-                statusKembalian.innerText = `Kembali Rp ${formatRupiah(kembalian)}`;
-                statusKembalian.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700";
+            if (statusKembalian) {
+                if (uangBayar === 0) {
+                    statusKembalian.innerText = "Rp 0";
+                    statusKembalian.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700";
+                } else if (kembalian < 0) {
+                    statusKembalian.innerText = `Kurang Rp ${formatRupiah(Math.abs(kembalian))}`;
+                    statusKembalian.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-rose-100 text-rose-700";
+                } else {
+                    statusKembalian.innerText = `Kembali Rp ${formatRupiah(kembalian)}`;
+                    statusKembalian.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700";
+                }
             }
 
-            document.getElementById('posTotalItem').innerText = totalItem;
-            document.getElementById('posTotalBelanja').innerText = formatRupiah(totalBelanja);
-            document.getElementById('posTunai').innerText = formatRupiah(uangBayar);
-            document.getElementById('posKembali').innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
+            const elItem = document.getElementById('posTotalItem');
+            const elBelanja = document.getElementById('posTotalBelanja');
+            const elTunai = document.getElementById('posTunai');
+            const elKembali = document.getElementById('posKembali');
+
+            if (elItem) elItem.innerText = totalItem;
+            if (elBelanja) elBelanja.innerText = formatRupiah(totalBelanja);
+            if (elTunai) elTunai.innerText = formatRupiah(uangBayar);
+            if (elKembali) elKembali.innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
         }
 
+        // FUNGSI CETAK DOKUMEN & PENYIMPANAN OTOMATIS
         function cetakNota() {
             if (daftarBarang.length === 0) {
                 alert('Daftar barang/jasa masih kosong!');
@@ -732,27 +954,262 @@
                 }
             }
 
+            // Siapkan Objek Data Transaksi
+            const dataTransaksi = {
+                noDokumen: nomorDokumenOtomatis,
+                mode: modeAktif,
+                tanggal: new Date().toISOString(),
+                items: [...daftarBarang],
+                totalBelanja: totalBelanja,
+                klien: modeAktif !== 'pos' ? {
+                    nama: document.getElementById('namaKlien').value,
+                    jabatan: document.getElementById('jabatanKlien').value,
+                    alamat: document.getElementById('alamatKlien').value
+                } : null
+            };
+
+            // Simpan ke LocalStorage & Naikkan Nomor Urut
+            simpanTransaksiKeStorage(dataTransaksi);
+
+            // Cetak
             window.print();
+
+            // Reset dan Siapkan Dokumen Baru
+            resetFormSetelan();
         }
 
-        function resetTransaksi() {
+        // RESET FORM UNTUK TRANSAKSI BARU
+        function resetFormSetelan() {
             daftarBarang = [];
-            document.getElementById('uangBayar').value = '';
-            document.getElementById('namaKlien').value = '';
-            document.getElementById('jabatanKlien').value = '';
-            document.getElementById('telpKlien').value = '';
-            document.getElementById('alamatKlien').value = '';
-            document.getElementById('posNoDokumen').innerText = generateNoDokumenOtomatis();
+            const idsToReset = ['uangBayar', 'namaKlien', 'jabatanKlien', 'telpKlien', 'alamatKlien'];
+            idsToReset.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            generateNoDokumen();
             setTanggal();
             renderTabel();
             updateStruk();
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            muatMasterBarang();
-            setTanggal();
-            switchMode('pos');
-        });
+        // TOMBOL RESET TRANSAKSI MANUAL
+        function resetTransaksi() {
+            if (!confirm("Apakah Anda yakin ingin mereset transaksi ini?")) return;
+            resetFormSetelan();
+        }
+        // BUKA & TUTUP MODAL RIWAYAT
+        function bukaModalRiwayat() {
+            const modal = document.getElementById('modalRiwayat');
+            if (modal) {
+                modal.classList.remove('hidden');
+                renderRiwayat();
+            }
+        }
+
+        function tutupModalRiwayat() {
+            const modal = document.getElementById('modalRiwayat');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        // RENDER DATA TABEL RIWAYAT
+        function renderRiwayat() {
+            const tbody = document.getElementById('tabelRiwayatBody');
+            const kataKunci = document.getElementById('cariRiwayat').value.toLowerCase();
+            const filterMode = document.getElementById('filterMode').value;
+            const riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
+
+            tbody.innerHTML = '';
+
+            // Filter Data
+            const dataTersaring = riwayat.filter(item => {
+                const cocokKata = item.noDokumen.toLowerCase().includes(kataKunci) ||
+                    (item.klien?.nama || '').toLowerCase().includes(kataKunci);
+                const cocokMode = filterMode === 'semua' || item.mode === filterMode;
+                return cocokKata && cocokMode;
+            });
+
+            if (dataTersaring.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 italic">Tidak ada data riwayat transaksi ditemukan.</td></tr>`;
+                return;
+            }
+
+            // Render Baris
+            dataTersaring.reverse().forEach((item, index) => {
+                const indexAsli = riwayat.length - 1 - index;
+                const tgl = new Date(item.tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+                let badgeClass = "bg-slate-100 text-slate-700";
+                if (item.mode === 'invoice') badgeClass = "bg-amber-100 text-amber-700";
+                if (item.mode === 'penawaran') badgeClass = "bg-indigo-100 text-indigo-700";
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                tr.innerHTML = `
+            <td class="p-3 font-semibold text-slate-800">${item.noDokumen}</td>
+            <td class="p-3 text-slate-500">${tgl}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${badgeClass}">${item.mode}</span></td>
+            <td class="p-3 text-slate-600">${item.klien?.nama || item.items.length + ' Item Transaksi'}</td>
+            <td class="p-3 text-right font-bold text-slate-800">Rp ${formatRupiah(item.totalBelanja)}</td>
+            <td class="p-3 text-center">
+                <div class="flex items-center justify-center gap-1">
+                    <button onclick="muatUlangTransaksi(${indexAsli})" title="Muat & Cetak Ulang" class="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-lg transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    </button>
+                    <button onclick="hapusRiwayatItem(${indexAsli})" title="Hapus" class="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                </div>
+            </td>
+        `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // MUAT ULANG TRANSAKSI KE PREVIEW UNTUK DICETAK KEMBALI
+        function muatUlangTransaksi(index) {
+            const riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
+            const item = riwayat[index];
+            if (!item) return;
+
+            daftarBarang = [...item.items];
+            switchMode(item.mode);
+
+            nomorDokumenOtomatis = item.noDokumen;
+            const elPosNo = document.getElementById('posNoDokumen');
+            const elDocNo = document.getElementById('docNomorSurat');
+            if (elPosNo) elPosNo.innerText = nomorDokumenOtomatis;
+            if (elDocNo) elDocNo.innerText = nomorDokumenOtomatis;
+
+            if (item.klien) {
+                if (document.getElementById('namaKlien')) document.getElementById('namaKlien').value = item.klien.nama || '';
+                if (document.getElementById('jabatanKlien')) document.getElementById('jabatanKlien').value = item.klien.jabatan || '';
+                if (document.getElementById('alamatKlien')) document.getElementById('alamatKlien').value = item.klien.alamat || '';
+            }
+
+            renderTabel();
+            updateStruk();
+            tutupModalRiwayat();
+        }
+
+        // HAPUS SATU ITEM RIWAYAT
+        function hapusRiwayatItem(index) {
+            if (!confirm("Hapus transaksi ini dari riwayat?")) return;
+            let riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
+            riwayat.splice(index, 1);
+            localStorage.setItem('riwayat_transaksi', JSON.stringify(riwayat));
+            renderRiwayat();
+        }
+
+        // HAPUS SEMUA RIWAYAT
+        function hapusSemuaRiwayat() {
+            if (!confirm("Apakah Anda yakin ingin menghapus SEMUA riwayat transaksi? Data tidak bisa dikembalikan.")) return;
+            localStorage.removeItem('riwayat_transaksi');
+            renderRiwayat();
+        }
+
+        // GANTI DENGAN URL GOOGLE APPS SCRIPT ANDA DARI LANGKAH 1
+        const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbw_mCkhiBcQTYy6Qw78C4TKMjjAEzUzV-SCyvPTW7o_H_U7zwRGR0wNeWjXlu6Hh8__/exec";
+
+        // FUNGSI SIMPAN TRANSAKSI (LOCALSTORAGE + GOOGLE SHEETS)
+        function simpanTransaksiKeStorage(dataTransaksi) {
+            // 1. Simpan ke LocalStorage Browser
+            let riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
+            riwayat.push(dataTransaksi);
+            localStorage.setItem('riwayat_transaksi', JSON.stringify(riwayat));
+
+            // 2. Update counter penomoran otomatis
+            let keyCounter = "counter_pos";
+            if (modeAktif === 'invoice') keyCounter = "counter_invoice";
+            if (modeAktif === 'penawaran') keyCounter = "counter_penawaran";
+
+            let nomorUrut = parseInt(localStorage.getItem(keyCounter)) || 1;
+            localStorage.setItem(keyCounter, nomorUrut + 1);
+
+            // 3. Kirim Data Otomatis ke Google Sheets
+            if (URL_GOOGLE_SHEETS && !URL_GOOGLE_SHEETS.includes("AKfycbw_mCkhiBcQTYy6Qw78C4TKMjjAEzUzV-SCyvPTW7o_H_U7zwRGR0wNeWjXlu6Hh8__")) {
+                fetch(URL_GOOGLE_SHEETS, {
+                    method: 'POST',
+                    mode: 'no-cors', // Mencegah pembatasan CORS browser
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataTransaksi)
+                })
+                    .then(() => console.log('Data transaksi berhasil dikirim ke Google Sheets'))
+                    .catch(err => console.error('Gagal mengirim ke Google Sheets:', err));
+            }
+        }
+
+        // FUNGSI EKSPOR RIWAYAT TRANSAKSI KE FILE CSV / EXCEL
+        function eksporRiwayatKeCSV() {
+            const riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
+
+            if (riwayat.length === 0) {
+                alert('Tidak ada data riwayat transaksi untuk diekspor!');
+                return;
+            }
+
+            // Header Kolom CSV
+            const headers = [
+                "No Dokumen",
+                "Tanggal",
+                "Mode Dokumen",
+                "Nama Klien",
+                "Jabatan Klien",
+                "Alamat Klien",
+                "Detail Barang/Jasa",
+                "Total Belanja (Rp)"
+            ];
+
+            const barisCSV = [];
+            barisCSV.push(headers.join(";")); // Menggunakan pemisah titik koma (;) agar otomatis rapi di Excel Indonesia
+
+            // Olah Data Transaksi
+            riwayat.forEach(item => {
+                const tgl = new Date(item.tanggal).toLocaleString('id-ID');
+                const mode = item.mode ? item.mode.toUpperCase() : 'POS';
+                const namaKlien = item.klien?.nama ? `"${item.klien.nama.replace(/"/g, '""')}"` : 'Tunai / POS';
+                const jabatanKlien = item.klien?.jabatan ? `"${item.klien.jabatan.replace(/"/g, '""')}"` : '-';
+                const alamatKlien = item.klien?.alamat ? `"${item.klien.alamat.replace(/"/g, '""')}"` : '-';
+
+                // Format gabungan daftar barang: "Nama Barang (Qty x Harga)"
+                const daftarBarangStr = item.items.map(b => `${b.nama} (${b.qty}x @Rp${b.harga - b.diskon})`).join(" | ");
+                const rincianBarangEscaped = `"${daftarBarangStr.replace(/"/g, '""')}"`;
+
+                const baris = [
+                    `"${item.noDokumen}"`,
+                    `"${tgl}"`,
+                    `"${mode}"`,
+                    namaKlien,
+                    jabatanKlien,
+                    alamatKlien,
+                    rincianBarangEscaped,
+                    item.totalBelanja
+                ];
+
+                barisCSV.push(baris.join(";"));
+            });
+
+            // Buat Blob File CSV dengan Encoding UTF-8 (BOM) agar Karakter/Simbol Tidak Rusak
+            const isiCSV = "\uFEFF" + barisCSV.join("\n");
+            const blob = new Blob([isiCSV], { type: 'text/csv;charset=utf-8;' });
+
+            // Buat URL dan Unduh File
+            const url = URL.createObjectURL(blob);
+            const linkA = document.createElement("a");
+
+            const skrg = new Date();
+            const tglFile = `${skrg.getFullYear()}${String(skrg.getMonth() + 1).padStart(2, '0')}${String(skrg.getDate()).padStart(2, '0')}`;
+
+            linkA.setAttribute("href", url);
+            linkA.setAttribute("download", `Riwayat_Transaksi_${tglFile}.csv`);
+            document.body.appendChild(linkA);
+
+            linkA.click();
+            document.body.removeChild(linkA);
+            URL.revokeObjectURL(url);
+        }
     </script>
 </body>
 
