@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Kasir & Dokumen - Dedy Technology Solution</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        /* Warna khusus tema dokumen surat (Cokelat Keemasan) */
+        .bg-doc-gold {
+            background-color: #b07d38;
+        }
+
+        .border-doc-gold {
+            border-color: #b07d38;
+        }
+
+        .text-doc-gold {
+            color: #b07d38;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                padding: 0 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .paper-preview {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800 min-h-screen p-4 md:p-6">
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- LEFT COLUMN: FORM & CONTROLS (NO PRINT) -->
+        <div class="lg:col-span-5 space-y-6 no-print">
+
+            <!-- HEADER CARD -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 p-5 flex items-center gap-4">
+                <img src="Logo.png" alt="Logo"
+                    class="h-12 w-12 object-contain rounded-lg bg-slate-50 p-1 border border-slate-100">
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900 leading-tight">Dedy Technology Solution</h1>
+                    <p class="text-xs text-slate-500">Sistem POS, Invoice & Penawaran Harga</p>
+                </div>
+            </div>
+
+            <!-- TAB NAVIGATION -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 p-1.5 flex gap-1">
+                <button id="tabPos" onclick="switchMode('pos')"
+                    class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-sm">
+                    Kasir (POS)
+                </button>
+                <button id="tabInvoice" onclick="switchMode('invoice')"
+                    class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200">
+                    Invoice
+                </button>
+                <button id="tabPenawaran" onclick="switchMode('penawaran')"
+                    class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200">
+                    Penawaran
+                </button>
+            </div>
+
+            <!-- FORM SECTION -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 p-5 space-y-5">
+
+                <!-- CLIENT INFO (INVOICE & PENAWARAN ONLY) -->
+                <div id="sectionKlien" class="hidden bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Informasi Klien & Surat</h3>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Jabatan / Yth.</label>
+                        <input type="text" id="jabatanKlien" placeholder="Contoh: Kepala Divisi IT"
+                            oninput="updateStruk()"
+                            class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Klien /
+                                Perusahaan</label>
+                            <input type="text" id="namaKlien" placeholder="Utan Boutique Hotel" oninput="updateStruk()"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">No. Telepon / WA</label>
+                            <input type="text" id="telpKlien" placeholder="0123 456 789" oninput="updateStruk()"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Alamat Lengkap Klien</label>
+                        <input type="text" id="alamatKlien" placeholder="Jl. Guru Gatot 45, Bondowoso, Jawa Timur"
+                            oninput="updateStruk()"
+                            class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Perihal Dokumen</label>
+                        <input type="text" id="perihalDokumen" placeholder="Penawaran Harga Pemasangan CCTV"
+                            oninput="updateStruk()"
+                            class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div id="groupJatuhTempo">
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Tanggal Jatuh Tempo</label>
+                            <input type="date" id="tglJatuhTempo" onchange="updateStruk()"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                        </div>
+                        <div id="groupMasaBerlaku" class="hidden">
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Masa Berlaku
+                                Penawaran</label>
+                            <input type="text" id="masaBerlaku" value="14 Hari" oninput="updateStruk()"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ITEM SELECTION -->
+                <div class="space-y-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Status Pembayaran</label>
+                            <select id="statusPembayaran" onchange="updateStruk()"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option value="Lunas">Lunas</option>
+                                <option value="Belum Lunas">Belum Lunas</option>
+                                <option value="DP (Uang Muka)">DP (Uang Muka)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="muatDataDariAppsScript()"
+                                class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                    </path>
+                                </svg>
+                                Tarik Data Apps Script
+                            </button>
+                        </div>
+                    </div>
+                    <!-- INPUT NAMA PELANGGAN (POS) -->
+                    <div id="sectionPelangganPos" class="pt-2 border-t border-slate-100">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Pelanggan / Kasir
+                            (Opsional)</label>
+                        <input type="text" id="namaPelangganPos" placeholder="Contoh: Bpk. Agus / Umum"
+                            oninput="updateStruk()"
+                            class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Barang / Jasa (Master
+                            Data)</label>
+                        <input type="text" id="namaBarang" list="listBarang" placeholder="Ketik atau pilih nama item..."
+                            oninput="autoIsiHarga()" onkeypress="handleEnter(event)"
+                            class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                        <datalist id="listBarang"></datalist>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Harga (Rp)</label>
+                            <input type="number" id="hargaBarang" placeholder="0" readonly
+                                class="w-full text-sm px-3 py-2 bg-slate-100 border border-slate-300 rounded-lg text-slate-600 outline-none cursor-not-allowed font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Qty</label>
+                            <input type="number" id="qtyBarang" value="1" min="1" onkeypress="handleEnter(event)"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Diskon/Item (Rp)</label>
+                            <input type="number" id="diskonItem" value="0" min="0" onkeypress="handleEnter(event)"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-medium">
+                        </div>
+                    </div>
+
+                    <button onclick="tambahBarang()"
+                        class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg shadow-sm transition duration-150 flex items-center justify-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
+                        </svg>
+                        Tambah Item
+                    </button>
+                </div>
+
+                <!-- TABLE ITEMS -->
+                <div class="overflow-x-auto custom-scrollbar border border-slate-200 rounded-lg">
+                    <table class="w-full text-left text-xs text-slate-600">
+                        <thead class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
+                            <tr>
+                                <th class="p-2.5">Item</th>
+                                <th class="p-2.5 text-center">Qty</th>
+                                <th class="p-2.5 text-right">Harga</th>
+                                <th class="p-2.5 text-right">Disc</th>
+                                <th class="p-2.5 text-right">Subtotal</th>
+                                <th class="p-2.5 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelBarang" class="divide-y divide-slate-100">
+                            <!-- Rows injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAYMENT SECTION (POS ONLY) -->
+                <div id="sectionPembayaran" class="pt-2 border-t border-slate-100 space-y-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Uang Bayar (Rp)</label>
+                            <input type="number" id="uangBayar" placeholder="0" oninput="updateStruk()"
+                                class="w-full text-sm px-3 py-2 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-medium">
+                        </div>
+                        <div
+                            class="bg-slate-50 p-3 rounded-lg border border-slate-200 flex justify-between items-center">
+                            <span class="text-xs font-semibold text-slate-600">Status:</span>
+                            <span id="statusKembalian"
+                                class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700">Rp
+                                0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="pt-2 flex flex-col sm:flex-row gap-2">
+                    <button id="btnCetak" onclick="cetakNota()"
+                        class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-lg shadow-sm transition duration-150 flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
+                            </path>
+                        </svg>
+                        <span>Cetak Dokumen</span>
+                        <span id="statusProses" style="display:none; margin-left: 10px; color: blue;">Menyimpan
+                            data...</span>
+                    </button>
+                    <button onclick="resetTransaksi()"
+                        class="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold text-sm rounded-lg border border-rose-200 transition duration-150">
+                        Reset
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: DOCUMENT PREVIEW (PRINT AREA) -->
+        <div class="lg:col-span-7 print-area">
+
+            <!-- MODE STRUK (POS ONLY) -->
+            <div id="previewStrukPos"
+                class="bg-white rounded-xl shadow-md border border-slate-200/80 p-6 paper-preview sticky top-6 max-w-md mx-auto">
+                <div class="text-center pb-4 border-b border-slate-200">
+                    <img class="h-12 w-12 mx-auto object-contain mb-2" src="Logo.png" alt="Logo">
+                    <h2 class="text-sm font-bold text-slate-900 tracking-wide uppercase">Dedy Technology Solution</h2>
+                    <p class="text-[11px] text-slate-500">Sangketan, Kabupaten Tabanan - Bali</p>
+                    <p class="text-[11px] text-slate-500">Telp/WA: 0851-5859-3379</p>
+                </div>
+
+                <div class="py-3 border-b border-slate-200">
+                    <div class="text-center mb-2">
+                        <span
+                            class="inline-block px-3 py-1 bg-slate-100 text-slate-800 text-xs font-bold rounded-full uppercase tracking-wider">STRUK
+                            PENJUALAN</span>
+                    </div>
+                    <div class="flex justify-between text-[11px] text-slate-500">
+                        <span>Tgl: <strong id="posNotaTgl" class="text-slate-700"></strong></span>
+                        <span id="posNoDokumen" class="font-mono text-slate-700">TRX-00000000-000</span>
+                    </div>
+                    <!-- NAMA PELANGGAN PADA STRUK -->
+                    <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                        <span>Pelanggan:</span>
+                        <strong id="posNamaPelanggan" class="text-slate-700">Umum</strong>
+                    </div>
+                </div>
+
+                <div class="py-3 border-b border-slate-200">
+                    <div id="posDaftarBarang" class="space-y-2 text-xs"></div>
+                </div>
+
+                <div class="py-3 border-b border-slate-200 space-y-1.5 text-xs">
+                    <div class="flex justify-between text-slate-600">
+                        <span>Total Item</span>
+                        <span id="posTotalItem" class="font-medium text-slate-800">0</span>
+                    </div>
+                    <div id="posRowTotalDiskon" class="hidden justify-between text-emerald-600 font-medium">
+                        <span>Total Diskon</span>
+                        <span>-Rp <span id="posTotalDiskon">0</span></span>
+                    </div>
+                    <div class="flex justify-between text-sm font-bold text-slate-900 pt-1">
+                        <span>Total Tagihan</span>
+                        <span>Rp <span id="posTotalBelanja">0</span></span>
+                    </div>
+                </div>
+
+                <div class="py-3 border-b border-slate-200 space-y-1 text-xs">
+                    <div class="flex justify-between text-slate-600">
+                        <span>Tunai</span>
+                        <span>Rp <span id="posTunai">0</span></span>
+                    </div>
+                    <div class="flex justify-between text-slate-600">
+                        <span>Kembali</span>
+                        <span>Rp <span id="posKembali">0</span></span>
+                    </div>
+                </div>
+
+                <div class="pt-4 text-center text-[11px] text-slate-500 space-y-1">
+                    <p>Kritik & Saran: 0851-5859-3379</p>
+                    <p class="font-bold text-slate-800 uppercase tracking-wide">Terima Kasih</p>
+                    <p class="text-[10px] text-slate-400">Atas Kunjungan & Kepercayaan Anda</p>
+                </div>
+            </div>
+
+            <!-- MODE SURAT / INVOICE & PENAWARAN (SESUAI FORMAT GAMBAR) -->
+            <div id="previewSurat"
+                class="hidden bg-white rounded-xl shadow-md border border-slate-200/80 p-8 md:p-12 paper-preview sticky top-6 font-serif text-slate-800 text-sm leading-relaxed">
+
+                <!-- HEADER SURAT -->
+                <div class="flex justify-between items-start border-b-2 border-slate-300 pb-6 mb-6">
+                    <div class="flex items-center gap-4">
+                        <img src="Logo.png" alt="Logo" class="h-16 w-16 object-contain">
+                        <div>
+                            <h2 class="text-xl font-bold tracking-wider text-slate-900 uppercase font-sans">DEDY
+                                TECHNOLOGY</h2>
+                            <p class="text-sm font-bold tracking-widest text-slate-700 uppercase font-sans">SOLUTION</p>
+                        </div>
+                    </div>
+                    <div class="text-right text-xs text-slate-600 font-sans space-y-1">
+                        <p class="flex items-center justify-end gap-1.5">
+                            <span>Sangketan, Tabanan, Bali 82152</span>
+                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </p>
+                        <p class="flex items-center justify-end gap-1.5">
+                            <span>0851-5859-3379</span>
+                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z">
+                                </path>
+                            </svg>
+                        </p>
+                        <p class="flex items-center justify-end gap-1.5">
+                            <span>dedytechsolution@gmail.com</span>
+                            <svg class="w-3.5 h-3.5 text-doc-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TANGGAL SURAT -->
+                <div class="text-right text-slate-800 font-sans text-sm mb-6">
+                    <span id="docTanggalSurat">21 Januari 2026</span>
+                </div>
+
+                <!-- METADATA SURAT -->
+                <div class="space-y-1 font-sans text-xs md:text-sm mb-6">
+                    <p><strong>Nomor:</strong> <span id="docNomorSurat">001/DTS/23/01/2026</span></p>
+                    <p><strong>Lampiran:</strong> -</p>
+                    <p><strong>Perihal:</strong> <span id="docPerihalSurat">Penawaran Harga Pengadaan & Instalasi</span>
+                    </p>
+                </div>
+
+                <!-- KEPADA YTH -->
+                <div class="space-y-0.5 font-sans text-xs md:text-sm mb-6">
+                    <p class="font-bold text-slate-900" id="docYthJabatan">Yth. Kepala Divisi IT</p>
+                    <p class="font-bold text-slate-900" id="docYthNama">Perusahan Bapak/Ibu</p>
+                    <p class="text-slate-600" id="docYthAlamat">Ditempat</p>
+                </div>
+
+                <div class="w-12 h-0.5 bg-doc-gold mb-6"></div>
+
+                <!-- SALAM PEMBUKA -->
+                <div class="space-y-3 font-serif text-slate-800 text-xs md:text-sm mb-6 text-justify">
+                    <p>Dengan hormat,</p>
+                    <p id="docParagrafPembuka">
+                        Melalui surat ini, kami ingin menindak lanjuti hasil pembahasan mengenai kebutuhan perangkat
+                        serta sistem teknologi informasi untuk <span id="docNamaKlienBody"
+                            class="font-semibold">Perusahaan Bapak/Ibu</span>. Kami ingin mengajukan rincian harga
+                        sebagai berikut:
+                    </p>
+                </div>
+
+                <!-- TABEL ITEMS HASIL DESIGN KANVA -->
+                <div class="mb-6 overflow-x-auto">
+                    <table class="w-full border-collapse border border-slate-300 font-sans text-xs md:text-sm">
+                        <thead>
+                            <tr class="bg-doc-gold text-white font-semibold">
+                                <th class="border border-slate-300 p-2.5 text-center w-12">No</th>
+                                <th class="border border-slate-300 p-2.5 text-left">Jenis Layanan / Barang</th>
+                                <th class="border border-slate-300 p-2.5 text-right">Biaya / Harga</th>
+                                <th class="border border-slate-300 p-2.5 text-center w-20">Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="docTabelItems">
+                            <!-- Rows injected JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PARAGRAF PENUTUP -->
+                <div class="space-y-3 font-serif text-slate-800 text-xs md:text-sm mb-8 text-justify">
+                    <p>
+                        Jika Anda memiliki pertanyaan lebih lanjut terkait <span id="docKataKunci">penawaran</span> ini
+                        atau tertarik untuk bekerja sama, Anda dapat menghubungi 0851-5859-3379 atau mengirim email ke
+                        dedytechsolution@gmail.com. Kami akan senang menjawab semua pertanyaan dan membantu Anda.
+                    </p>
+                    <p>Kami berharap bisa melakukan kerja sama dengan perusahaan Anda.</p>
+                </div>
+
+                <div class="w-12 h-0.5 bg-doc-gold mb-8"></div>
+
+                <!-- HORMAT KAMI / TANDA TANGAN -->
+                <div class="font-sans text-xs md:text-sm space-y-12">
+                    <div>
+                        <p class="font-medium text-slate-800">Hormat kami,</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 underline">I Putu Dedi Suardana</p>
+                        <p class="text-slate-600 text-xs">Pemilik / Owner</p>
+                        <p class="text-slate-600 text-xs font-semibold">Dedy Technology Solution</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Tombol Buka Riwayat (Bisa diletakkan di header / navbar aplikasi Anda) -->
+    <button onclick="bukaModalRiwayat()"
+        class="flex items-center gap-2 px-3 py-2 bg-slate-800 text-white rounded-lg text-xs font-semibold hover:bg-slate-700 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Riwayat Transaksi
+    </button>
+    <!-- MODAL RIWAYAT TRANSAKSI -->
+    <div id="modalRiwayat"
+        class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div
+            class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-100">
+
+            <!-- Header Modal -->
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div>
+                    <h3 class="text-base font-bold text-slate-800">Riwayat Transaksi Tersimpan</h3>
+                    <p class="text-xs text-slate-500">Daftar transaksi yang tersimpan di penyimpanan lokal browser.</p>
+                </div>
+                <button onclick="tutupModalRiwayat()"
+                    class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-lg transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Filter & Pencarian -->
+            <div
+                class="p-4 bg-white border-b border-slate-100 flex flex-wrap gap-3 items-center justify-between text-xs">
+                <input type="text" id="cariRiwayat" onkeyup="renderRiwayat()" placeholder="Cari No Dokumen / Klien..."
+                    class="px-3 py-2 border border-slate-200 rounded-lg w-full sm:w-64 focus:outline-none focus:border-indigo-500">
+                <div class="flex items-center gap-2">
+                    <select id="filterMode" onchange="renderRiwayat()"
+                        class="px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                        <option value="semua">Semua Dokumen</option>
+                        <option value="pos">POS Struk</option>
+                        <option value="invoice">Invoice</option>
+                        <option value="penawaran">Penawaran</option>
+                    </select>
+                    <button onclick="hapusSemuaRiwayat()"
+                        class="px-3 py-2 bg-rose-50 text-rose-600 font-semibold rounded-lg hover:bg-rose-100 transition">
+                        Hapus Semua
+                    </button>
+                    <!-- Diletakkan di dalam kontainer filter modal riwayat -->
+                    <button onclick="eksporRiwayatKeCSV()"
+                        class="flex items-center gap-1.5 px-3 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition text-xs">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        Ekspor CSV / Excel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabel Riwayat -->
+            <div class="overflow-y-auto flex-1 p-4">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
+                        <tr>
+                            <th class="p-3">No. Dokumen</th>
+                            <th class="p-3">Tanggal</th>
+                            <th class="p-3">Jenis</th>
+                            <th class="p-3">Klien / Detail</th>
+                            <th class="p-3 text-center">Status Bayar</th>
+                            <th class="p-3 text-right">Total</th>
+                            <th class="p-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelRiwayatBody" class="divide-y divide-slate-100">
+                        <!-- Data dimasukkan via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="p-4 border-t border-slate-100 bg-slate-50 text-right">
+                <button onclick="tutupModalRiwayat()"
+                    class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300 transition text-xs">
+                    Tutup
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <!-- LOGIC SYSTEM -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
