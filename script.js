@@ -1,4 +1,6 @@
-// MASTER DATA BARANG & JASA
+// ==========================================
+// 1. MASTER DATA BARANG & JASA
+// ==========================================
 const masterBarang = [
     { nama: "CCTV INDOOR EZVIZ H6C PRO 2K/3MP", harga: 490000 },
     { nama: "CCTV INDOOR EZVIZ TY1 1080P", harga: 470000 },
@@ -44,12 +46,17 @@ const masterBarang = [
     { nama: "AKSESORIS CCTV(KABEL 5M, DURADUS, KLEM, DLL)", harga: 100000 }
 ];
 
-// STATE APLIKASI
+// ==========================================
+// 2. STATE APLIKASI
+// ==========================================
 let daftarBarang = [];
 let modeAktif = 'pos';
 let nomorDokumenOtomatis = '';
+const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbzpugAh-yVb75hGLuISIjb_GJa3HPL9ut5yXJy8ZEfAKFIbUAwOaIFfmvqhA-sKg4f_kA/exec";
 
-// INITIALIZATION
+// ==========================================
+// 3. INISIALISASI
+// ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     muatMasterBarang();
     setTanggal();
@@ -57,7 +64,39 @@ document.addEventListener("DOMContentLoaded", function () {
     switchMode('pos');
 });
 
-// GENERATE NOMOR DOKUMEN BERURUTAN (AUTO-INCREMENT)
+// ==========================================
+// 4. HELPER & UTILITIES
+// ==========================================
+function formatRupiah(angka) {
+    return new Intl.NumberFormat('id-ID').format(angka || 0);
+}
+
+function handleEnter(event) {
+    if (event.key === 'Enter') tambahBarang();
+}
+
+function setTanggal() {
+    const skrg = new Date();
+    const tglLengkap = skrg.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const elDocTgl = document.getElementById('docTanggalSurat');
+    if (elDocTgl) elDocTgl.innerText = tglLengkap;
+
+    const tglJam = String(skrg.getDate()).padStart(2, '0') + '.' +
+        String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
+        String(skrg.getFullYear()).slice(-2) + ' ' +
+        String(skrg.getHours()).padStart(2, '0') + ':' +
+        String(skrg.getMinutes()).padStart(2, '0');
+
+    const elPosTgl = document.getElementById('posNotaTgl');
+    if (elPosTgl) elPosTgl.innerText = tglJam;
+
+    const jatuhTempoDate = new Date();
+    jatuhTempoDate.setDate(skrg.getDate() + 7);
+    const elJatuhTempo = document.getElementById('tglJatuhTempo');
+    if (elJatuhTempo) elJatuhTempo.valueAsDate = jatuhTempoDate;
+}
+
 function generateNoDokumen() {
     const skrg = new Date();
     const thn = skrg.getFullYear();
@@ -74,27 +113,24 @@ function generateNoDokumen() {
         keyCounter = "counter_penawaran";
     }
 
-    // Ambil nomor urut terakhir dari LocalStorage
     let nomorUrut = parseInt(localStorage.getItem(keyCounter)) || 1;
     const nomorFormatted = String(nomorUrut).padStart(4, '0');
 
     nomorDokumenOtomatis = `${prefix}-${nomorFormatted}/${tgl}/${bln}/${thn}`;
 
-    // Update Tampilan DOM
     const elPosNo = document.getElementById('posNoDokumen');
     const elDocNo = document.getElementById('docNomorSurat');
     if (elPosNo) elPosNo.innerText = nomorDokumenOtomatis;
     if (elDocNo) elDocNo.innerText = nomorDokumenOtomatis;
 }
 
-
-
-// AMBIL DAFTAR RIWAYAT TRANSAKSI (Bisa digunakan untuk tabel riwayat)
 function ambilRiwayatTransaksi() {
     return JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
 }
 
-// SWITCH TABS (POS / INVOICE / PENAWARAN)
+// ==========================================
+// 5. NAVIGASI TAB & SWITCH MODE
+// ==========================================
 function switchMode(mode) {
     modeAktif = mode;
 
@@ -128,7 +164,10 @@ function switchMode(mode) {
         if (sectionPembayaran) sectionPembayaran.classList.remove('hidden');
         if (previewStrukPos) previewStrukPos.classList.remove('hidden');
         if (previewSurat) previewSurat.classList.add('hidden');
-        if (btnCetak) btnCetak.querySelector('span').innerText = "Cetak Struk Nota";
+        if (btnCetak) {
+            const spanBtn = btnCetak.querySelector('span');
+            if (spanBtn) spanBtn.innerText = "Cetak Struk Nota";
+        }
     } else {
         if (sectionKlien) sectionKlien.classList.remove('hidden');
         if (sectionPembayaran) sectionPembayaran.classList.add('hidden');
@@ -139,12 +178,18 @@ function switchMode(mode) {
         if (mode === 'invoice') {
             if (groupJatuhTempo) groupJatuhTempo.classList.remove('hidden');
             if (groupMasaBerlaku) groupMasaBerlaku.classList.add('hidden');
-            if (btnCetak) btnCetak.querySelector('span').innerText = "Cetak Dokumen Invoice";
+            if (btnCetak) {
+                const spanBtn = btnCetak.querySelector('span');
+                if (spanBtn) spanBtn.innerText = "Cetak Dokumen Invoice";
+            }
             if (perihalInput) perihalInput.value = "Tagihan Pembayaran (Invoice) Pengadaan / Jasa";
         } else {
             if (groupJatuhTempo) groupJatuhTempo.classList.add('hidden');
             if (groupMasaBerlaku) groupMasaBerlaku.classList.remove('hidden');
-            if (btnCetak) btnCetak.querySelector('span').innerText = "Cetak Dokumen Penawaran";
+            if (btnCetak) {
+                const spanBtn = btnCetak.querySelector('span');
+                if (spanBtn) spanBtn.innerText = "Cetak Dokumen Penawaran";
+            }
             if (perihalInput) perihalInput.value = "Penawaran Harga Pengadaan & Jasa";
         }
     }
@@ -153,7 +198,9 @@ function switchMode(mode) {
     updateStruk();
 }
 
-// POPULATE DATALIST AUTOCOMPLETE
+// ==========================================
+// 6. KELOLA BARANG (DATALIST & INPUT)
+// ==========================================
 function muatMasterBarang() {
     const datalist = document.getElementById('listBarang');
     if (!datalist) return;
@@ -166,9 +213,10 @@ function muatMasterBarang() {
     });
 }
 
-// AUTOFILL HARGA
 function autoIsiHarga() {
-    const inputNama = document.getElementById('namaBarang').value.trim().toUpperCase();
+    const elNama = document.getElementById('namaBarang');
+    if (!elNama) return;
+    const inputNama = elNama.value.trim().toUpperCase();
     const inputHarga = document.getElementById('hargaBarang');
     const barangDitemukan = masterBarang.find(item => item.nama === inputNama);
     if (inputHarga) {
@@ -176,42 +224,12 @@ function autoIsiHarga() {
     }
 }
 
-// SET TANGGAL OTOMATIS
-function setTanggal() {
-    const skrg = new Date();
-    const tglLengkap = skrg.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-
-    const elDocTgl = document.getElementById('docTanggalSurat');
-    if (elDocTgl) elDocTgl.innerText = tglLengkap;
-
-    const tglJam = String(skrg.getDate()).padStart(2, '0') + '.' +
-        String(skrg.getMonth() + 1).padStart(2, '0') + '.' +
-        String(skrg.getFullYear()).slice(-2) + ' ' +
-        String(skrg.getHours()).padStart(2, '0') + ':' +
-        String(skrg.getMinutes()).padStart(2, '0');
-
-    const elPosTgl = document.getElementById('posNotaTgl');
-    if (elPosTgl) elPosTgl.innerText = tglJam;
-
-    const jatuhTempoDate = new Date();
-    jatuhTempoDate.setDate(skrg.getDate() + 7);
-    const elJatuhTempo = document.getElementById('tglJatuhTempo');
-    if (elJatuhTempo) elJatuhTempo.valueAsDate = jatuhTempoDate;
-}
-
-function formatRupiah(angka) {
-    return new Intl.NumberFormat('id-ID').format(angka || 0);
-}
-
-function handleEnter(event) {
-    if (event.key === 'Enter') tambahBarang();
-}
-
-// TAMBAH ITEM KE DAFTAR
 function tambahBarang() {
     const namaInput = document.getElementById('namaBarang');
     const qtyInput = document.getElementById('qtyBarang');
     const diskonInput = document.getElementById('diskonItem');
+
+    if (!namaInput || !qtyInput || !diskonInput) return;
 
     const nama = namaInput.value.trim().toUpperCase();
     const qty = parseInt(qtyInput.value) || 0;
@@ -249,7 +267,8 @@ function tambahBarang() {
     }
 
     namaInput.value = '';
-    document.getElementById('hargaBarang').value = '';
+    const elHargaBarang = document.getElementById('hargaBarang');
+    if (elHargaBarang) elHargaBarang.value = '';
     qtyInput.value = '1';
     diskonInput.value = '0';
     namaInput.focus();
@@ -258,14 +277,12 @@ function tambahBarang() {
     updateStruk();
 }
 
-// HAPUS ITEM
 function hapusBarang(index) {
     daftarBarang.splice(index, 1);
     renderTabel();
     updateStruk();
 }
 
-// RENDER TABEL INPUT
 function renderTabel() {
     const tbody = document.getElementById('tabelBarang');
     if (!tbody) return;
@@ -279,22 +296,24 @@ function renderTabel() {
     daftarBarang.forEach((item, index) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-                <td class="p-2.5 font-medium text-slate-800">${item.nama}</td>
-                <td class="p-2.5 text-center">${item.qty}</td>
-                <td class="p-2.5 text-right">Rp ${formatRupiah(item.harga)}</td>
-                <td class="p-2.5 text-right text-rose-500">Rp ${formatRupiah(item.diskon)}</td>
-                <td class="p-2.5 text-right font-semibold text-slate-800">Rp ${formatRupiah(item.subtotal)}</td>
-                <td class="p-2.5 text-center">
-                    <button onclick="hapusBarang(${index})" class="p-1 text-rose-600 hover:bg-rose-50 rounded transition">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                    </button>
-                </td>
-            `;
+            <td class="p-2.5 font-medium text-slate-800">${item.nama}</td>
+            <td class="p-2.5 text-center">${item.qty}</td>
+            <td class="p-2.5 text-right">Rp ${formatRupiah(item.harga)}</td>
+            <td class="p-2.5 text-right text-rose-500">Rp ${formatRupiah(item.diskon)}</td>
+            <td class="p-2.5 text-right font-semibold text-slate-800">Rp ${formatRupiah(item.subtotal)}</td>
+            <td class="p-2.5 text-center">
+                <button onclick="hapusBarang(${index})" class="p-1 text-rose-600 hover:bg-rose-50 rounded transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+            </td>
+        `;
         tbody.appendChild(tr);
     });
 }
 
-// UPDATE PREVIEW REALTIME
+// ==========================================
+// 7. REALTIME PREVIEW UPDATE
+// ==========================================
 function updateStruk() {
     const posDaftarBarang = document.getElementById('posDaftarBarang');
     const docTabelItems = document.getElementById('docTabelItems');
@@ -320,23 +339,23 @@ function updateStruk() {
                 divPos.className = "flex justify-between items-start text-xs text-slate-700";
                 let infoDiskonText = item.diskon > 0 ? `<span class="text-[10px] text-rose-500 block">(Disc: -Rp ${formatRupiah(item.diskon)})</span>` : '';
                 divPos.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-medium text-slate-800">${item.nama}</div>
-                            <div class="text-slate-500 text-[11px]">${item.qty} x Rp ${formatRupiah(item.harga - item.diskon)} ${infoDiskonText}</div>
-                        </div>
-                        <div class="font-semibold text-slate-800">Rp ${formatRupiah(item.subtotal)}</div>
-                    `;
+                    <div class="space-y-0.5">
+                        <div class="font-medium text-slate-800">${item.nama}</div>
+                        <div class="text-slate-500 text-[11px]">${item.qty} x Rp ${formatRupiah(item.harga - item.diskon)} ${infoDiskonText}</div>
+                    </div>
+                    <div class="font-semibold text-slate-800">Rp ${formatRupiah(item.subtotal)}</div>
+                `;
                 posDaftarBarang.appendChild(divPos);
             }
 
             if (docTabelItems) {
                 const trDoc = document.createElement('tr');
                 trDoc.innerHTML = `
-                        <td class="border border-slate-300 p-2.5 text-center">${index + 1}</td>
-                        <td class="border border-slate-300 p-2.5 font-medium">${item.nama}</td>
-                        <td class="border border-slate-300 p-2.5 text-right font-semibold">Rp ${formatRupiah(item.subtotal)}</td>
-                        <td class="border border-slate-300 p-2.5 text-center">${item.qty} Unit</td>
-                    `;
+                    <td class="border border-slate-300 p-2.5 text-center">${index + 1}</td>
+                    <td class="border border-slate-300 p-2.5 font-medium">${item.nama}</td>
+                    <td class="border border-slate-300 p-2.5 text-right font-semibold">Rp ${formatRupiah(item.subtotal)}</td>
+                    <td class="border border-slate-300 p-2.5 text-center">${item.qty} Unit</td>
+                `;
                 docTabelItems.appendChild(trDoc);
             }
         });
@@ -389,7 +408,6 @@ function updateStruk() {
     if (elTunai) elTunai.innerText = formatRupiah(uangBayar);
     if (elKembali) elKembali.innerText = formatRupiah(kembalian > 0 ? kembalian : 0);
 
-    // Di dalam fungsi updateStruk():
     const namaPelangganInput = document.getElementById('namaPelangganPos')?.value.trim();
     const elPosPelanggan = document.getElementById('posNamaPelanggan');
 
@@ -398,7 +416,9 @@ function updateStruk() {
     }
 }
 
-// FUNGSI CETAK DOKUMEN & PENYIMPANAN OTOMATIS
+// ==========================================
+// 8. FUNGSI TRANSAKSI, CETAK & RESET
+// ==========================================
 function cetakNota() {
     if (daftarBarang.length === 0) {
         alert('Daftar barang/jasa masih kosong!');
@@ -409,13 +429,18 @@ function cetakNota() {
     const statusBayarVal = document.getElementById('statusPembayaran')?.value || 'Lunas';
     const namaPelangganPos = document.getElementById('namaPelangganPos')?.value.trim() || 'Umum';
 
+    const uangBayarInput = parseInt(document.getElementById('uangBayar')?.value) || 0;
+    const hitungKembalian = uangBayarInput > 0 ? (uangBayarInput - totalBelanja) : 0;
+
     const dataTransaksi = {
         noDokumen: nomorDokumenOtomatis,
         mode: modeAktif,
         tanggal: new Date().toISOString(),
         items: [...daftarBarang],
         totalBelanja: totalBelanja,
-        statusPembayaran: statusBayarVal, // <--- Penambahan Status Pembayaran
+        statusPembayaran: statusBayarVal,
+        uangBayar: modeAktif === 'pos' ? uangBayarInput : totalBelanja,
+        kembalian: modeAktif === 'pos' ? (hitungKembalian > 0 ? hitungKembalian : 0) : 0,
         pelanggan: modeAktif === 'pos' ? namaPelangganPos : '',
         klien: modeAktif !== 'pos' ? {
             nama: document.getElementById('namaKlien')?.value || '',
@@ -429,29 +454,28 @@ function cetakNota() {
     resetFormSetelan();
 }
 
-// RESET FORM UNTUK TRANSAKSI BARU
 function resetFormSetelan() {
-    function resetFormSetelan() {
-        daftarBarang = [];
-        const idsToReset = ['uangBayar', 'namaKlien', 'jabatanKlien', 'telpKlien', 'alamatKlien', 'namaPelangganPos'];
-        idsToReset.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.value = '';
-        });
+    daftarBarang = [];
+    const idsToReset = ['uangBayar', 'namaKlien', 'jabatanKlien', 'telpKlien', 'alamatKlien', 'namaPelangganPos'];
+    idsToReset.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
 
-        generateNoDokumen();
-        setTanggal();
-        renderTabel();
-        updateStruk();
-    }
+    generateNoDokumen();
+    setTanggal();
+    renderTabel();
+    updateStruk();
 }
 
-// TOMBOL RESET TRANSAKSI MANUAL
 function resetTransaksi() {
     if (!confirm("Apakah Anda yakin ingin mereset transaksi ini?")) return;
     resetFormSetelan();
 }
-// BUKA & TUTUP MODAL RIWAYAT
+
+// ==========================================
+// 9. RIWAYAT TRANSAKSI & MODAL
+// ==========================================
 function bukaModalRiwayat() {
     const modal = document.getElementById('modalRiwayat');
     if (modal) {
@@ -465,8 +489,6 @@ function tutupModalRiwayat() {
     if (modal) modal.classList.add('hidden');
 }
 
-// RENDER DATA TABEL RIWAYAT
-// RENDER DATA TABEL RIWAYAT DI MODAL
 function renderRiwayat() {
     const tbody = document.getElementById('tabelRiwayatBody');
     if (!tbody) return;
@@ -477,15 +499,13 @@ function renderRiwayat() {
 
     tbody.innerHTML = '';
 
-    // Filter data berdasarkan kata kunci dan mode dokumen
     const dataTersaring = riwayat.filter(item => {
         const noDok = String(item.noDokumen || '').toLowerCase();
         const namaPelangganKlien = item.mode === 'pos'
             ? String(item.pelanggan || 'Umum')
             : String(item.klien?.nama || '');
 
-        const cocokKata = noDok.includes(kataKunci) ||
-            namaPelangganKlien.toLowerCase().includes(kataKunci);
+        const cocokKata = noDok.includes(kataKunci) || namaPelangganKlien.toLowerCase().includes(kataKunci);
         const cocokMode = filterMode === 'semua' || item.mode === filterMode;
         return cocokKata && cocokMode;
     });
@@ -495,11 +515,9 @@ function renderRiwayat() {
         return;
     }
 
-    // Tampilkan data riwayat (terbaru di atas)
     dataTersaring.reverse().forEach((item, index) => {
         const indexAsli = riwayat.length - 1 - index;
 
-        // Handling tanggal yang aman
         let tgl = '-';
         if (item.tanggal) {
             const d = new Date(item.tanggal);
@@ -508,12 +526,10 @@ function renderRiwayat() {
             }
         }
 
-        // Badge Jenis Transaksi (POS, Invoice, Penawaran)
         let badgeClass = "bg-slate-100 text-slate-700";
         if (item.mode === 'invoice') badgeClass = "bg-amber-100 text-amber-700";
         if (item.mode === 'penawaran') badgeClass = "bg-indigo-100 text-indigo-700";
 
-        // Status Pembayaran
         const statusBayar = String(item.statusPembayaran || 'Lunas');
         let badgeStatus = "bg-emerald-100 text-emerald-800";
         if (statusBayar === 'Belum Lunas') {
@@ -522,12 +538,10 @@ function renderRiwayat() {
             badgeStatus = "bg-amber-100 text-amber-800";
         }
 
-        // Nama Pelanggan / Klien
         const namaTampil = item.mode === 'pos'
             ? (item.pelanggan || 'Umum')
             : (item.klien?.nama || 'Umum');
 
-        // PERBAIKAN KALKULASI TOTAL BELANJA (Pencegah Rp 0)
         let totalAngka = Number(item.totalBelanja) || 0;
         if (totalAngka === 0 && Array.isArray(item.items)) {
             totalAngka = item.items.reduce((sum, i) => {
@@ -548,7 +562,7 @@ function renderRiwayat() {
                     ${statusBayar}
                 </span>
             </td>
-            <td class="p-3 text-right font-bold text-slate-800">Rp ${typeof formatRupiah === 'function' ? formatRupiah(totalAngka) : totalAngka.toLocaleString('id-ID')}</td>
+            <td class="p-3 text-right font-bold text-slate-800">Rp ${formatRupiah(totalAngka)}</td>
             <td class="p-3 text-center">
                 <div class="flex items-center justify-center gap-1">
                     <button onclick="muatUlangTransaksi(${indexAsli})" title="Muat & Cetak Ulang" class="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-lg transition">
@@ -564,13 +578,12 @@ function renderRiwayat() {
     });
 }
 
-// MUAT ULANG TRANSAKSI KE PREVIEW UNTUK DICETAK KEMBALI
 function muatUlangTransaksi(index) {
     const riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
     const item = riwayat[index];
     if (!item) return;
 
-    daftarBarang = [...item.items];
+    daftarBarang = [...(item.items || [])];
     switchMode(item.mode);
 
     nomorDokumenOtomatis = item.noDokumen;
@@ -580,17 +593,33 @@ function muatUlangTransaksi(index) {
     if (elDocNo) elDocNo.innerText = nomorDokumenOtomatis;
 
     if (item.klien) {
-        if (document.getElementById('namaKlien')) document.getElementById('namaKlien').value = item.klien.nama || '';
-        if (document.getElementById('jabatanKlien')) document.getElementById('jabatanKlien').value = item.klien.jabatan || '';
-        if (document.getElementById('alamatKlien')) document.getElementById('alamatKlien').value = item.klien.alamat || '';
+        const elNama = document.getElementById('namaKlien');
+        const elJabatan = document.getElementById('jabatanKlien');
+        const elAlamat = document.getElementById('alamatKlien');
+        if (elNama) elNama.value = item.klien.nama || '';
+        if (elJabatan) elJabatan.value = item.klien.jabatan || '';
+        if (elAlamat) elAlamat.value = item.klien.alamat || '';
+    }
+
+    if (item.pelanggan) {
+        const elPelanggan = document.getElementById('namaPelangganPos');
+        if (elPelanggan) elPelanggan.value = item.pelanggan;
+    }
+
+    if (item.uangBayar) {
+        const elUangBayar = document.getElementById('uangBayar');
+        if (elUangBayar) elUangBayar.value = item.uangBayar;
     }
 
     renderTabel();
     updateStruk();
     tutupModalRiwayat();
+
+    setTimeout(() => {
+        window.print();
+    }, 300);
 }
 
-// HAPUS SATU ITEM RIWAYAT
 function hapusRiwayatItem(index) {
     if (!confirm("Hapus transaksi ini dari riwayat?")) return;
     let riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
@@ -599,17 +628,16 @@ function hapusRiwayatItem(index) {
     renderRiwayat();
 }
 
-// HAPUS SEMUA RIWAYAT
 function hapusSemuaRiwayat() {
     if (!confirm("Apakah Anda yakin ingin menghapus SEMUA riwayat transaksi? Data tidak bisa dikembalikan.")) return;
     localStorage.removeItem('riwayat_transaksi');
     renderRiwayat();
 }
 
+// ==========================================
+// 10. PENYIMPANAN LOCAL & GOOGLE SHEETS
+// ==========================================
 function simpanTransaksiKeStorage(dataTransaksi) {
-    const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbzDfkSN72hSindWmGjYU8ey2OYrEjqA8NXRGkIlyidzG68XI83cDBPMTHVBUTwAiLirXQ/exec";
-
-    // 1. Tampilkan indikator loading di UI
     const elStatus = document.getElementById('statusProses');
     const btnCetak = document.getElementById('btnCetak');
 
@@ -619,22 +647,17 @@ function simpanTransaksiKeStorage(dataTransaksi) {
     }
     if (btnCetak) btnCetak.disabled = true;
 
-    // 2. Simpan ke LocalStorage Browser
     let riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
     riwayat.push(dataTransaksi);
     localStorage.setItem('riwayat_transaksi', JSON.stringify(riwayat));
 
-    // 3. Update counter penomoran
     let keyCounter = "counter_pos";
-    if (typeof modeAktif !== 'undefined') {
-        if (modeAktif === 'invoice') keyCounter = "counter_invoice";
-        if (modeAktif === 'penawaran') keyCounter = "counter_penawaran";
-    }
+    if (modeAktif === 'invoice') keyCounter = "counter_invoice";
+    if (modeAktif === 'penawaran') keyCounter = "counter_penawaran";
 
     let nomorUrut = parseInt(localStorage.getItem(keyCounter)) || 1;
     localStorage.setItem(keyCounter, nomorUrut + 1);
 
-    // 4. Kirim Data ke Google Sheets (Pengecekan Validasi URL yang Benar)
     const isValidUrl = URL_GOOGLE_SHEETS && URL_GOOGLE_SHEETS.startsWith("https://script.google.com");
 
     if (isValidUrl) {
@@ -657,7 +680,6 @@ function simpanTransaksiKeStorage(dataTransaksi) {
     }
 }
 
-// Fungsi pembantu untuk mengembalikan status UI
 function selesaiProsesUI(pesan) {
     const elStatus = document.getElementById('statusProses');
     const btnCetak = document.getElementById('btnCetak');
@@ -669,8 +691,9 @@ function selesaiProsesUI(pesan) {
     if (btnCetak) btnCetak.disabled = false;
 }
 
-// FUNGSI EKSPOR KE EXCEL (.XLS) AGAR LANGSUNG TERBENTUK KOLOM KANAN-KIRI
-// FUNGSI EKSPOR RIWAYAT DENGAN KALKULASI PRESISI KE EXCEL (.XLS / CSV)
+// ==========================================
+// 11. EKSPOR DATA KE EXCEL (CSV/XLS)
+// ==========================================
 function eksporRiwayatKeCSV() {
     const riwayat = JSON.parse(localStorage.getItem('riwayat_transaksi')) || [];
 
@@ -722,7 +745,6 @@ function eksporRiwayatKeCSV() {
     `;
 
     riwayat.forEach(transaksi => {
-        // Handling Tanggal & Jam Aman
         let tgl = '-';
         let jam = '-';
         if (transaksi.tanggal) {
@@ -740,13 +762,11 @@ function eksporRiwayatKeCSV() {
 
         const statusBayar = transaksi.statusPembayaran || 'Lunas';
 
-        // Format Rincian Item Barang
         const detailBarang = (transaksi.items || []).map(item => {
             const hargaBersih = (item.harga || 0) - (item.diskon || 0);
             return `${item.nama} (${item.qty}x @ Rp ${formatRupiah(hargaBersih)})`;
         }).join(" | ");
 
-        // Kalkulasi Total Belanja Presisi (Fallback jika totalBelanja = 0)
         let totalReal = Number(transaksi.totalBelanja) || 0;
         if (totalReal === 0 && Array.isArray(transaksi.items)) {
             totalReal = transaksi.items.reduce((sum, i) => {
@@ -776,7 +796,6 @@ function eksporRiwayatKeCSV() {
     </html>
     `;
 
-    // Download File Excel / CSV
     const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const linkA = document.createElement("a");
@@ -793,12 +812,9 @@ function eksporRiwayatKeCSV() {
     URL.revokeObjectURL(url);
 }
 
-
-
-// URL Google Apps Script
-const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbzDfkSN72hSindWmGjYU8ey2OYrEjqA8NXRGkIlyidzG68XI83cDBPMTHVBUTwAiLirXQ/exec";
-
-// 1. FUNGSI UNTUK MEMANGGIL/MENAMPILKAN DATA DARI APPS SCRIPT
+// ==========================================
+// 12. SINKRONISASI APPS SCRIPT
+// ==========================================
 function muatDataDariAppsScript() {
     const elStatus = document.getElementById('statusProses');
     if (elStatus) {
@@ -810,7 +826,6 @@ function muatDataDariAppsScript() {
         .then(response => response.json())
         .then(data => {
             if (Array.isArray(data)) {
-                // Simpan data dari Apps Script ke LocalStorage agar riwayat terbarui
                 localStorage.setItem('riwayat_transaksi', JSON.stringify(data));
                 renderRiwayat();
                 bukaModalRiwayat();
