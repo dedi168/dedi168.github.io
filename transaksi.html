@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencatatan & Riwayat Transaksi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Dashboard Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .summary-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-card .amount {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .text-pemasukan {
+            color: #28a745;
+        }
+
+        .text-pengeluaran {
+            color: #dc3545;
+        }
+
+        .text-saldo {
+            color: #007bff;
+        }
+
+        .main-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            flex: 1;
+            min-width: 320px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+            font-size: 18px;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            color: #555;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+
+        .btn-cancel {
+            width: 100%;
+            padding: 8px;
+            background-color: #6c757d;
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+
+        button:disabled {
+            background-color: #aaa !important;
+            cursor: not-allowed;
+        }
+
+        #statusMessage {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .success {
+            color: #28a745;
+        }
+
+        .error {
+            color: #dc3545;
+        }
+
+        /* Style Tabel */
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .bg-pemasukan {
+            background-color: #28a745;
+        }
+
+        .bg-pengeluaran {
+            background-color: #dc3545;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .btn-action {
+            padding: 4px 8px;
+            font-size: 12px;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-print {
+            background-color: #17a2b8;
+        }
+
+        .btn-print:hover {
+            background-color: #138496;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        /* Pagination Style */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .pagination button {
+            width: auto;
+            padding: 6px 12px;
+            font-size: 13px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Struk / Cetak */
+        #printArea {
+            display: none;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printArea,
+            #printArea * {
+                visibility: visible;
+            }
+
+            #printArea {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+                font-family: monospace;
+            }
+
+            .receipt-box {
+                border: 1px dashed #000;
+                padding: 15px;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .receipt-title {
+                text-align: center;
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #000;
+                padding-bottom: 5px;
+            }
+
+            .receipt-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Ringkasan Bulan Berjalan -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h4>Pemasukan (Bulan Ini)</h4>
+                <div class="amount text-pemasukan" id="summaryPemasukan">Rp 0</div>
+            </div>
+            <div class="summary-card">
+                <h4>Pengeluaran (Bulan Ini)</h4>
+                <div class="amount text-pengeluaran" id="summaryPengeluaran">Rp 0</div>
+            </div>
+            <div class="summary-card">
+                <h4>Saldo Bersih (Bulan Ini)</h4>
+                <div class="amount text-saldo" id="summarySaldo">Rp 0</div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <!-- Form Input / Edit Transaksi -->
+            <div class="card">
+                <h2 id="formTitle">Tambah Transaksi</h2>
+                <form id="transactionForm">
+                    <input type="hidden" id="editId" value="">
+
+                    <div class="form-group">
+                        <label>Jenis Transaksi</label>
+                        <select id="jenis" required>
+                            <option value="Pengeluaran">Pengeluaran</option>
+                            <option value="Pemasukan">Pemasukan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="kategori" required>
+                            <option value="Makanan & Minuman">Makanan & Minuman</option>
+                            <option value="Transportasi">Transportasi</option>
+                            <option value="Belanja">Belanja</option>
+                            <option value="Gaji / Penjualan">Gaji / Penjualan</option>
+                            <option value="Lain-lain">Lain-lain</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah (Rp)</label>
+                        <input type="number" id="jumlah" placeholder="Contoh: 50000" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Keterangan</label>
+                        <textarea id="keterangan" rows="2" placeholder="Catatan opsional..."></textarea>
+                    </div>
+                    <button type="submit" id="submitBtn" class="btn-submit">Simpan Transaksi</button>
+                    <button type="button" id="cancelEditBtn" class="btn-cancel" onclick="resetFormMode()">Batal
+                        Edit</button>
+                </form>
+                <div id="statusMessage"></div>
+            </div>
+
+            <!-- Tabel Riwayat Transaksi -->
+            <div class="card" style="flex: 2;">
+                <h2>Riwayat Transaksi</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Kategori</th>
+                                <th>Jumlah</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center;">Memuat data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button id="prevBtn" onclick="changePage(-1)" disabled>&laquo; Sebelumnya</button>
+                    <span id="pageIndicator" style="font-size: 13px; font-weight: 600;">Halaman 1</span>
+                    <button id="nextBtn" onclick="changePage(1)" disabled>Berikutnya &raquo;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Area Print Struk -->
+    <div id="printArea">
+        <div class="receipt-box">
+            <div class="receipt-title">BUKTI TRANSAKSI</div>
+            <div class="receipt-row"><span>ID:</span> <span id="pId"></span></div>
+            <div class="receipt-row"><span>Tanggal:</span> <span id="pTanggal"></span></div>
+            <div class="receipt-row"><span>Jenis:</span> <span id="pJenis"></span></div>
+            <div class="receipt-row"><span>Kategori:</span> <span id="pKategori"></span></div>
+            <div class="receipt-row"><span>Jumlah:</span> <span id="pJumlah"></span></div>
+            <div class="receipt-row"><span>Keterangan:</span> <span id="pKeterangan"></span></div>
+            <hr>
+            <div style="text-align: center; font-size: 10px;">Terima kasih</div>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1oRbcddPBEUXyTJOVGO_YUpdlmeBB0IFEj9LHSSIo1OWK3157BrzEhtNXHirNC1Y/exec"; // Masukkan URL Apps Script Anda
+
+        let allTransactions = [];
+        let currentPage = 1;
+        const itemsPerPage = 5;
+
+        const form = document.getElementById('transactionForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const formTitle = document.getElementById('formTitle');
+        const editIdInput = document.getElementById('editId');
+
+        // Helper Format Rupiah
+        function formatRp(val) {
+            return "Rp " + Number(val).toLocaleString("id-ID");
+        }
+
+        // 1. Simpan Baru ATAU Update Transaksi
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            const isEditMode = editIdInput.value !== "";
+            submitBtn.innerText = isEditMode ? "Memperbarui..." : "Menyimpan...";
+            statusMessage.innerText = "";
+
+            const payload = {
+                action: isEditMode ? "update" : "create",
+                id: editIdInput.value,
+                jenis: document.getElementById('jenis').value,
+                kategori: document.getElementById('kategori').value,
+                jumlah: document.getElementById('jumlah').value,
+                keterangan: document.getElementById('keterangan').value
+            };
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    statusMessage.innerText = result.message;
+                    statusMessage.className = "success";
+                    resetFormMode();
+                    loadHistory(); // Reload data & summary setelah simpan/update
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                statusMessage.innerText = "Gagal: " + error.message;
+                statusMessage.className = "error";
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+
+        // 2. Mengambil Data Riwayat & Summary
+        async function loadHistory() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Memuat data...</td></tr>';
+
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    allTransactions = result.data;
+
+                    // Update Ringkasan
+                    if (result.summary) {
+                        document.getElementById('summaryPemasukan').innerText = formatRp(result.summary.totalPemasukan);
+                        document.getElementById('summaryPengeluaran').innerText = formatRp(result.summary.totalPengeluaran);
+                        document.getElementById('summarySaldo').innerText = formatRp(result.summary.saldoBersih);
+                    }
+
+                    renderTable();
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: red;">Gagal memuat data</td></tr>';
+                }
+            } catch (error) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: red;">Terjadi kesalahan koneksi</td></tr>';
+            }
+        }
+
+        // 3. Render Tabel (Maks 10 Data per Halaman)
+        function renderTable() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            if (allTransactions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Belum ada riwayat transaksi.</td></tr>';
+                updatePagination();
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = allTransactions.slice(startIndex, endIndex);
+
+            pageData.forEach((item) => {
+                const badgeClass = item.jenis === 'Pemasukan' ? 'bg-pemasukan' : 'bg-pengeluaran';
+                const formattedJumlah = formatRp(item.jumlah);
+                const safeKet = (item.keterangan || "-").replace(/'/g, "\\'");
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                <td>${item.tanggal}</td>
+                <td><span class="badge ${badgeClass}">${item.jenis}</span></td>
+                <td>${item.kategori}</td>
+                <td><b>${formattedJumlah}</b></td>
+                <td>${item.keterangan}</td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-action btn-edit" onclick="setEditMode('${item.id}', '${item.jenis}', '${item.kategori}', ${item.jumlah}, '${safeKet}')">Edit</button>
+                        <button class="btn-action btn-print" onclick="printReceipt('${item.id}', '${item.tanggal}', '${item.jenis}', '${item.kategori}', '${formattedJumlah}', '${safeKet}')">Cetak</button>
+                    </div>
+                </td>
+            `;
+                tbody.appendChild(tr);
+            });
+
+            updatePagination();
+        }
+
+        // 4. Set Form ke Mode Edit
+        function setEditMode(id, jenis, kategori, jumlah, keterangan) {
+            editIdInput.value = id;
+            document.getElementById('jenis').value = jenis;
+            document.getElementById('kategori').value = kategori;
+            document.getElementById('jumlah').value = jumlah;
+            document.getElementById('keterangan').value = keterangan === '-' ? '' : keterangan;
+
+            formTitle.innerText = "Edit Transaksi";
+            submitBtn.innerText = "Update Transaksi";
+            submitBtn.style.backgroundColor = "#ffc107";
+            submitBtn.style.color = "#212529";
+            cancelEditBtn.style.display = "block";
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 5. Reset Form ke Mode Tambah Baru
+        function resetFormMode() {
+            editIdInput.value = "";
+            form.reset();
+            formTitle.innerText = "Tambah Transaksi";
+            submitBtn.innerText = "Simpan Transaksi";
+            submitBtn.style.backgroundColor = "#28a745";
+            submitBtn.style.color = "white";
+            cancelEditBtn.style.display = "none";
+        }
+
+        // 6. Pagination Controls
+        function updatePagination() {
+            const totalPages = Math.ceil(allTransactions.length / itemsPerPage) || 1;
+            document.getElementById('pageIndicator').innerText = `Halaman ${currentPage} dari ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderTable();
+        }
+
+        // 7. Cetak Struk Bukti Transaksi
+        function printReceipt(id, tanggal, jenis, kategori, jumlah, keterangan) {
+            document.getElementById('pId').innerText = id;
+            document.getElementById('pTanggal').innerText = tanggal;
+            document.getElementById('pJenis').innerText = jenis;
+            document.getElementById('pKategori').innerText = kategori;
+            document.getElementById('pJumlah').innerText = jumlah;
+            document.getElementById('pKeterangan').innerText = keterangan;
+
+            window.print();
+        }
+
+        // Init
+        loadHistory();
+    </script>
+
+</body>
+
+</html>
