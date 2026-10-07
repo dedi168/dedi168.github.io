@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Hutang Piutang</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            margin: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            color: #007bff;
+            margin-top: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .badge-hutang {
+            background: #dc3545;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .badge-piutang {
+            background: #28a745;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 12px;
+            margin-right: 2px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* Pop-up Overlay (Modal Notifikasi & Riwayat) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.2s;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        /* Notifikasi Custom Styling */
+        .notif-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .notif-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .notif-msg {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .notif-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-notif-ok {
+            background: #6c757d;
+        }
+
+        .btn-notif-ok:hover {
+            background: #5a6268;
+        }
+
+        .btn-notif-print {
+            background: #28a745;
+        }
+
+        .btn-notif-print:hover {
+            background: #218838;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* TAMPILAN STRUK INDOMARET (58mm Thermal Print) */
+        #printArea {
+            display: none;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printArea,
+            #printArea * {
+                visibility: visible;
+            }
+
+            #printArea {
+                display: block !important;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 58mm;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 11px;
+                color: #000;
+                padding: 5px;
+                line-height: 1.2;
+            }
+
+            @page {
+                size: auto;
+                margin: 0mm;
+            }
+        }
+
+        .struk-header {
+            text-align: center;
+        }
+
+        .struk-header h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .struk-header p {
+            margin: 2px 0;
+            font-size: 10px;
+        }
+
+        .divider {
+            border-top: 1px dashed #000;
+            margin: 6px 0;
+        }
+
+        .struk-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 3px 0;
+        }
+
+        .struk-footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 p-5 flex items-center gap-4">
+            <img src="Logo.png" alt="Logo"
+                class="h-12 w-12 object-contain rounded-lg bg-slate-50 p-1 border border-slate-100">
+            <div>
+                <h1 class="text-xl font-bold text-slate-900 leading-tight">Dedy Technology Solution</h1>
+                <p class="text-xs text-slate-500">Sistem Pencatatan Hutang Piutang</p>
+            </div>
+        </div>
+
+        <!-- Form Tambah Transaksi -->
+        <div class="grid">
+            <div class="form-group">
+                <label>Nama Debitur / Kreditur</label>
+                <input type="text" id="nama" placeholder="Masukkan nama">
+            </div>
+            <div class="form-group">
+                <label>Jenis Transaksi</label>
+                <select id="tipe">
+                    <option value="Hutang">Hutang (Saya Berhutang)</option>
+                    <option value="Piutang">Piutang (Orang Berhutang ke Saya)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Jumlah Pokok (Rp)</label>
+                <input type="number" id="pokok" placeholder="Contoh: 1000000">
+            </div>
+            <div class="form-group">
+                <label>Bunga (%)</label>
+                <input type="number" id="bunga" placeholder="Contoh: 5" value="0">
+            </div>
+        </div>
+        <button id="btnSimpan" onclick="tambahTransaksi()">+ Simpan Transaksi Baru</button>
+
+        <h3 style="margin-top: 30px; color: #444;">Daftar Transaksi</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Tipe</th>
+                    <th>Pokok</th>
+                    <th>Bunga</th>
+                    <th>Total + Bunga</th>
+                    <th>Sisa Saldo</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="dataTabel">
+                <tr>
+                    <td colspan="7" style="text-align:center;">Memuat data...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- MODAL NOTIFIKASI SUKSES / GAGAL -->
+    <div id="modalNotif" class="modal">
+        <div class="modal-content">
+            <div id="notifIcon" class="notif-icon">✅</div>
+            <div id="notifTitle" class="notif-title">Pembayaran Berhasil!</div>
+            <div id="notifMsg" class="notif-msg">Data transaksi pembayaran telah berhasil disimpan.</div>
+            <div class="notif-buttons">
+                <button class="btn-notif-ok" onclick="tutupNotif()">OK</button>
+                <button id="btnCetakNotif" class="btn-notif-print" onclick="eksekusiCetakPopUp()">🖨️ Cetak
+                    Bukti</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL RIWAYAT & CETAK ULANG -->
+    <div id="modalRiwayat" class="modal">
+        <div class="modal-content" style="max-width: 650px; text-align: left;">
+            <span class="close-btn" onclick="tutupModalRiwayat()">&times;</span>
+            <h3 style="margin-top:0;" id="modalTitle">Riwayat Pembayaran</h3>
+            <table style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>No. Struk</th>
+                        <th>Tgl & Jam</th>
+                        <th>Jumlah Bayar</th>
+                        <th>Sisa Saldo</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelRiwayat"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TEMPLATE STRUK UNTUK PRINT (Gaya Indomaret) -->
+    <div id="printArea">
+        <div class="struk-header">
+            <div class="text-center pb-4 border-b border-slate-200">
+                <img class="h-12 w-12 mx-auto object-contain mb-2" src="Logo.png" alt="Logo">
+                <h2 class="text-sm font-bold text-slate-900 tracking-wide uppercase">Dedy Technology Solution</h2>
+                <p class="text-[11px] text-slate-500">Sangketan, Kabupaten Tabanan - Bali</p>
+                <p class="text-[11px] text-slate-500">Telp/WA: 0851-5859-3379</p>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div>
+            <div>No: <span id="pNoStruk">-</span></div>
+            <div>Tgl: <span id="pTglJam">-</span></div>
+            <div>Nama: <span id="pNama">-</span></div>
+            <div>Jenis: <span id="pTipe">-</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="struk-row">
+            <span>TOTAL UTANG</span>
+            <span>Rp <span id="pTotalUtang">0</span></span>
+        </div>
+        <div class="struk-row">
+            <span>BAYAR</span>
+            <span>Rp <span id="pBayar">0</span></span>
+        </div>
+        <div class="divider"></div>
+        <div class="struk-row" style="font-weight: bold;">
+            <span>SISA SALDO</span>
+            <span>Rp <span id="pSisa">0</span></span>
+        </div>
+        <div class="divider"></div>
+        <div class="struk-footer">
+            <div class="pt-4 text-center text-[11px] text-slate-500 space-y-1">
+                <p>*** BUKTI PEMBAYARAN SAH ***</p>
+                <p class="font-bold text-slate-800 uppercase tracking-wide">Terima Kasih Atas Pembayaran Anda</p>
+                <p class="text-[10px] text-slate-400">Simpan Struk Ini Sebagai Bukti</p>
+                <p>Kritik & Saran: 0851-5859-3379</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ganti dengan Web App URL dari Google Apps Script milik Anda
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKIfS80s-_qF5RY3p-enjTwvMI0GsHcXGtezNQQlmjGyIOMUiYtaD-oumsCKH-idyr/exec";
+
+        let listData = [];
+        let tempCetakData = null; // Menyimpan data sementara untuk aksi cetak dari notifikasi
+
+        async function loadData() {
+            try {
+                let res = await fetch(SCRIPT_URL + "?action=get");
+                listData = await res.json();
+                renderTable();
+            } catch (err) {
+                tampilkanNotif(false, "Gagal Memuat Data", "Tidak dapat terhubung ke Google Sheets.", false);
+            }
+        }
+
+        function renderTable() {
+            let tbody = document.getElementById("dataTabel");
+            tbody.innerHTML = "";
+
+            if (listData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Belum ada data.</td></tr>';
+                return;
+            }
+
+            listData.forEach((item) => {
+                let badgeClass = item.tipe === "Hutang" ? "badge-hutang" : "badge-piutang";
+                let tr = document.createElement("tr");
+
+                tr.innerHTML = `
+        <td><strong>${item.nama}</strong></td>
+        <td><span class="${badgeClass}">${item.tipe}</span></td>
+        <td>Rp ${Number(item.pokok).toLocaleString('id-ID')}</td>
+        <td>${item.bunga}%</td>
+        <td>Rp ${Number(item.total).toLocaleString('id-ID')}</td>
+        <td><strong style="color:${item.sisa > 0 ? '#dc3545' : '#28a745'}">Rp ${Number(item.sisa).toLocaleString('id-ID')}</strong></td>
+        <td>
+          <button class="btn-sm" style="background:#28a745" onclick="bayar('${item.id}', '${item.nama}', '${item.tipe}')">Bayar</button>
+          <button class="btn-sm" style="background:#17a2b8" onclick="bukaRiwayat('${item.id}')">Riwayat & Cetak</button>
+        </td>
+      `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function tambahTransaksi() {
+            let nama = document.getElementById("nama").value;
+            let tipe = document.getElementById("tipe").value;
+            let pokok = parseFloat(document.getElementById("pokok").value);
+            let bunga = parseFloat(document.getElementById("bunga").value) || 0;
+
+            if (!nama || isNaN(pokok)) {
+                tampilkanNotif(false, "Form Belum Lengkap", "Silakan isi nama dan jumlah pokok terlebih dahulu.", false);
+                return;
+            }
+
+            let btn = document.getElementById("btnSimpan");
+            btn.disabled = true;
+            btn.innerText = "Menyimpan...";
+
+            try {
+                let payload = { action: "add", nama, tipe, pokok, bunga };
+                let res = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+                let result = await res.json();
+
+                if (result.status === "success") {
+                    document.getElementById("nama").value = "";
+                    document.getElementById("pokok").value = "";
+                    document.getElementById("bunga").value = "0";
+                    tampilkanNotif(true, "Simpan Berhasil!", "Data transaksi baru berhasil ditambahkan.", false);
+                    loadData();
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                tampilkanNotif(false, "Simpan Gagal!", "Terjadi kesalahan saat menyimpan ke Google Sheets.", false);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "+ Simpan Transaksi Baru";
+            }
+        }
+
+        async function bayar(id, nama, tipe) {
+            let jumlahBayar = prompt(`Masukkan nominal pembayaran untuk ${nama}:`);
+            if (!jumlahBayar || isNaN(jumlahBayar) || jumlahBayar <= 0) return;
+
+            let now = new Date();
+            let tgl = now.toLocaleDateString('id-ID');
+            let jam = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+            let payload = {
+                action: "pay",
+                id: id,
+                jumlahBayar: parseFloat(jumlahBayar),
+                tanggal: tgl,
+                jam: jam
+            };
+
+            try {
+                let res = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+                let result = await res.json();
+
+                if (result.status === "success") {
+                    let item = listData.find(d => d.id === id);
+                    let sisaBaru = item.sisa - parseFloat(jumlahBayar);
+
+                    // Simpan data untuk diprint via tombol "Cetak Bukti" di notifikasi
+                    tempCetakData = {
+                        noStruk: result.payId || "STRUK-NEW",
+                        tglJam: `${tgl} ${jam}`,
+                        nama: nama,
+                        tipe: tipe,
+                        total: item.total,
+                        bayar: jumlahBayar,
+                        sisa: sisaBaru
+                    };
+
+                    tampilkanNotif(true, "Pembayaran Berhasil!", `Pembayaran sebesar Rp ${Number(jumlahBayar).toLocaleString('id-ID')} berhasil disimpan.`, true);
+                    loadData();
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                tampilkanNotif(false, "Pembayaran Gagal!", "Gagal memproses pembayaran ke server.", false);
+            }
+        }
+
+        // BUKA MODAL NOTIFIKASI
+        function tampilkanNotif(isSukses, judul, pesan, tampilkanBtnCetak) {
+            document.getElementById("notifIcon").innerText = isSukses ? "✅" : "❌";
+            document.getElementById("notifTitle").innerText = judul;
+            document.getElementById("notifTitle").style.color = isSukses ? "#28a745" : "#dc3545";
+            document.getElementById("notifMsg").innerText = pesan;
+
+            let btnCetak = document.getElementById("btnCetakNotif");
+            btnCetak.style.display = tampilkanBtnCetak ? "inline-block" : "none";
+
+            document.getElementById("modalNotif").style.display = "block";
+        }
+
+        function tutupNotif() {
+            document.getElementById("modalNotif").style.display = "none";
+        }
+
+        function eksekusiCetakPopUp() {
+            if (tempCetakData) {
+                cetakStrukIndomaret(
+                    tempCetakData.noStruk,
+                    tempCetakData.tglJam,
+                    tempCetakData.nama,
+                    tempCetakData.tipe,
+                    tempCetakData.total,
+                    tempCetakData.bayar,
+                    tempCetakData.sisa
+                );
+            }
+            tutupNotif();
+        }
+
+        function bukaRiwayat(id) {
+            let item = listData.find(d => d.id === id);
+            let tbody = document.getElementById("tabelRiwayat");
+            document.getElementById("modalTitle").innerText = `Riwayat: ${item.nama} (${item.tipe})`;
+            tbody.innerHTML = "";
+
+            if (!item.riwayat || item.riwayat.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada pembayaran.</td></tr>';
+            } else {
+                item.riwayat.forEach((r) => {
+                    let tr = document.createElement("tr");
+                    let payId = r.payId || "STRUK-OLD";
+                    let tglJam = `${r.tgl} ${r.jam || ''}`;
+
+                    tr.innerHTML = `
+          <td><small>${payId}</small></td>
+          <td>${tglJam}</td>
+          <td>Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td>
+          <td>Rp ${Number(r.sisa).toLocaleString('id-ID')}</td>
+          <td>
+            <button class="btn-sm" style="background:#ffc107; color:#000;" onclick="cetakStrukIndomaret('${payId}', '${tglJam}', '${item.nama}', '${item.tipe}', ${item.total}, ${r.jumlah}, ${r.sisa})">
+              🖨️ Cetak Ulang
+            </button>
+          </td>
+        `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            document.getElementById("modalRiwayat").style.display = "block";
+        }
+
+        function tutupModalRiwayat() {
+            document.getElementById("modalRiwayat").style.display = "none";
+        }
+
+        function cetakStrukIndomaret(noStruk, tglJam, nama, tipe, total, bayar, sisa) {
+            document.getElementById("pNoStruk").innerText = noStruk;
+            document.getElementById("pTglJam").innerText = tglJam;
+            document.getElementById("pNama").innerText = nama;
+            document.getElementById("pTipe").innerText = tipe;
+            document.getElementById("pTotalUtang").innerText = Number(total).toLocaleString('id-ID');
+            document.getElementById("pBayar").innerText = Number(bayar).toLocaleString('id-ID');
+            document.getElementById("pSisa").innerText = Number(sisa).toLocaleString('id-ID');
+
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        }
+
+        // Load data awal
+        loadData();
+    </script>
+
+</body>
+
+</html>
