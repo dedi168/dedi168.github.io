@@ -4,207 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Hutang Piutang</title>
+    <title>Sistem Hutang Piutang - Dedy Technology Solution</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome Icon CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: #f4f6f9;
-            margin: 20px;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
         }
 
-        .container {
-            max-width: 1050px;
-            margin: auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            color: #007bff;
-            margin-top: 0;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 10px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        input,
-        select,
-        button {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-            font-size: 13px;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .badge-hutang {
-            background: #dc3545;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-        }
-
-        .badge-piutang {
-            background: #28a745;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-        }
-
-        .btn-sm {
-            padding: 6px 10px;
-            font-size: 12px;
-            margin-right: 2px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        /* Pop-up Overlay (Modal Notifikasi & Riwayat) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.2s;
-        }
-
-        .modal-content {
-            background: white;
-            margin: 10% auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .close-btn {
-            float: right;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #aaa;
-        }
-
-        .close-btn:hover {
-            color: #000;
-        }
-
-        /* Notifikasi Custom Styling */
-        .notif-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        .notif-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .notif-msg {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .notif-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .btn-notif-ok {
-            background: #6c757d;
-        }
-
-        .btn-notif-ok:hover {
-            background: #5a6268;
-        }
-
-        .btn-notif-print {
-            background: #28a745;
-        }
-
-        .btn-notif-print:hover {
-            background: #218838;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* TAMPILAN STRUK INDOMARET (58mm Thermal Print) */
+        /* TAMPILAN STRUK THERMAL 58mm PRINT */
         #printArea {
             display: none;
         }
@@ -237,223 +51,337 @@
                 margin: 0mm;
             }
         }
-
-        .struk-header {
-            text-align: center;
-        }
-
-        .struk-header h3 {
-            margin: 0;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .struk-header p {
-            margin: 2px 0;
-            font-size: 10px;
-        }
-
-        .divider {
-            border-top: 1px dashed #000;
-            margin: 6px 0;
-        }
-
-        .struk-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 3px 0;
-        }
-
-        .struk-footer {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 10px;
-        }
     </style>
 </head>
 
-<body>
+<body class="text-slate-800 antialiased min-h-screen pb-12">
 
-    <div class="container">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200/80 p-5 flex items-center gap-4">
-            <img src="Logo.png" alt="Logo"
-                class="h-12 w-12 object-contain rounded-lg bg-slate-50 p-1 border border-slate-100">
+    <!-- Navbar / Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Dedy Technology Solution</h1>
+                    <p class="text-xs text-slate-500">Sistem Pencatatan Hutang & Piutang</p>
+                </div>
+            </div>
             <div>
-                <h1 class="text-xl font-bold text-slate-900 leading-tight">Dedy Technology Solution</h1>
-                <p class="text-xs text-slate-500">Sistem Pencatatan Hutang Piutang</p>
+                <button onclick="loadData()"
+                    class="px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-rotate-right"></i> Refresh
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+
+        <!-- Stat Ringkasan -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Hutang</p>
+                    <h3 class="text-xl font-bold text-red-600 mt-1" id="statHutang">Rp 0</h3>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center">
+                    <i class="fa-solid fa-arrow-down-left"></i>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Piutang</p>
+                    <h3 class="text-xl font-bold text-emerald-600 mt-1" id="statPiutang">Rp 0</h3>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <i class="fa-solid fa-arrow-up-right"></i>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Sisa Saldo Belum Lunas</p>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1" id="statSisa">Rp 0</h3>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
             </div>
         </div>
 
-        <!-- Form Tambah Transaksi -->
-        <div class="grid">
-            <div class="form-group">
-                <label>Nama Debitur / Kreditur</label>
-                <input type="text" id="nama" placeholder="Masukkan nama">
+        <!-- Section Form Tambah Transaksi -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm p-6">
+            <h2 class="text-base font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-plus-circle text-blue-600"></i> Tambah Transaksi Baru
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Nama Debitur / Kreditur</label>
+                    <input type="text" id="nama" placeholder="Masukkan nama"
+                        class="w-full text-sm px-3.5 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Jenis Transaksi</label>
+                    <select id="tipe"
+                        class="w-full text-sm px-3.5 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white">
+                        <option value="Hutang">Hutang (Saya Berhutang)</option>
+                        <option value="Piutang">Piutang (Orang Berhutang ke Saya)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Jumlah Pokok (Rp)</label>
+                    <input type="number" id="pokok" placeholder="Contoh: 1000000"
+                        class="w-full text-sm px-3.5 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Bunga (%)</label>
+                    <input type="number" id="bunga" placeholder="0" value="0"
+                        class="w-full text-sm px-3.5 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                </div>
             </div>
-            <div class="form-group">
-                <label>Jenis Transaksi</label>
-                <select id="tipe">
-                    <option value="Hutang">Hutang (Saya Berhutang)</option>
-                    <option value="Piutang">Piutang (Orang Berhutang ke Saya)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Jumlah Pokok (Rp)</label>
-                <input type="number" id="pokok" placeholder="Contoh: 1000000">
-            </div>
-            <div class="form-group">
-                <label>Bunga (%)</label>
-                <input type="number" id="bunga" placeholder="Contoh: 5" value="0">
+            <div class="mt-4 text-right">
+                <button id="btnSimpan" onclick="tambahTransaksi()"
+                    class="w-full md:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan Transaksi Baru
+                </button>
             </div>
         </div>
-        <button id="btnSimpan" onclick="tambahTransaksi()">+ Simpan Transaksi Baru</button>
 
-        <h3 style="margin-top: 30px; color: #444;">Daftar Transaksi</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Tipe</th>
-                    <th>Pokok</th>
-                    <th>Bunga</th>
-                    <th>Total + Bunga</th>
-                    <th>Sisa Saldo</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="dataTabel">
-                <tr>
-                    <td colspan="7" style="text-align:center;">Memuat data...</td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- Tabel Transaksi -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <h3 class="font-semibold text-slate-800 text-base">Daftar Transaksi</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr
+                            class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wider font-semibold">
+                            <th class="py-3 px-4">Nama</th>
+                            <th class="py-3 px-4">Tipe</th>
+                            <th class="py-3 px-4">Pokok</th>
+                            <th class="py-3 px-4">Bunga</th>
+                            <th class="py-3 px-4">Total + Bunga</th>
+                            <th class="py-3 px-4">Sisa Saldo</th>
+                            <th class="py-3 px-4 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTabel" class="divide-y divide-slate-100 text-sm">
+                        <tr>
+                            <td colspan="7" class="py-8 text-center text-slate-400">
+                                <i class="fa-solid fa-spinner fa-spin text-lg mr-2"></i> Memuat data...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL PEMBAYARAN -->
+    <div id="modalBayar"
+        class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl border border-slate-100 w-full max-w-md overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                <h3 class="font-bold text-slate-800" id="bayarTitle">Form Pembayaran</h3>
+                <button onclick="tutupModalBayar()" class="text-slate-400 hover:text-slate-600"><i
+                        class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Nominal Pembayaran (Rp)</label>
+                    <input type="number" id="inputJumlahBayar" placeholder="Masukkan jumlah bayar"
+                        class="w-full text-sm px-3.5 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            <div class="px-6 py-3 bg-slate-50 border-t border-slate-100 flex justify-end gap-2">
+                <button onclick="tutupModalBayar()"
+                    class="px-4 py-2 text-xs font-medium text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg">Batal</button>
+                <button id="btnProsesBayar" onclick="prosesBayarModal()"
+                    class="px-4 py-2 text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm">Konfirmasi
+                    Bayar</button>
+            </div>
+        </div>
     </div>
 
     <!-- MODAL NOTIFIKASI SUKSES / GAGAL -->
-    <div id="modalNotif" class="modal">
-        <div class="modal-content">
-            <div id="notifIcon" class="notif-icon">✅</div>
-            <div id="notifTitle" class="notif-title">Pembayaran Berhasil!</div>
-            <div id="notifMsg" class="notif-msg">Data transaksi pembayaran telah berhasil disimpan.</div>
-            <div class="notif-buttons">
-                <button class="btn-notif-ok" onclick="tutupNotif()">OK</button>
-                <button id="btnCetakNotif" class="btn-notif-print" onclick="eksekusiCetakPopUp()">🖨️ Cetak
-                    Bukti</button>
+    <div id="modalNotif"
+        class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl border border-slate-100 w-full max-w-sm p-6 text-center space-y-4">
+            <div id="notifIcon" class="text-5xl">✅</div>
+            <h3 id="notifTitle" class="text-lg font-bold text-slate-800">Pembayaran Berhasil!</h3>
+            <p id="notifMsg" class="text-xs text-slate-500 leading-relaxed">Data transaksi pembayaran telah berhasil
+                disimpan.</p>
+            <div class="pt-2 flex justify-center gap-2">
+                <button onclick="tutupNotif()"
+                    class="px-4 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">Tutup</button>
+                <button id="btnCetakNotif" onclick="eksekusiCetakPopUp()"
+                    class="px-4 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-print"></i> Cetak Bukti
+                </button>
             </div>
         </div>
     </div>
 
     <!-- MODAL RIWAYAT & CETAK ULANG -->
-    <div id="modalRiwayat" class="modal">
-        <div class="modal-content" style="max-width: 650px; text-align: left;">
-            <span class="close-btn" onclick="tutupModalRiwayat()">&times;</span>
-            <h3 style="margin-top:0;" id="modalTitle">Riwayat Pembayaran</h3>
-            <table style="width:100%;">
-                <thead>
-                    <tr>
-                        <th>No. Struk</th>
-                        <th>Tgl & Jam</th>
-                        <th>Jumlah Bayar</th>
-                        <th>Sisa Saldo</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelRiwayat"></tbody>
-            </table>
+    <div id="modalRiwayat"
+        class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-xl shadow-xl border border-slate-100 w-full max-w-2xl overflow-hidden flex flex-col max-h-[85vh]">
+            <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                <h3 class="font-bold text-slate-800" id="modalTitle">Riwayat Pembayaran</h3>
+                <button onclick="tutupModalRiwayat()" class="text-slate-400 hover:text-slate-600"><i
+                        class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr
+                            class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 uppercase tracking-wider font-semibold">
+                            <th class="py-2.5 px-3">No. Struk</th>
+                            <th class="py-2.5 px-3">Tgl & Jam</th>
+                            <th class="py-2.5 px-3">Jumlah Bayar</th>
+                            <th class="py-2.5 px-3">Sisa Saldo</th>
+                            <th class="py-2.5 px-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelRiwayat" class="divide-y divide-slate-100 text-xs"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- TEMPLATE STRUK UNTUK PRINT (Gaya Indomaret) -->
+    <!-- TEMPLATE STRUK UNTUK PRINT (58mm Thermal Print) -->
     <div id="printArea">
         <div class="struk-header">
-            <div class="text-center pb-4 border-b border-slate-200">
-                <img class="h-12 w-12 mx-auto object-contain mb-2" src="Logo.png" alt="Logo">
-                <h2 class="text-sm font-bold text-slate-900 tracking-wide uppercase">Dedy Technology Solution</h2>
-                <p class="text-[11px] text-slate-500">Sangketan, Kabupaten Tabanan - Bali</p>
-                <p class="text-[11px] text-slate-500">Telp/WA: 0851-5859-3379</p>
+            <div style="text-align: center; padding-bottom: 5px; border-bottom: 1px dashed #000;">
+                <h2 style="font-size: 13px; font-weight: bold; margin: 0; text-transform: uppercase;">Dedy Technology
+                    Solution</h2>
+                <p style="margin: 2px 0 0 0; font-size: 10px;">Sangketan, Kabupaten Tabanan - Bali</p>
+                <p style="margin: 2px 0 0 0; font-size: 10px;">Telp/WA: 0851-5859-3379</p>
             </div>
         </div>
-        <div class="divider"></div>
-        <div>
+        <div style="margin: 6px 0;">
             <div>No: <span id="pNoStruk">-</span></div>
             <div>Tgl: <span id="pTglJam">-</span></div>
             <div>Nama: <span id="pNama">-</span></div>
             <div>Jenis: <span id="pTipe">-</span></div>
         </div>
-        <div class="divider"></div>
-        <div class="struk-row">
+        <div style="border-top: 1px dashed #000; margin: 6px 0;"></div>
+        <div style="display: flex; justify-content: space-between; margin: 3px 0;">
             <span>TOTAL UTANG</span>
             <span>Rp <span id="pTotalUtang">0</span></span>
         </div>
-        <div class="struk-row">
+        <div style="display: flex; justify-content: space-between; margin: 3px 0;">
             <span>BAYAR</span>
             <span>Rp <span id="pBayar">0</span></span>
         </div>
-        <div class="divider"></div>
-        <div class="struk-row" style="font-weight: bold;">
+        <div style="border-top: 1px dashed #000; margin: 6px 0;"></div>
+        <div style="display: flex; justify-content: space-between; margin: 3px 0; font-weight: bold;">
             <span>SISA SALDO</span>
             <span>Rp <span id="pSisa">0</span></span>
         </div>
-        <div class="divider"></div>
-        <div class="struk-footer">
-            <div class="pt-4 text-center text-[11px] text-slate-500 space-y-1">
-                <p>*** BUKTI PEMBAYARAN SAH ***</p>
-                <p class="font-bold text-slate-800 uppercase tracking-wide">Terima Kasih Atas Pembayaran Anda</p>
-                <p class="text-[10px] text-slate-400">Simpan Struk Ini Sebagai Bukti</p>
-                <p>Kritik & Saran: 0851-5859-3379</p>
-            </div>
+        <div style="border-top: 1px dashed #000; margin: 6px 0;"></div>
+        <div style="text-align: center; margin-top: 8px; font-size: 10px;">
+            <p style="margin: 2px 0;">*** BUKTI PEMBAYARAN SAH ***</p>
+            <p style="margin: 2px 0; font-weight: bold;">Terima Kasih Atas Pembayaran Anda</p>
+            <p style="margin: 2px 0;">Simpan Struk Ini Sebagai Bukti</p>
+            <p style="margin: 2px 0;">Kritik & Saran: 0851-5859-3379</p>
         </div>
     </div>
 
     <script>
-        // Ganti dengan Web App URL dari Google Apps Script milik Anda
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKIfS80s-_qF5RY3p-enjTwvMI0GsHcXGtezNQQlmjGyIOMUiYtaD-oumsCKH-idyr/exec";
 
         let listData = [];
-        let tempCetakData = null; // Menyimpan data sementara untuk aksi cetak dari notifikasi
+        let tempCetakData = null;
+        let tempBayarItem = null;
 
         async function loadData() {
+            let tbody = document.getElementById("dataTabel");
+            tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin text-lg mr-2"></i> Memuat data...</td></tr>';
+
             try {
                 let res = await fetch(SCRIPT_URL + "?action=get");
                 listData = await res.json();
                 renderTable();
+                calculateSummary();
             } catch (err) {
                 tampilkanNotif(false, "Gagal Memuat Data", "Tidak dapat terhubung ke Google Sheets.", false);
             }
+        }
+
+        function calculateSummary() {
+            let totalHutang = 0;
+            let totalPiutang = 0;
+            let totalSisa = 0;
+
+            listData.forEach(item => {
+                if (item.tipe === "Hutang") {
+                    totalHutang += Number(item.total || 0);
+                } else {
+                    totalPiutang += Number(item.total || 0);
+                }
+                totalSisa += Number(item.sisa || 0);
+            });
+
+            document.getElementById("statHutang").innerText = `Rp ${totalHutang.toLocaleString('id-ID')}`;
+            document.getElementById("statPiutang").innerText = `Rp ${totalPiutang.toLocaleString('id-ID')}`;
+            document.getElementById("statSisa").innerText = `Rp ${totalSisa.toLocaleString('id-ID')}`;
         }
 
         function renderTable() {
             let tbody = document.getElementById("dataTabel");
             tbody.innerHTML = "";
 
-            if (listData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Belum ada data.</td></tr>';
+            if (!listData || listData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-400">Belum ada data transaksi.</td></tr>';
                 return;
             }
 
             listData.forEach((item) => {
-                let badgeClass = item.tipe === "Hutang" ? "badge-hutang" : "badge-piutang";
+                let isHutang = item.tipe === "Hutang";
+                let badgeClass = isHutang
+                    ? "bg-red-50 text-red-700 border-red-200/60"
+                    : "bg-emerald-50 text-emerald-700 border-emerald-200/60";
+
                 let tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-50/80 transition-colors";
 
                 tr.innerHTML = `
-        <td><strong>${item.nama}</strong></td>
-        <td><span class="${badgeClass}">${item.tipe}</span></td>
-        <td>Rp ${Number(item.pokok).toLocaleString('id-ID')}</td>
-        <td>${item.bunga}%</td>
-        <td>Rp ${Number(item.total).toLocaleString('id-ID')}</td>
-        <td><strong style="color:${item.sisa > 0 ? '#dc3545' : '#28a745'}">Rp ${Number(item.sisa).toLocaleString('id-ID')}</strong></td>
-        <td>
-          <button class="btn-sm" style="background:#28a745" onclick="bayar('${item.id}', '${item.nama}', '${item.tipe}')">Bayar</button>
-          <button class="btn-sm" style="background:#17a2b8" onclick="bukaRiwayat('${item.id}')">Riwayat & Cetak</button>
-        </td>
-      `;
+                    <td class="py-3 px-4 font-semibold text-slate-800">${item.nama}</td>
+                    <td class="py-3 px-4">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${badgeClass}">
+                            ${item.tipe}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-slate-600">Rp ${Number(item.pokok).toLocaleString('id-ID')}</td>
+                    <td class="py-3 px-4 text-slate-600">${item.bunga}%</td>
+                    <td class="py-3 px-4 font-medium text-slate-700">Rp ${Number(item.total).toLocaleString('id-ID')}</td>
+                    <td class="py-3 px-4">
+                        <span class="font-bold ${item.sisa > 0 ? 'text-red-600' : 'text-emerald-600'}">
+                            Rp ${Number(item.sisa).toLocaleString('id-ID')}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center space-x-1">
+                        <button onclick="bukaModalBayar('${item.id}', '${item.nama}', '${item.tipe}')" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium transition-colors shadow-sm">
+                            <i class="fa-solid fa-hand-holding-dollar mr-1"></i> Bayar
+                        </button>
+                        <button onclick="bukaRiwayat('${item.id}')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition-colors">
+                            <i class="fa-solid fa-clock-rotate-left mr-1"></i> Riwayat
+                        </button>
+                    </td>
+                `;
                 tbody.appendChild(tr);
             });
         }
 
         async function tambahTransaksi() {
-            let nama = document.getElementById("nama").value;
+            let nama = document.getElementById("nama").value.trim();
             let tipe = document.getElementById("tipe").value;
             let pokok = parseFloat(document.getElementById("pokok").value);
             let bunga = parseFloat(document.getElementById("bunga").value) || 0;
@@ -465,7 +393,7 @@
 
             let btn = document.getElementById("btnSimpan");
             btn.disabled = true;
-            btn.innerText = "Menyimpan...";
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
 
             try {
                 let payload = { action: "add", nama, tipe, pokok, bunga };
@@ -488,13 +416,34 @@
                 tampilkanNotif(false, "Simpan Gagal!", "Terjadi kesalahan saat menyimpan ke Google Sheets.", false);
             } finally {
                 btn.disabled = false;
-                btn.innerText = "+ Simpan Transaksi Baru";
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Transaksi Baru';
             }
         }
 
-        async function bayar(id, nama, tipe) {
-            let jumlahBayar = prompt(`Masukkan nominal pembayaran untuk ${nama}:`);
-            if (!jumlahBayar || isNaN(jumlahBayar) || jumlahBayar <= 0) return;
+        function bukaModalBayar(id, nama, tipe) {
+            tempBayarItem = { id, nama, tipe };
+            document.getElementById("bayarTitle").innerText = `Bayar: ${nama} (${tipe})`;
+            document.getElementById("inputJumlahBayar").value = "";
+            document.getElementById("modalBayar").classList.remove("hidden");
+        }
+
+        function tutupModalBayar() {
+            document.getElementById("modalBayar").classList.add("hidden");
+            tempBayarItem = null;
+        }
+
+        async function prosesBayarModal() {
+            if (!tempBayarItem) return;
+
+            let jumlahBayar = parseFloat(document.getElementById("inputJumlahBayar").value);
+            if (isNaN(jumlahBayar) || jumlahBayar <= 0) {
+                tampilkanNotif(false, "Input Tidak Valid", "Masukkan jumlah nominal pembayaran yang benar.", false);
+                return;
+            }
+
+            let btn = document.getElementById("btnProsesBayar");
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
 
             let now = new Date();
             let tgl = now.toLocaleDateString('id-ID');
@@ -502,8 +451,8 @@
 
             let payload = {
                 action: "pay",
-                id: id,
-                jumlahBayar: parseFloat(jumlahBayar),
+                id: tempBayarItem.id,
+                jumlahBayar: jumlahBayar,
                 tanggal: tgl,
                 jam: jam
             };
@@ -516,20 +465,20 @@
                 let result = await res.json();
 
                 if (result.status === "success") {
-                    let item = listData.find(d => d.id === id);
-                    let sisaBaru = item.sisa - parseFloat(jumlahBayar);
+                    let item = listData.find(d => d.id === tempBayarItem.id);
+                    let sisaBaru = item.sisa - jumlahBayar;
 
-                    // Simpan data untuk diprint via tombol "Cetak Bukti" di notifikasi
                     tempCetakData = {
                         noStruk: result.payId || "STRUK-NEW",
                         tglJam: `${tgl} ${jam}`,
-                        nama: nama,
-                        tipe: tipe,
+                        nama: tempBayarItem.nama,
+                        tipe: tempBayarItem.tipe,
                         total: item.total,
                         bayar: jumlahBayar,
                         sisa: sisaBaru
                     };
 
+                    tutupModalBayar();
                     tampilkanNotif(true, "Pembayaran Berhasil!", `Pembayaran sebesar Rp ${Number(jumlahBayar).toLocaleString('id-ID')} berhasil disimpan.`, true);
                     loadData();
                 } else {
@@ -537,24 +486,30 @@
                 }
             } catch (err) {
                 tampilkanNotif(false, "Pembayaran Gagal!", "Gagal memproses pembayaran ke server.", false);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Konfirmasi Bayar";
             }
         }
 
-        // BUKA MODAL NOTIFIKASI
         function tampilkanNotif(isSukses, judul, pesan, tampilkanBtnCetak) {
             document.getElementById("notifIcon").innerText = isSukses ? "✅" : "❌";
             document.getElementById("notifTitle").innerText = judul;
-            document.getElementById("notifTitle").style.color = isSukses ? "#28a745" : "#dc3545";
+            document.getElementById("notifTitle").style.color = isSukses ? "#16a34a" : "#dc2626";
             document.getElementById("notifMsg").innerText = pesan;
 
             let btnCetak = document.getElementById("btnCetakNotif");
-            btnCetak.style.display = tampilkanBtnCetak ? "inline-block" : "none";
+            if (tampilkanBtnCetak) {
+                btnCetak.classList.remove("hidden");
+            } else {
+                btnCetak.classList.add("hidden");
+            }
 
-            document.getElementById("modalNotif").style.display = "block";
+            document.getElementById("modalNotif").classList.remove("hidden");
         }
 
         function tutupNotif() {
-            document.getElementById("modalNotif").style.display = "none";
+            document.getElementById("modalNotif").classList.add("hidden");
         }
 
         function eksekusiCetakPopUp() {
@@ -579,7 +534,7 @@
             tbody.innerHTML = "";
 
             if (!item.riwayat || item.riwayat.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada pembayaran.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="py-6 text-center text-slate-400">Belum ada riwayat pembayaran.</td></tr>';
             } else {
                 item.riwayat.forEach((r) => {
                     let tr = document.createElement("tr");
@@ -587,25 +542,25 @@
                     let tglJam = `${r.tgl} ${r.jam || ''}`;
 
                     tr.innerHTML = `
-          <td><small>${payId}</small></td>
-          <td>${tglJam}</td>
-          <td>Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td>
-          <td>Rp ${Number(r.sisa).toLocaleString('id-ID')}</td>
-          <td>
-            <button class="btn-sm" style="background:#ffc107; color:#000;" onclick="cetakStrukIndomaret('${payId}', '${tglJam}', '${item.nama}', '${item.tipe}', ${item.total}, ${r.jumlah}, ${r.sisa})">
-              🖨️ Cetak Ulang
-            </button>
-          </td>
-        `;
+                        <td class="py-2.5 px-3 font-mono text-slate-500">${payId}</td>
+                        <td class="py-2.5 px-3 text-slate-600">${tglJam}</td>
+                        <td class="py-2.5 px-3 font-medium text-emerald-600">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td>
+                        <td class="py-2.5 px-3 font-medium text-slate-700">Rp ${Number(r.sisa).toLocaleString('id-ID')}</td>
+                        <td class="py-2.5 px-3 text-center">
+                            <button onclick="cetakStrukIndomaret('${payId}', '${tglJam}', '${item.nama}', '${item.tipe}', ${item.total}, ${r.jumlah}, ${r.sisa})" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded text-xs transition-colors">
+                                <i class="fa-solid fa-print"></i> Cetak Ulang
+                            </button>
+                        </td>
+                    `;
                     tbody.appendChild(tr);
                 });
             }
 
-            document.getElementById("modalRiwayat").style.display = "block";
+            document.getElementById("modalRiwayat").classList.remove("hidden");
         }
 
         function tutupModalRiwayat() {
-            document.getElementById("modalRiwayat").style.display = "none";
+            document.getElementById("modalRiwayat").classList.add("hidden");
         }
 
         function cetakStrukIndomaret(noStruk, tglJam, nama, tipe, total, bayar, sisa) {
